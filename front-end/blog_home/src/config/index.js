@@ -7,8 +7,8 @@ export default {
    * @description api请求基础路径
    */
   baseUrl: {
-    dev: 'http://192.168.1.161:8300/api/',
-    pro: 'http://192.168.1.161:8300/api/'
+    dev: 'http://192.168.0.102/api/',
+    pro: 'http://192.168.0.102/api/'
   },
   /**
    * @description 首页header头中的社交地址

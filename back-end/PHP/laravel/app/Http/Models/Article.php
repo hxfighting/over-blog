@@ -69,4 +69,13 @@ class Article extends BasicModel
         })->count();
     }
 
+    //获取文章列表
+    public function getList(array $data)
+    {
+        return $this->with('tags:tag.id,name','category:category.id,category.title')
+            ->withCount('comments')
+            ->filter($data)
+            ->get();
+    }
+
 }

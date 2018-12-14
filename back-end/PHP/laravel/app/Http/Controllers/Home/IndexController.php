@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Home;
 
+use App\Http\Models\Article;
 use App\Http\Models\Category;
 use App\Http\Models\Image;
 use App\Http\Models\Photo;
@@ -24,5 +25,16 @@ class IndexController extends Controller
         $rotation = $image->rotationImage();
         $photo = $image->photoImage();
         return renderSuccess('获取轮播图数据成功',compact('rotation','photo'));
+    }
+
+    //获取文章列表
+    public function getArticleList(Request $request,Article $article)
+    {
+        $data = $request->all();
+        $data['order'] = 'is_top';
+        $data['show'] = 1;
+        $list = $article->getList($data);
+        return $list->isNotEmpty()?renderSuccess('获取文章列表成功',$list)
+            :renderError('暂无文章列表数据');
     }
 }

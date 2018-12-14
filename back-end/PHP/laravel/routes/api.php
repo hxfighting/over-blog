@@ -183,5 +183,7 @@ Route::group(['prefix'=>'home','namespace'=>'Home'],function(){
         Route::get('/category','IndexController@category');
         //首页轮播图
         Route::get('/rotation','IndexController@rotation');
+        //获取文章列表
+        Route::get('/article','IndexController@getArticleList');
     });
 });

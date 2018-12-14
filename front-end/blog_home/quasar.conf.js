@@ -59,14 +59,18 @@ module.exports = function (ctx) {
         'QCarousel',
         'QCarouselSlide',
         'QCarouselControl',
-        'QPagination'
+        'QPagination',
+        'QSpinner',
+        'QSpinnerHourglass',
+        'QAjaxBar'
       ],
       directives: [
         'Ripple'
       ],
       // Quasar plugins
       plugins: [
-        'Notify'
+        'Notify',
+        'Loading'
       ],
       // iconSet: ctx.theme.mat ? 'material-icons' : 'ionicons'
       i18n: 'zh-hans' // Quasar language
