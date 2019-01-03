@@ -81,7 +81,7 @@ export default [
                 path: 'category_page',
                 name: '分类管理',
                 meta: {
-                    icon: 'ios-book',
+                    icon: 'md-list',
                     title: '分类管理'
                 },
                 component: () => import('@/view/category.vue')
@@ -100,7 +100,7 @@ export default [
                 path: 'comment_page',
                 name: '评论管理',
                 meta: {
-                    icon: 'ios-book',
+                    icon: 'ios-chatboxes',
                     title: '评论管理'
                 },
                 component: () => import('@/view/comment.vue')
@@ -119,7 +119,7 @@ export default [
                 path: 'user_page',
                 name: '会员管理',
                 meta: {
-                    icon: 'ios-book',
+                    icon: 'ios-people',
                     title: '会员管理'
                 },
                 component: () => import('@/view/user.vue')
@@ -157,7 +157,7 @@ export default [
                 path: 'config_page',
                 name: '配置管理',
                 meta: {
-                    icon: 'ios-book',
+                    icon: 'ios-construct',
                     title: '配置管理'
                 },
                 component: () => import('@/view/webConfig.vue')
@@ -176,7 +176,7 @@ export default [
                 path: 'chat_page',
                 name: '说说管理',
                 meta: {
-                    icon: 'ios-book',
+                    icon: 'ios-chatbubbles',
                     title: '说说管理'
                 },
                 component: () => import('@/view/chat.vue')
@@ -195,7 +195,7 @@ export default [
                 path: 'link_page',
                 name: '友联管理',
                 meta: {
-                    icon: 'ios-book',
+                    icon: 'ios-link',
                     title: '友联管理',
                     notCache:true
                 },
@@ -215,7 +215,7 @@ export default [
                 path: 'contact_page',
                 name: '留言管理',
                 meta: {
-                    icon: 'ios-book',
+                    icon: 'md-mail',
                     title: '留言管理'
                 },
                 component: () => import('@/view/contact.vue')

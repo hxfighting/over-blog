@@ -158,6 +158,18 @@ Route::group(['prefix'=>'admin'],function (){
             Route::delete('/','CommentController@destroy');
         });
 
+        //配置组
+        Route::group(['prefix'=>'config'],function (){
+            //获取配置列表
+            Route::get('/','ConfigController@getList');
+            //添加配置
+            Route::post('/','ConfigController@store');
+            //修改配置
+            Route::put('/','ConfigController@update');
+            //删除配置
+            Route::delete('/','ConfigController@delete');
+        });
+
     });
 
     //不需要登录的接口

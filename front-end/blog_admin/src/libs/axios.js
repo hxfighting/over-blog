@@ -59,7 +59,7 @@ class HttpRequest {
       this.destroy(url)
       const {data, status} = res
 
-      if (res.status == 401) {
+      if (res.data.code == 401) {
         router.push({path: '/login'})
         return res
       }
@@ -67,6 +67,7 @@ class HttpRequest {
       if (res.headers.authorization != undefined) {
         setToken(res.headers.authorization)
       }
+
       return {data, status}
     }, error => {
       this.destroy(url)
