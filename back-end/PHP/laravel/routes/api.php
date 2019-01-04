@@ -23,6 +23,8 @@ Route::group(['prefix'=>'admin'],function (){
 
         //图片上传
         Route::post('/upload','UploadController@upload');
+        //获取dashboard的统计数据
+        Route::get('/count','DashboardController@index');
 
         //错误日志组
         Route::group(['prefix'=>'error'],function (){

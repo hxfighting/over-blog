@@ -32,7 +32,7 @@
         },
         methods: {
             renderContent (h, { root, node, data }) {
-                if(data.pid===0){
+                if(data.pid===0 && data.type===1){
                     return h('span', {
                         style: {
                             display: 'inline-block',

@@ -42,4 +42,11 @@ if(!function_exists('transferToArray')){
     }
 }
 
+//简化数据库连接
+if(!function_exists('db')){
+    function db(string $table,string $connection='mysql'){
+        return \Illuminate\Support\Facades\DB::connection($connection)->table($table);
+    }
+}
+
 
