@@ -46,7 +46,7 @@
 <script>
     import {getCategory} from '../../api/header'
     import config from '../../config/index'
-    const {title,socialAddress} = config;
+    const {title} = config;
     export default {
         name: 'middle',
         data() {
@@ -54,11 +54,11 @@
                 category:[],
                 title:title,
                 socialAddress:{
-                    qq:socialAddress.qq,
-                    weibo:socialAddress.weibo,
-                    twitter:socialAddress.twitter,
-                    git:socialAddress.git,
-                    github:socialAddress.github
+                    qq:'',
+                    weibo:'',
+                    twitter:'',
+                    git:'',
+                    github:''
                 }
             }
         },
@@ -67,7 +67,8 @@
                 getCategory().then(res=>{
                     let re = res.data;
                     if(re.code===200){
-                        this.category = re.data;
+                        this.category = re.data.list;
+                        this.socialAddress = re.data.social;
                     }else {
                         this.$q.notify({
                             color: 'negative',

@@ -199,5 +199,9 @@ Route::group(['prefix'=>'home','namespace'=>'Home'],function(){
         Route::get('/rotation','IndexController@rotation');
         //获取文章列表
         Route::get('/article','IndexController@getArticleList');
+        //获取footer内容
+        Route::get('/footer','IndexController@getFooter');
+        //获取侧边栏数据
+        Route::get('/sidebar','IndexController@getSidebarData');
     });
 });

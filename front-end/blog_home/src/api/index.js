@@ -11,3 +11,11 @@ export const getArticleList = ({tag_id,category_id,pageSize,pageNum}) => {
     params:data
   })
 }
+
+//获取侧边栏数据
+export const getSidebarList = () => {
+  return axios.request({
+    url: 'home/sidebar',
+    method: 'get',
+  })
+}

@@ -8,8 +8,7 @@
                             <div class="footer-heading"><h1><span style="color: #fff;">拖油瓶</span></h1></div>
                             <br>
                             <div class="content">
-                                <p>假如生活欺骗了你，别伤心，因为它还会继续欺骗你!</p>
-                                <p>陌路人，再回首，以忘初心！</p>
+                                <p v-for="item in famous_remark">{{item.val}}</p>
                             </div>
                         </div>
                         <div class="col-md-4 col-footer footer-3">
@@ -17,10 +16,8 @@
                             <br>
                             <div class="content">
                                 <ul>
-                                    <li><i class="fa fa-cogs"></i>&nbsp;框架：laravel 5.5</li>
-                                    <li><i class="fa fa-list-ol"></i>&nbsp;文章总计：&nbsp;21&nbsp;篇</li>
-                                    <li><i class="fa fa-group"></i>&nbsp;访问总计：&nbsp; 24565&nbsp;次</li>
-                                    <li><i></i></li>
+                                    <li v-for="it in blog_related">{{it.title}}: {{it.val}}</li>
+                                    <li></li>
                                 </ul>
                             </div>
                         </div>
@@ -29,13 +26,9 @@
                             <br>
                             <div class="content">
                                 <ul>
-                                    <li><a href="http://www.pexels.com" target="_blank" title="Pexel" style="color: whitesmoke">免费的照片-Pexel</a>
-                                    </li>
-                                    <li><a href="http://www.vmovier.com/" target="_blank" title="V电影" style="color: whitesmoke">V电影</a>
-                                    </li>
-                                    <li><a href="http://www.imooc.com/" title="慕课网" target="_blank" style="color: whitesmoke">慕课网</a>
-                                    </li>
-                                    <li><a href="http://www.runoob.com/" title="菜鸟教程" target="_blank" style="color: whitesmoke">菜鸟教程</a>
+                                    <li v-for="cg in blogger_collection"><a :href="cg.val" target="_blank"
+                                                                            :title="cg.title"
+                                                                            style="color: whitesmoke">{{cg.title}}</a>
                                     </li>
                                     <li><a></a>
                                     </li>
@@ -47,16 +40,49 @@
             </div>
 
             <div class="copy-right">
-                <p>Copyright © 胡鑫<a href="http://www.ohdata.top/" target="_blank" style="color:white;text-decoration:none"> www.ohdata.top</a>版权所有 ICP证：蜀ICP备17015680号-2</p>
+                <p v-html="copyright.val"></p>
             </div>
         </footer>
     </div>
 </template>
 
 <script>
-export default {
-  name: 'index'
-}
+    import {getFooterList} from "../../api/footer";
+
+    export default {
+        name: 'index',
+        data() {
+            return {
+                famous_remark: [],
+                blog_related: [],
+                blogger_collection: [],
+                copyright: ''
+            }
+        },
+        methods: {
+            getFooterList() {
+                getFooterList().then(res => {
+                    let data = res.data;
+                    if (data.code === 200) {
+                        this.famous_remark = data.data.famous_remark;
+                        this.blog_related = data.data.blog_related;
+                        this.blogger_collection = data.data.blogger_collection;
+                        this.copyright = data.data.copyright[0];
+                    } else {
+                        this.$q.notify({
+                            color: 'negative',
+                            message: data.msg,
+                            icon: 'warning',
+                            position: 'top'
+                        })
+                    }
+                })
+            }
+        },
+        created() {
+            this.getFooterList()
+        }
+    }
 </script>
 
 <style scoped>

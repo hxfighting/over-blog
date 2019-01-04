@@ -5,7 +5,7 @@
         <div class="row b-one-article" v-for="item in article">
           <h3 class="col-xs-12 col-md-12 col-lg-12">
             <router-link class="b-oa-title" to="/article/1" style="color: black;" :title="item.title">
-              {{item.title}}
+              {{item.title.length>30?item.title.substring(0, 30) +"...":item.title}}
             </router-link>
             <label class="btn btn-danger pull-right inline" style="font-size: 10px;" v-if="item.is_top==1">置顶</label>
           </h3>
@@ -118,4 +118,9 @@
 
 <style scoped>
   @import "../../statics/css/index.css";
+  .bg-primary {
+    color: #fff;
+    background-color: #428bca;
+    width: 100px;
+  }
 </style>
