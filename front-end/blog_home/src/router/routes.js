@@ -1,5 +1,6 @@
 const mainPage = () => import("../pages/Index");
 const category = () => import("../components/category/Index");
+const tag = () => import("../components/tag/Index");
 const indexLeftContent = () => import("../components/content/leftSide");
 const indexHeaderBottom = () => import('../components/header/bottom');
 const chat = () => import('../components/chat/index');
@@ -44,6 +45,30 @@ const routes = [
         },
       },
       {
+        path: 'tag/:id',
+        name: 'tag',
+        components: {
+          default: '',
+          h_content: tag
+        },
+        beforeEnter (to, from, next) {
+          let id = to.params.id;
+          if(isNaN(id)){
+            next(error)
+          }else {
+            next()
+          }
+        },
+        beforeUpdate (to, from, next) {
+          let id = to.params.id;
+          if(isNaN(id)){
+            next(error)
+          }else {
+            next()
+          }
+        },
+      },
+      {
         path: 'chat',
         components: {
           default: '',
@@ -59,6 +84,7 @@ const routes = [
       },
       {
         path: 'article/:id',
+        name: 'article',
         components: {
           default: articleHeader,
           h_content: article

@@ -2,26 +2,42 @@
 
 namespace App\Http\Controllers\Home;
 
-use App\Http\Models\Article;
-use App\Http\Models\ArticleComment;
-use App\Http\Models\Category;
-use App\Http\Models\Image;
-use App\Http\Models\Link;
-use App\Http\Models\Photo;
-use App\Http\Models\RotationImage;
-use App\Http\Models\Tag;
-use App\Http\Models\WebConfig;
+use App\Http\Models\{Article,ArticleComment,Category,Image,Link,Tag,WebConfig};
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 
-class IndexController extends Controller
+class IndexController extends BasicController
 {
     //社交地址type
     private const SOCIAL_TYPE = 1;
     //footer内容type
     private const FOOTER_TYPE = 2;
+
+    /**
+     * 博客首页
+     * Date: 2019/1/8 18:49
+     * @param Request $request
+     * @param Article $article
+     * @param Image   $image
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request,Article $article,Image $image)
+    {
+        $view = $this->countView($request);
+        $newArticle = $article->getList();
+        $img = $this->rotation($image);
+        $rotation = $img['rotation'];
+        $photo = $img['photo'];
+        return response()->view('home.index', compact('newArticle', 'rotation', 'photo'))
+            ->cookie('view_index', $view, $this->getLastMinute());
+    }
+
+    //获取今日剩余分钟
+    private function getLastMinute()
+    {
+        return (strtotime(date('Y-m-d').' 23:59:59')-time())/60;
+    }
 
 
     //博客首页分类
@@ -53,14 +69,14 @@ class IndexController extends Controller
     }
 
     //博客首页轮播图
-    public function rotation(Image $image): JsonResponse
+    public function rotation(Image $image): array
     {
         $data = Cache::rememberForever(config('blog.rotation_cache_key'),function () use ($image){
             $rotation = $image->rotationImage();
             $photo = $image->photoImage();
             return compact('rotation','photo');
         });
-        return renderSuccess('获取轮播图数据成功',$data);
+        return $data;
     }
 
     //获取文章列表

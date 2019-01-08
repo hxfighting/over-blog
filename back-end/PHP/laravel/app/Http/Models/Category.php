@@ -3,11 +3,15 @@
 namespace App\Http\Models;
 
 
+use Watson\Rememberable\Rememberable;
+
 class Category extends BasicModel
 {
+    use Rememberable;
     protected $table = 'category';
     protected $dateFormat = 'U';
     protected $fillable = ['pid','title'];
+    protected $rememberCacheTag = 'h_category_cache';
 
     public function children()
     {

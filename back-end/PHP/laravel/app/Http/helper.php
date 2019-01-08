@@ -49,4 +49,13 @@ if(!function_exists('db')){
     }
 }
 
+//获取IP
+if(!function_exists('getIP')){
+    function getIP(){
+        $user_IP = isset($_SERVER["HTTP_VIA"]) ? $_SERVER["HTTP_X_FORWARDED_FOR"] : $_SERVER["REMOTE_ADDR"];
+        $user_IP = $user_IP ?? $_SERVER["REMOTE_ADDR"];
+        return $user_IP;
+    }
+}
+
 

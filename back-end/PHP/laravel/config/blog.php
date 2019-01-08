@@ -34,5 +34,13 @@ return [
     /**
      * 友联cache
      */
-    'link_cache_key'=>'link_cache'
+    'link_cache_key'=>'link_cache',
+    /**
+     * 首页统计cache
+     */
+    'blog_index_count_key'=>'blog_index_count',
+    /**
+     * 文章页面统计cache
+     */
+    'blog_article_count_key'=>'blog_article_count'
 ];

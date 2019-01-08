@@ -12,6 +12,8 @@ class ConfigController extends Controller
     private const SOCIAL_TYPE = 1;
     //footer内容配置
     private const FOOTER_TYPE = 2;
+    //其他配置类型
+    private const OTHER_CONFIG_TYPE = 3;
 
 
     //获取配置项列表数据
@@ -35,17 +37,9 @@ class ConfigController extends Controller
             'title' => 'required|between:2,100',
             'val' => 'required|min:1',
         ]);
-        if ($data['type'] == self::FOOTER_TYPE)
-        {
-            $count = $config->where(['name' => $data['name'], 'type' => $data['type']])->count();
-            if ($data['name'] == 'copyright' && $count >= 1)
-            {
-                return renderError('版权信息只能有一条!');
-            }
-            if ($count >= 4)
-            {
-                return renderError('footer内容每一项最多添加4个!');
-            }
+        $check = $this->checkConfigVal($config,$data);
+        if(!$check['flag']){
+            return renderError($check['msg']);
         }
         $exist = $config->firstOrNew(['name' => $data['name'], 'type' => $data['type']]);
         if (!$exist->id)
@@ -59,6 +53,24 @@ class ConfigController extends Controller
         {
             return renderError('已添加该配置,请勿重复添加!');
         }
+    }
+
+    //检查数据
+    private function checkConfigVal($config,$data): array
+    {
+        $count = $config->where(['name' => $data['name'], 'type' => $data['type']])->count();
+        if ($data['type'] == self::FOOTER_TYPE)
+        {
+            if ($data['name'] == 'copyright' && $count >= 1)
+            {
+                return ['msg'=>'版权信息只能有一条!','flag'=>false];
+            }
+            if ($count >= 4)
+            {
+                return ['msg'=>'footer内容每一项最多添加4个!','flag'=>false];
+            }
+        }
+        return ['flag'=>true];
     }
 
     /**
@@ -78,17 +90,9 @@ class ConfigController extends Controller
             'title' => 'required|between:2,100',
             'val' => 'required|min:1',
         ]);
-        if ($data['type'] == self::FOOTER_TYPE)
-        {
-            $count = $config->where(['name' => $data['name'], 'type' => $data['type']])->count();
-            if ($data['name'] == 'copyright' && $count >= 1)
-            {
-                return renderError('版权信息只能有一条!');
-            }
-            if ($count >= 4)
-            {
-                return renderError('footer内容每一项最多添加4个!');
-            }
+        $check = $this->checkConfigVal($config,$data);
+        if(!$check['flag']){
+            return renderError($check['msg']);
         }
         $exist = $config->firstOrNew(['name' => $data['name'], 'type' => $data['type']]);
         if ($exist->id && $exist->id != $data['id'])

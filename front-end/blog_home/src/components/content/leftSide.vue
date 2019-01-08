@@ -4,7 +4,7 @@
       <div class="col-xs-12 col-md-12 col-lg-12">
         <div class="row b-one-article" v-for="item in article">
           <h3 class="col-xs-12 col-md-12 col-lg-12">
-            <router-link class="b-oa-title" to="/article/1" style="color: black;" :title="item.title">
+            <router-link class="b-oa-title" :to="{name:'article',params: { id:item.id }}" style="color: black;" :title="item.title">
               {{item.title.length>30?item.title.substring(0, 30) +"...":item.title}}
             </router-link>
             <label class="btn btn-danger pull-right inline" style="font-size: 10px;" v-if="item.is_top==1">置顶</label>
@@ -15,7 +15,7 @@
                 <i class="fa fa-user"></i>&nbsp;{{item.author}}
               </li>
               <li class="col-xs-7 col-md-3 col-lg-3">
-                <i class="fa fa-calendar"></i>&nbsp;{{item.created_at}}
+                <i class="fa fa-calendar"></i>&nbsp;{{item.created_at.substring(0,item.created_at.indexOf(' '))}}
               </li>
               <li class="col-xs-5 col-md-2 col-lg-2">
                 <i class="fa fa-eye"></i>&nbsp;{{item.click}}
@@ -31,11 +31,11 @@
               <!-- 文章封面图片开始 -->
               <div class="col-sm-6 col-md-6 col-lg-4 hidden-xs">
                 <figure class="b-oa-pic b-style1">
-                  <a href="http://192.168.1.161/article/100.html">
+                  <router-link :to="{name:'article',params: { id:item.id }}" :title="item.title">
                     <img :src="item.thumb" :alt="item.title" :title="item.title">
-                  </a>
+                  </router-link>
                   <figcaption>
-                    <a href="http://192.168.1.161/article/100.html"></a>
+                    <router-link :to="{name:'article',params: { id:item.id }}" :title="item.title"></router-link>
                   </figcaption>
                 </figure>
               </div>
@@ -48,7 +48,7 @@
               <!-- 文章描述结束 -->
             </div>
           </div>
-          <a class=" b-readall" href="http://192.168.1.161/article/100.html">阅读全文</a>
+          <router-link class=" b-readall" :to="{name:'article',params: { id:item.id }}">阅读全文</router-link>
         </div>
         <div class="a_page" style="text-align: center">
           <q-btn :loading="loading" color="primary" @click="simulateProgress">

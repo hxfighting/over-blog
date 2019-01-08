@@ -4,13 +4,15 @@ namespace App\Http\Models;
 
 
 use EloquentFilter\Filterable;
+use Watson\Rememberable\Rememberable;
 
 class Tag extends BasicModel
 {
-    use Filterable;
+    use Filterable,Rememberable;
     protected $table = 'tag';
     protected $dateFormat = 'U';
     protected $fillable = ['name'];
+    protected $rememberCacheTag = 'h_tag_cache';
 
     public function getCreatedAtAttribute($value)
     {

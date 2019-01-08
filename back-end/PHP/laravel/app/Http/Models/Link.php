@@ -4,13 +4,15 @@ namespace App\Http\Models;
 
 
 use EloquentFilter\Filterable;
+use Watson\Rememberable\Rememberable;
 
 class Link extends BasicModel
 {
-    use Filterable;
+    use Filterable,Rememberable;
     protected $table = 'link';
     protected $dateFormat = 'U';
     protected $guarded = [];
+    protected $rememberCacheTag = 'h_link_cache';
 
     public function getCreatedAtAttribute($value)
     {

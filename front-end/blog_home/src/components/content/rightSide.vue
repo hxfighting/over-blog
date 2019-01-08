@@ -17,7 +17,7 @@
                 <div class="heading"><h4>标签云</h4></div>
                 <br>
                 <div class="content">
-                    <a class="label article_tag_f" href="http://192.168.1.161/tag/1.html" v-for="ta in tag">{{ta.name}}</a>
+                    <router-link class="label article_tag_f" :to="{name:'tag',params: { id:ta.id }}" :title="ta.name" v-for="ta in tag">{{ta.name}}</router-link>
                 </div>
             </div>
             <div class="widget ">
@@ -25,8 +25,8 @@
                 <br>
                 <div class="content">
                     <div class="wrap-vid" v-for="ar in hot_article">
-                        <h3 class="vid-name"><a href="http://192.168.1.161/article/96.html"
-                                                :title="ar.title">{{ar.title}}</a>
+                        <h3 class="vid-name">
+                            <router-link :to="{name:'article',params: { id:ar.id }}" :title="ar.title">{{ar.title.length>30?ar.title.substring(0, 30) +"...":ar.title}}</router-link>
                         </h3>
                         <div class="info">
                             <span><i class="fa fa-calendar"></i>{{ar.created_at.substring(0,ar.created_at.indexOf(' '))}}</span>
@@ -43,11 +43,11 @@
                 <div class="content">
                     <div class="post" v-for="com in comment">
                         <a> <img :src="com.avatar"
-                                 class="img-circle img-responsive" :title="com."></a>
+                                 class="img-circle img-responsive" :title="com.name"></a>
                         <div class="wrapper">
-                            <a href="http://192.168.1.161/article/100.html"><span>抱歉，daocloud目前不...</span></a>
+                            <router-link :to="{name:'article',params: { id:com.article_id }}" :title="com.content">{{com.content.length>10?com.content.substring(0, 10) +"...":com.content}}</router-link>
                             <ul class="list-inline">
-                                <li><i class="fa fa-calendar"></i>&nbsp;2018-09-25 14:44:29</li>
+                                <li><i class="fa fa-calendar"></i>&nbsp;{{com.created_at}}</li>
                             </ul>
                         </div>
                     </div>
@@ -55,26 +55,10 @@
             </div>
             <div class="widget wid-tags">
                 <div class="heading"><h4>友情链接</h4></div>
-                <p><a style="color: black;cursor: pointer" class="link_modal">申请友链</a></p>
+                <p><a style="color: black;cursor: pointer" class="link_modal" @click="addLinkModal = true">申请友链</a></p>
                 <div class="content">
-                    <a class="label article_tag_f" href="http://123.207.241.214" style="color: black" title="王大大的博客"
-                       target="_blank">王大大的博客</a>
-                    <a class="label article_tag_f" href="http://9898192.cn" style="color: black" title="一个吊儿郎当的骚年！"
-                       target="_blank">王洋洋的文笔博客</a>
-                    <a class="label article_tag_f" href="http://tunanshan.com" style="color: black" title="图南山"
-                       target="_blank">图南山</a>
-                    <a class="label article_tag_f" href="http://www.whiteeeen.cn/" style="color: black" title="陈杨的博客"
-                       target="_blank">陈杨的博客</a>
-                    <a class="label article_tag_f" href="http://www.hzj233.cn" style="color: black" title="dota2交友论坛"
-                       target="_blank">dota2交友论坛</a>
-                    <a class="label article_tag_f" href="http://www.bestmx.top/" style="color: black" title="疯言疯语"
-                       target="_blank">疯言疯语</a>
-                    <a class="label article_tag_f" href="https://ituring.me" style="color: black" title="iTuring"
-                       target="_blank">iTuring</a>
-                    <a class="label article_tag_f" href="http://www.zsk6.top" style="color: black" title="吃辣椒的小蜜蜂"
-                       target="_blank">吃辣椒的小蜜蜂</a>
-                    <a class="label article_tag_f" href="http://www.ericnothing.cn/" style="color: black" title="个人博客"
-                       target="_blank">Eric-Nothing</a>
+                    <a class="label article_tag_f" :href="li.url" style="color: black" :title="li.name"
+                       target="_blank" v-for="li in link">{{li.name}}</a>
                 </div>
             </div>
 
@@ -112,6 +96,34 @@
             </div>
 
         </div>
+        <div>
+            <q-dialog
+                    v-model="addLinkModal"
+                    stack-buttons
+                    prevent-close
+                    @cancel="onCancel"
+                    @ok="onOk"
+            >
+                <!-- This or use "title" prop on <q-dialog> -->
+                <span slot="title">Favorite Superhero</span>
+
+                <!-- This or use "message" prop on <q-dialog> -->
+                <span slot="message">What is your superhero of choice?</span>
+
+                <div slot="body">
+                    <q-field
+                            icon="account_circle"
+                            helper="We need your name so we can send you to the movies."
+                            label="Your name"
+                            :label-width="3"
+                            :error="nameError"
+                    >
+                        <q-input v-model="formData.name" />
+                    </q-field>
+                </div>
+            </q-dialog>
+
+        </div>
     </div>
 </template>
 
@@ -125,7 +137,14 @@
                 tag:[],
                 hot_article:[],
                 comment:[],
-                link:[]
+                link:[],
+                addLinkModal:false,
+                formData:{
+                    url:'',
+                    name:'',
+                    description:''
+                },
+                nameError:false
             }
         },
         methods:{
@@ -146,6 +165,12 @@
                         })
                     }
                 })
+            },
+            onCancel(){
+
+            },
+            onOk(){
+
             }
         },
         created() {

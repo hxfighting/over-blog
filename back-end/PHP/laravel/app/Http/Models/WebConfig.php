@@ -4,13 +4,15 @@ namespace App\Http\Models;
 
 
 use EloquentFilter\Filterable;
+use Watson\Rememberable\Rememberable;
 
 class WebConfig extends BasicModel
 {
-    use Filterable;
+    use Filterable,Rememberable;
     protected $table = 'web_config';
     protected $dateFormat = 'U';
     protected $guarded = [];
+    protected $rememberCacheTag = 'h_web_config_cache';
 
     //获取列表统计
     public function getListCount(array $data): int
