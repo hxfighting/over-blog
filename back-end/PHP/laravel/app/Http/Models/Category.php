@@ -21,7 +21,7 @@ class Category extends BasicModel
     //获取文章分类
     public function getArticleCategory()
     {
-        $data = $this->where('is_article_category',1)->select('id','title')->get();
+        $data = $this->where('type',1)->select('id','title')->get();
         return $data->isNotEmpty()?$data:null;
     }
 

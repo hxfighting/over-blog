@@ -42,5 +42,9 @@ return [
     /**
      * 文章页面统计cache
      */
-    'blog_article_count_key'=>'blog_article_count'
+    'blog_article_count_key'=>'blog_article_count',
+    /**
+     * footer内容缓存cache
+     */
+    'blog_footer_cache_key'=>'blog_footer_cache'
 ];

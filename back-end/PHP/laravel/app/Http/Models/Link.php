@@ -24,6 +24,11 @@ class Link extends BasicModel
         return date('Y/m/d H:i:s',$value);
     }
 
+    public function scopeShow($query,int $is_show)
+    {
+        return $query->where('is_show',$is_show);
+    }
+
     //统计相关友联
     public function getLinkCount(array $data)
     {

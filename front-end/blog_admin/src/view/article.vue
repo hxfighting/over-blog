@@ -452,6 +452,7 @@
                 this.getArticleList();
             },
             handleSearch() {
+                this.listData.pageNum = 1;
                 this.getArticleList();
             },
             handleView(name) {

@@ -11,8 +11,8 @@
         <meta name="keywords" content="{{config('websiteConfig.keywords')}}">
         <meta name="description" content="{{\Illuminate\Support\Facades\Config::get('websiteConfig.description')}}">
         <meta name="author" content="{{\Illuminate\Support\Facades\Config::get('websiteConfig.seo_title')}}">
-        @show
-    <!-- Bootstrap Core CSS -->
+    @show
+<!-- Bootstrap Core CSS -->
     <link href="{{asset('css/home/bootstrap.min.css')}}" rel="stylesheet">
 
     <!-- Owl Carousel Assets -->
@@ -38,8 +38,7 @@
     <![endif]-->
     <link rel="stylesheet" href="{{asset('css/home/animate.css')}}">
     <link rel="stylesheet" href="{{asset('css/home/index.css')}}">
-    @section('other-css')
-        @show
+    @stack('other-css')
     {!! config('websiteConfig.web_count') !!}
 
 </head>
@@ -55,15 +54,18 @@
                 <div class="col-md-6">
                     <ul class="list-inline top-link link">
                         @if(session('user.is_admin')==0 || is_null(session('user')))
-                        <li><a title="首页" href="{{url('/')}}"><i class="fa fa-home"></i> 首页</a></li>
+                            <li><a title="首页" href="{{url('/')}}"><i class="fa fa-home"></i> 首页</a></li>
                         @else
-                            <li style="cursor: pointer"><a title="后台" href="{{url('/ohdata')}}"><i class="fa fa-home"></i> 后台</a></li>
+                            <li style="cursor: pointer"><a title="后台" href="{{url('/ohdata')}}"><i
+                                            class="fa fa-home"></i> 后台</a></li>
                         @endif
                         @guest
-                        <li style="cursor: pointer"><a title="登录" class="oauth_login"><i class="fa fa-user"></i> 登录</a></li>
+                            <li style="cursor: pointer"><a title="登录" class="oauth_login"><i class="fa fa-user"></i> 登录</a>
+                            </li>
                         @endguest
                         @auth
-                            <li style="cursor: pointer"><a title="退出登录" class="oauth_quit"><i class="fa fa-user"></i> 退出登录</a></li>
+                            <li style="cursor: pointer"><a title="退出登录" class="oauth_quit"><i class="fa fa-user"></i>
+                                    退出登录</a></li>
                         @endauth
                         <li><a title="联系我" href="{{url('category/8')}}"><i class="fa fa-comments"></i>↓联系我↓</a></li>
                     </ul>
@@ -72,35 +74,42 @@
         </div>
     </nav>
 
-    <div class="modal fade" id="b-modal-login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="b-modal-login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content row">
                 <div class="col-xs-12 col-md-12 col-lg-12">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title b-ta-center" id="myModalLabel">无需注册，用以下帐号即可直接登录</h4>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-12 col-lg-12 b-login-row">
                     <ul class="row">
                         <li class="col-xs-6 col-md-4 col-lg-4 b-login-img">
-                            <a href="{{url('/oauth/redirectToProvider/weibo')}}"><img src="{{ asset('image/sina-login.png') }}" alt="微博登录" title="微博登录"></a>
+                            <a href="{{url('/oauth/redirectToProvider/weibo')}}"><img
+                                        src="{{ asset('image/sina-login.png') }}" alt="微博登录" title="微博登录"></a>
                         </li>
                         <li class="col-xs-6 col-md-4 col-lg-4 b-login-img">
-                            <a href="{{url('/oauth/redirectToProvider/qq')}}"><img src="{{ asset('image/qq-login.png') }}" alt="QQ登录" title="QQ登录"></a>
+                            <a href="{{url('/oauth/redirectToProvider/qq')}}"><img
+                                        src="{{ asset('image/qq-login.png') }}" alt="QQ登录" title="QQ登录"></a>
                         </li>
                         <li class="col-xs-6 col-md-4 col-lg-4 b-login-img">
-                            <img src="{{ asset('image/wechat.png') }}" alt="微信登录" title="微信登录" style="cursor: pointer" class="hx-wechat" tabindex="0" role="button" data-toggle="popover" data-trigger="focus" data-content="" data-placement="bottom" data-html="true">
+                            <img src="{{ asset('image/wechat.png') }}" alt="微信登录" title="微信登录" style="cursor: pointer"
+                                 class="hx-wechat" tabindex="0" role="button" data-toggle="popover" data-trigger="focus"
+                                 data-content="" data-placement="bottom" data-html="true">
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
-    <div class="wechat-modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" hidden>
+    <div class="wechat-modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+         hidden>
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
-                <img  class="wechat-image" src="">
+                <img class="wechat-image" src="">
             </div>
         </div>
     </div>
@@ -117,7 +126,7 @@
             <ul class="nav navbar-nav">
                 @foreach($dh as $k => $v)
                     @if(!$v->children->isEmpty())
-                        <li class="dropdown" >
+                        <li class="dropdown">
                             <a href="{{url($v->url)}}" class="dropdown-toggle" title="{{$v->title}}">{{$v->title}}</a>
                             <div class="dropdown-menu">
                                 <div class="dropdown-inner">
@@ -130,7 +139,7 @@
                             </div>
                         </li>
                     @else
-                        <li >
+                        <li>
                             <a href="{{url($v->url)}}" title="{{$v->title}}">{{$v->title}}</a>
                         </li>
                     @endif
@@ -138,8 +147,8 @@
             </ul>
             <ul class="list-inline navbar-right top-social">
                 @foreach($socialData as $so)
-                <li><a title="博主{{$so->title}}" href="{{$so->val}}"
-                       target="_blank"><i class="fa fa-{{$so->name}}"></i></a></li>
+                    <li><a title="博主{{$so->title}}" href="{{$so->val}}"
+                           target="_blank"><i class="fa fa-{{$so->name}}"></i></a></li>
                 @endforeach
             </ul>
         </div>
@@ -170,7 +179,7 @@
                     <br/>
                     <div class="content">
                         @foreach($tagCloud as $tag)
-                                <a class="label" href="{{url('tag/'.$tag['id'].'.html')}}">{{$tag['name']}}</a>
+                            <a class="label" href="{{url('tag/'.$tag['id'].'.html')}}">{{$tag['name']}}</a>
                         @endforeach
                     </div>
                 </div>
@@ -199,19 +208,21 @@
                     <div class="content">
                         @if($comment_t->isEmpty())
                             <h6 class="text-center">暂时没有评论</h6>
-                            @else
+                        @else
                             @foreach($comment_t as $v)
-                            <div class="post">
-                               <a> <img src="{{url($v->avatar)}}" class="img-circle img-responsive" title="{{$v->name}}"/></a>
-                                <div class="wrapper">
-                                    <a href="{{url('article/'.$v->article_id.'.html')}}" title="{{$v->content}}"><span>{{mb_strimwidth($v->content,0,23,'...','utf8')}}</span></a>
-                                    <ul class="list-inline">
-                                        <li><i class="fa fa-calendar"></i>&nbsp;{{$v->created_at ?? ''}}</li>
-                                    </ul>
+                                <div class="post">
+                                    <a> <img src="{{url($v->avatar)}}" class="img-circle img-responsive"
+                                             title="{{$v->name}}"/></a>
+                                    <div class="wrapper">
+                                        <a href="{{url('article/'.$v->article_id.'.html')}}"
+                                           title="{{$v->content}}"><span>{{mb_strimwidth($v->content,0,23,'...','utf8')}}</span></a>
+                                        <ul class="list-inline">
+                                            <li><i class="fa fa-calendar"></i>&nbsp;{{$v->created_at ?? ''}}</li>
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
                             @endforeach
-                            @endif
+                        @endif
                     </div>
                 </div>
                 <div class="widget wid-tags">
@@ -219,17 +230,20 @@
                     <p><a style="color: black;cursor: pointer" class="link_modal">申请友链</a></p>
                     <div class="content">
                         @foreach($friendLink as $link)
-                            <a class="label" href="{{$link['url']}}" style="color: black" title="{{$link['description']}}" target="_blank">{{$link['name']}}</a>
+                            <a class="label" href="{{$link['url']}}" style="color: black"
+                               title="{{$link['description']}}" target="_blank">{{$link['name']}}</a>
                         @endforeach
                     </div>
                 </div>
 
                 <!-- link --->
-                <div class="modal fade" id="hx_link_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                <div class="modal fade" id="hx_link_modal" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabel">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
                                 <h4 class="modal-title" id="exampleModalLabel">友链申请</h4>
                             </div>
                             <div class="modal-body">
@@ -240,11 +254,13 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="ur_url" class="control-label">友链URL:</label>
-                                        <input type="text" class="form-control" id="ur_url" name="ur_url" value="http://">
+                                        <input type="text" class="form-control" id="ur_url" name="ur_url"
+                                               value="http://">
                                     </div>
                                     <div class="form-group">
                                         <label for="ur_description" class="control-label">友链描述:</label>
-                                        <textarea class="form-control" id="ur_description" name="ur_description"></textarea>
+                                        <textarea class="form-control" id="ur_description"
+                                                  name="ur_description"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -269,8 +285,11 @@
                     <div class="footer-heading"><h1><span style="color: #fff;">拖油瓶</span></h1></div>
                     <br/>
                     <div class="content">
-                        <p>假如生活欺骗了你，别伤心，因为它还会继续欺骗你!</p>
-                        <p>陌路人，再回首，以忘初心！</p>
+                        @if(isset($footerData['famous_remark']))
+                            @foreach($footerData['famous_remark'] as $fa)
+                                <p>{{$fa->val}}</p>
+                            @endforeach
+                        @endif
                     </div>
                 </div>
                 <div class="col-md-4 col-footer footer-3">
@@ -278,10 +297,13 @@
                     <br/>
                     <div class="content">
                         <ul>
-                            <li><i class="fa fa-cogs"></i>&nbsp;框架：laravel 5.5</li>
+                            <li><i class="fa fa-cogs"></i>&nbsp;框架：{{$footerData['blog_related'][0]->val ?? ''}}</li>
                             <li><i class="fa fa-list-ol"></i>&nbsp;文章总计：&nbsp;{{$totalArticle}}&nbsp;篇</li>
-                            <li><i class="fa fa-group"></i>&nbsp;访问总计：&nbsp; {{\Illuminate\Support\Facades\Cache::get(config('blog.blog_index_count_key'))}}&nbsp;次</li>
-                            <li><i ></i></li>
+                            <li>
+                                <i class="fa fa-group"></i>&nbsp;访问总计：&nbsp; {{\Illuminate\Support\Facades\Cache::get(config('blog.blog_index_count_key'))}}
+                                &nbsp;次
+                            </li>
+                            <li><i></i></li>
                         </ul>
                     </div>
                 </div>
@@ -290,14 +312,12 @@
                     <br/>
                     <div class="content">
                         <ul>
-                            <li><a href="http://www.pexels.com" target="_blank" title="Pexel" style="color: whitesmoke">免费的照片-Pexel</a>
-                            </li>
-                            <li><a href="http://www.vmovier.com/" target="_blank" title="V电影" style="color: whitesmoke">V电影</a>
-                            </li>
-                            <li><a href="http://www.imooc.com/" title="慕课网" target="_blank" style="color: whitesmoke">慕课网</a>
-                            </li>
-                            <li><a href="http://www.runoob.com/" title="菜鸟教程" target="_blank" style="color: whitesmoke">菜鸟教程</a>
-                            </li>
+                            @if(isset($footerData['blogger_collection']))
+                                @foreach($footerData['blogger_collection'] as $bl)
+                                    <li><a href="{{$bl->val}}" target="_blank" title="{{$bl->title}}" style="color: whitesmoke">{{$bl->title}}</a>
+                                    </li>
+                                @endforeach
+                            @endif
                             <li><a></a>
                             </li>
                         </ul>
@@ -308,7 +328,7 @@
     </div>
 
     <div class="copy-right">
-        <p>{!! \Illuminate\Support\Facades\Config::get('websiteConfig.copyright') !!}</p>
+        <p>{!! $footerData['copyright'][0]->val ?? '' !!}</p>
     </div>
 </footer>
 <script src="{{asset('css/home/owl-carousel/owl.carousel.js')}}"></script>

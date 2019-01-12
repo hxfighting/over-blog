@@ -48,6 +48,11 @@ class Article extends BasicModel
         return date('Y/m/d H:i:s', $value);
     }
 
+    public function scopeShow($query,int $is_show)
+    {
+        return $query->where('is_show',$is_show);
+    }
+
     //如果描述为空,默认文章前200个字
     public function setDescriptionAttribute($value)
     {
@@ -72,14 +77,12 @@ class Article extends BasicModel
     }
 
     //获取文章列表
-    public function getList()
+    public function getList(array $data=[],bool $flag=false)
     {
-        return $this->with('tags:tag.id,name','category:category.id,category.title')
-            ->withCount('comments')
-            ->where('is_show',1)
-            ->latest('is_top')
-            ->latest('created_at')
-            ->paginate(8);
+        $query = $this->with('tags:tag.id,name','category:category.id,category.title')
+            ->withCount('comments');
+        return $flag?$query->filter($data)->get()
+            :$query->latest('is_top')->latest('created_at')->show(1)->paginate(8);
     }
 
 }

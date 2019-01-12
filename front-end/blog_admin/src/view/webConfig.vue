@@ -123,6 +123,21 @@
                     callback()
                 }
             }
+            const validateVal = (rule, value, callback) => {
+                if (this.formData.name == 'famous_remark') {
+                    if(value.length>24){
+                        callback(new Error('名言只能在24个字符以内哦!'))
+                    }else {
+                        callback()
+                    }
+                } else {
+                    if(value.length<1){
+                        callback(new Error('请输入配置值!'))
+                    }else {
+                        callback()
+                    }
+                }
+            }
             return {
                 tableData: [],
                 loading: false,
@@ -162,8 +177,7 @@
                         {validator: validateName, trigger: 'blur'}
                     ],
                     val: [
-                        {required: true, message: '请输入配置val', trigger: 'blur'},
-                        {type: 'string', min: 1, message: '配置val最少2个字符', trigger: 'change'},
+                        {validator: validateVal, trigger: 'blur'},
                     ]
                 },
                 tableColumns: [
@@ -283,6 +297,7 @@
                 }, 500);
             },
             handleSearch(){
+                this.listData.pageNum = 1;
                 this.getConfigList();
             },
             handleConfig(name) {
@@ -336,20 +351,27 @@
                 this.configUpdateModal = true;
             },
             updateConfig(name){
-                updateConfig(this.formData).then(res=>{
-                    let data = res.data;
-                    if (data.code == 200) {
-                        this.$Message.success(data.msg)
-                        this.configUpdateModal = false;
-                        this.modalCancel(name)
-                        this.getConfigList()
+                this.$refs[name].validate((valid) => {
+                    if (valid) {
+                        updateConfig(this.formData).then(res=>{
+                            let data = res.data;
+                            if (data.code == 200) {
+                                this.$Message.success(data.msg)
+                                this.configUpdateModal = false;
+                                this.modalCancel(name)
+                                this.getConfigList()
+                            } else {
+                                this.dealButtonLoading();
+                                this.$Message.error(data.msg);
+                            }
+                        }).catch(err=>{
+                            this.dealButtonLoading();
+                            this.$Message.error('服务器开小差了!');
+                        })
                     } else {
                         this.dealButtonLoading();
-                        this.$Message.error(data.msg);
+                        this.$Message.error('验证失败!')
                     }
-                }).catch(err=>{
-                    this.dealButtonLoading();
-                    this.$Message.error('服务器开小差了!');
                 })
             },
             deleteConfig(id){

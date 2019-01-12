@@ -2,9 +2,9 @@
 $agent = new \Jenssegers\Agent\Agent();
 @endphp
 @extends('home.layouts.home')
-@section('other-css')
+@push('other-css')
     <link rel="stylesheet" href="{{asset('css/home/hx.css')}}">
-@stop
+@endpush
 @section('content')
 <body>
 <div class="featured container">
@@ -112,7 +112,7 @@ $agent = new \Jenssegers\Agent\Agent();
                                             <div class="col-sm-6 col-md-6 col-lg-4 hidden-xs">
                                                 <figure class="b-oa-pic b-style1">
                                                     <a href="{{url('article/'.$new->id.'.html')}}">
-                                                        <img src="{{asset($new->thumb)}}" alt="胡鑫" title="胡鑫">
+                                                        <img src="{{asset($new->thumb)}}" alt="{{$new->title}}" title="{{$new->title}}">
                                                     </a>
                                                     <figcaption>
                                                         <a href="{{url('article/'.$new->id.'.html')}}"></a>
@@ -151,26 +151,6 @@ $agent = new \Jenssegers\Agent\Agent();
                 + '<span>%S</span> 秒'));
         });
 
-        /**
-         * 处理分页
-         */
-        $(".a_page ul li").click(function (e) {
-            e.preventDefault();
-            var value = $(this).children().text();
-            var search = window.location.search;
-            var se_re = new RegExp('search');
-            var href = '';
-            if(se_re.test(search) && search.indexOf('&')===-1){
-                href = search + '&page=' + value;
-            }else if(se_re.test(search) && search.indexOf('&')!==-1){
-                var index = search.indexOf('&');
-                var right_search = search.substring(0,index);
-                href = right_search +  '&page=' + value;
-            }else {
-                href = '?page=' + value;
-            }
-            window.location.href = href;
-        });
     })
 </script>
 @endsection

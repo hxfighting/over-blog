@@ -4,7 +4,8 @@ namespace App\Providers;
 
 use App\Http\Models\
 {Article, ArticleComment, Category, Contact, Link, Tag, WebConfig};
-use App\Observers\{CategoryObserve,CommentObserve,ContactObserve,WebConfigObserve};
+use App\Observers\
+{CategoryObserve, CommentObserve, ContactObserve, LinkObserve, WebConfigObserve};
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
         ArticleComment::observe(CommentObserve::class);
         Category::observe(CategoryObserve::class);
         WebConfig::observe(WebConfigObserve::class);
+        Link::observe(LinkObserve::class);
 
         //获取导航
         $h_category = Category::with(['children'=>function ($q) { $q->rememberForever(); }])
@@ -29,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
             ->rememberForever()
             ->get();
 
-        $social_data = WebConfig::where('type',1)->rememberForever()->get();
+        $social_data = WebConfig::type(1)->rememberForever()->get();
 
         $minute = (strtotime(date('Y-m-d').' 23:59:59')-time())/60;
 
@@ -39,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
             ->selectRaw('id,title,created_at,click,
                 (select count(*) from article_comment where article_comment.article_id=article.id) as comment_count')
             ->remember($minute)
-            ->where('is_show',1)
+            ->show(1)
             ->take(10)
             ->get();
 
@@ -52,11 +54,18 @@ class AppServiceProvider extends ServiceProvider
             ->latest()
             ->get();
 
+        //首页footer内容
+        $footerData =  WebConfig::type(2)
+            ->remember($minute)
+            ->cacheTags(config('blog.blog_footer_cache_key'))
+            ->get()
+            ->groupBy('name');
+
         //标签云
         $tagCloud = Tag::rememberForever()->get();
 
         //友情链接
-        $friendLink = Link::where('is_show',1)
+        $friendLink = Link::show(1)
             ->rememberForever()
             ->latest('order')
             ->oldest('created_at')
@@ -72,6 +81,7 @@ class AppServiceProvider extends ServiceProvider
         view()->share('tagCloud', $tagCloud);
         view()->share('friendLink', $friendLink);
         view()->share('socialData', $social_data);
+        view()->share('footerData', $footerData);
     }
 
     /**

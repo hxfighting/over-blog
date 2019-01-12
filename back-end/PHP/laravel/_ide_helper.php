@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.7.19 on 2019-01-08 13:34:13.
+ * Generated for Laravel 5.7.20 on 2019-01-09 11:13:03.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -7258,6 +7258,17 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
+         * Get the jobs that have been pushed.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function pushedJobs()
+        {
+            return \Illuminate\Support\Testing\Fakes\QueueFake::pushedJobs();
+        }
+        
+        /**
          * Get the connection name for the queue.
          *
          * @return string 
@@ -7863,6 +7874,17 @@ namespace Illuminate\Support\Facades {
         public static function pjax()
         {
             return \Illuminate\Http\Request::pjax();
+        }
+        
+        /**
+         * Determine if the request is the result of an prefetch call.
+         *
+         * @return bool 
+         * @static 
+         */ 
+        public static function prefetch()
+        {
+            return \Illuminate\Http\Request::prefetch();
         }
         
         /**
@@ -11714,25 +11736,25 @@ namespace Illuminate\Support\Facades {
         /**
          * Assert that the given file exists.
          *
-         * @param string $path
-         * @return void 
+         * @param string|array $path
+         * @return $this 
          * @static 
          */ 
         public static function assertExists($path)
         {
-            \Illuminate\Filesystem\FilesystemAdapter::assertExists($path);
+            return \Illuminate\Filesystem\FilesystemAdapter::assertExists($path);
         }
         
         /**
          * Assert that the given file does not exist.
          *
-         * @param string $path
-         * @return void 
+         * @param string|array $path
+         * @return $this 
          * @static 
          */ 
         public static function assertMissing($path)
         {
-            \Illuminate\Filesystem\FilesystemAdapter::assertMissing($path);
+            return \Illuminate\Filesystem\FilesystemAdapter::assertMissing($path);
         }
         
         /**

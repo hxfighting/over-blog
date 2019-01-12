@@ -23,7 +23,7 @@ class LinkController extends Controller
     public function destroy(Request $request,Link $link)
     {
         $data = $this->validate($request,['id'=>'required|integer']);
-        $res = $link->destroy($data['id']);
+        $res = $link->where('id',$data['id'])->delete();
         return $res?renderSuccess('删除友联成功')
             :renderError('删除友联失败,请稍后再试！');
     }
@@ -38,7 +38,12 @@ class LinkController extends Controller
             'order'         =>'nullable|integer|min:1',
             'is_show'       =>'nullable|integer|in:0,1'
         ]);
-        $res = $link->create($data);
+        $link->url = $data['url'];
+        $link->name = $data['name'];
+        $link->description = $data['description'];
+        $link->order = $data['order'];
+        $link->is_show = $data['is_show'];
+        $res = $link->save();
         return $res?renderSuccess('添加友联成功')
             :renderError('添加友联失败,请稍后再试!');
     }
@@ -55,7 +60,13 @@ class LinkController extends Controller
             'order'         =>'nullable|integer|min:1',
             'is_show'       =>'nullable|integer|in:0,1'
         ]);
-        $res = $link->where('id',$id)->update($data);
+        $link = $link->find($data['id']);
+        $link->url = $data['url'];
+        $link->name = $data['name'];
+        $link->description = $data['description'];
+        $link->order = $data['order'];
+        $link->is_show = $data['is_show'];
+        $res = $link->save();
         return $res?renderSuccess('修改友联成功')
             :renderError('修改友联失败,请稍后再试！');
     }
