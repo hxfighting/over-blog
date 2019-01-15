@@ -22,4 +22,9 @@ class Chat extends BasicModel
         return date('Y/m/d H:i:s',$value);
     }
 
+    public function scopeShow($query,$value)
+    {
+        return $query->where('is_show',$value);
+    }
+
 }

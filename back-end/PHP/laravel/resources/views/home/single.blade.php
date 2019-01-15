@@ -3,12 +3,21 @@
 @endphp
 @extends('home.layouts.home')
 @section('meta')
-    <title>{{config('websiteConfig.web_title')}}-{{$single->title or ''}}</title>
-    <meta name="keywords" content="{{$single->keywords or ''}}">
-    <meta name="description" content="{{$single->description or ''}}">
+    <title>{{config('webConfig.web_title')}}-{{$single->title ?? ''}}</title>
+    <meta name="keywords" content="{{$single->keywords ?? ''}}">
+    <meta name="description" content="{{$single->description ?? ''}}">
     @stop
 @push('other-css')
-    {{--<link rel="stylesheet" href="{{asset('vendor/editormd/css/editormd.preview.css')}}">--}}
+    <style>
+        code {
+            padding: 2px 4px;
+            font-size: 90%;
+            color: #c7254e;
+            background-color: #f9f2f4;
+            border-radius: 4px;
+            white-space:unset;
+        }
+    </style>
     @endpush
 @section('content')
     <body>
@@ -192,7 +201,7 @@
             var user_name = "{{session('user.name')}}";
         </script>
         <script src="{{asset('js/home/comment.js').'?ver='.RELEASE_VERSION}}"></script>
-        <script src="{{asset('vendor/jqueryTpfd/js/postbird-img-glass.js').'?ver='.RELEASE_VERSION}}"></script>
+        <script src="{{asset('js/jqueryTpfd/js/postbird-img-glass.js').'?ver='.RELEASE_VERSION}}"></script>
         <script>
             PostbirdImgGlass.init({
                 domSelector:".hx_article_images img",

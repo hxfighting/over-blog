@@ -16,7 +16,10 @@ Route::group(['namespace'=>'Home'],function(){
         //前台首页路由
         Route::get('/', 'IndexController@index')->name('index');
         //文章详情页
-        Route::get('article/{id}.html', 'ArticleController@index');
+        Route::get('/article/{id}.html', 'ArticleController@index')->where('id','\d+');
+        //说说页面
+        Route::get('/chat','ChatController@index');
+        Route::get('/category/{id}.html','CategoryController@index')->where('id','\d+');
     });
 
     //微信组

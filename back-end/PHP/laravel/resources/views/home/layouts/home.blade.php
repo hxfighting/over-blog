@@ -127,12 +127,12 @@
                 @foreach($dh as $k => $v)
                     @if(!$v->children->isEmpty())
                         <li class="dropdown">
-                            <a href="{{url($v->url)}}" class="dropdown-toggle" title="{{$v->title}}">{{$v->title}}</a>
+                            <a href="{{url($v->url).'.html'}}" class="dropdown-toggle" title="{{$v->title}}">{{$v->title}}</a>
                             <div class="dropdown-menu">
                                 <div class="dropdown-inner">
                                     <ul class="list-unstyled">
                                         @foreach($v->children as $m)
-                                            <li><a href="{{$m->url}}">{{$m->title}}</a></li>
+                                            <li><a href="{{$m->url.'.html'}}">{{$m->title}}</a></li>
                                         @endforeach
                                     </ul>
                                 </div>
@@ -140,7 +140,7 @@
                         </li>
                     @else
                         <li>
-                            <a href="{{url($v->url)}}" title="{{$v->title}}">{{$v->title}}</a>
+                            <a href="{{url($v->url.'.html')}}" title="{{$v->title}}">{{$v->title}}</a>
                         </li>
                     @endif
                 @endforeach

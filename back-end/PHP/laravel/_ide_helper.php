@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.7.20 on 2019-01-09 11:13:03.
+ * Generated for Laravel 5.7.20 on 2019-01-15 13:38:38.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -13633,7 +13633,7 @@ namespace Jenssegers\Agent\Facades {
         
         /**
          * Get all detection rules. These rules include the additional
-         * platforms and browsers.
+         * platforms and browsers and utilities.
          *
          * @return array 
          * @static 
@@ -13646,7 +13646,6 @@ namespace Jenssegers\Agent\Facades {
         /**
          * 
          *
-         * @inheritdoc 
          * @static 
          */ 
         public static function getRules()
@@ -13663,6 +13662,56 @@ namespace Jenssegers\Agent\Facades {
         public static function getCrawlerDetect()
         {
             return \Jenssegers\Agent\Agent::getCrawlerDetect();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function getBrowsers()
+        {
+            return \Jenssegers\Agent\Agent::getBrowsers();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function getOperatingSystems()
+        {
+            return \Jenssegers\Agent\Agent::getOperatingSystems();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function getPlatforms()
+        {
+            return \Jenssegers\Agent\Agent::getPlatforms();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function getDesktopDevices()
+        {
+            return \Jenssegers\Agent\Agent::getDesktopDevices();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function getProperties()
+        {
+            return \Jenssegers\Agent\Agent::getProperties();
         }
         
         /**
@@ -13766,7 +13815,6 @@ namespace Jenssegers\Agent\Facades {
         /**
          * 
          *
-         * @inheritdoc 
          * @static 
          */ 
         public static function version($propertyName, $type = 'text')
@@ -13981,18 +14029,6 @@ namespace Jenssegers\Agent\Facades {
         }
         
         /**
-         * Retrieve the list of known browsers. Specifically, the user agents.
-         *
-         * @return array List of browsers / user agents.
-         * @static 
-         */ 
-        public static function getBrowsers()
-        {
-            //Method inherited from \Mobile_Detect            
-            return \Jenssegers\Agent\Agent::getBrowsers();
-        }
-        
-        /**
          * Retrieve the list of known utilities.
          *
          * @return array List of utilities.
@@ -14032,18 +14068,6 @@ namespace Jenssegers\Agent\Facades {
         {
             //Method inherited from \Mobile_Detect            
             return \Jenssegers\Agent\Agent::getMobileDetectionRulesExtended();
-        }
-        
-        /**
-         * Retrieve the list of mobile operating systems.
-         *
-         * @return array The list of mobile operating systems.
-         * @static 
-         */ 
-        public static function getOperatingSystems()
-        {
-            //Method inherited from \Mobile_Detect            
-            return \Jenssegers\Agent\Agent::getOperatingSystems();
         }
         
         /**
@@ -14129,18 +14153,6 @@ namespace Jenssegers\Agent\Facades {
         {
             //Method inherited from \Mobile_Detect            
             return \Jenssegers\Agent\Agent::match($regex, $userAgent);
-        }
-        
-        /**
-         * Get the properties array.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function getProperties()
-        {
-            //Method inherited from \Mobile_Detect            
-            return \Jenssegers\Agent\Agent::getProperties();
         }
         
         /**
