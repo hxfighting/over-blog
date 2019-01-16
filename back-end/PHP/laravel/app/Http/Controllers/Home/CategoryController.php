@@ -15,7 +15,10 @@ class CategoryController extends BasicController
      */
     public function index($id,Article $article)
     {
-        $list = $article->where('category_id', $id)->latest()->paginate(6);
+        $list = $article->with('tags:tag.id,name', 'category:category.id,category.title')
+            ->where('category_id', $id)
+            ->latest()
+            ->paginate(7);
         return $list->isNotEmpty()?view('home.category', compact('list'))
             :view('home.kong');
     }

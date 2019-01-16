@@ -24,7 +24,7 @@ $agent = new \Jenssegers\Agent\Agent();
                 <div class="carousel-inner">
                     @foreach($rotation as $v)
                     <div class="item @if($v->id==1) active @endif">
-                        <img src="{{asset($v->image_url)}}" alt="拖油瓶">
+                        <img src="{{$v->image_url}}" alt="拖油瓶">
                         <!-- Static Header -->
                         <div class="header-text hidden-xs">
                             <div class="col-md-12 text-center">
@@ -55,7 +55,7 @@ $agent = new \Jenssegers\Agent\Agent();
         <div class="col-sm-4" style="text-align: center">
             <div id="owl-demo-1" class="owl-carousel">
                 @foreach($photo as $v)
-                <img src="{{asset($v->image_url)}}" alt="博主照片"/>
+                <img src="{{$v->image_url}}" alt="博主照片"/>
                     @endforeach
             </div>
             <br/>
@@ -112,7 +112,7 @@ $agent = new \Jenssegers\Agent\Agent();
                                             <div class="col-sm-6 col-md-6 col-lg-4 hidden-xs">
                                                 <figure class="b-oa-pic b-style1">
                                                     <a href="{{url('article/'.$new->id.'.html')}}">
-                                                        <img src="{{asset($new->thumb)}}" alt="{{$new->title}}" title="{{$new->title}}">
+                                                        <img src="{{$new->thumb}}" alt="{{$new->title}}" title="{{$new->title}}">
                                                     </a>
                                                     <figcaption>
                                                         <a href="{{url('article/'.$new->id.'.html')}}"></a>

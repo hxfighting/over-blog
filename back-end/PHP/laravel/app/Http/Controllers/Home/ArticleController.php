@@ -8,6 +8,13 @@ use Illuminate\Http\Request;
 
 class ArticleController extends BasicController
 {
+    /**
+     * 文章详情页
+     * Date: 2019/1/16 10:53
+     * @param Request $request
+     * @param         $id
+     * @return \Illuminate\Http\Response
+     */
     public function index(Request $request, $id)
     {
         //得到单一文章详情
@@ -101,5 +108,22 @@ class ArticleController extends BasicController
             ->leftJoin('user as b', 'article_comment.user_id', '=', 'b.id')
             ->select('article_comment.*', 'a.avatar as reply_avatar',
                 'a.name as reply_name', 'b.avatar as user_avatar', 'b.name as username');
+    }
+
+    /**
+     * 搜索文章
+     * Date: 2019/1/16 10:57
+     * @param Request $request
+     * @param Article $article
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function search(Request $request,Article $article)
+    {
+        $search = $request->input('search',null);
+        $list = $article->with('tags:tag.id,name', 'category:category.id,category.title')
+            ->when($search,function ($q) use ($search){
+            return $q->where('title', 'like', '%' . $search . '%');
+        })->latest()->paginate(7);
+        return view('home.category', compact('list'));
     }
 }

@@ -6,8 +6,11 @@ use App\Http\Models\
 {Article, ArticleComment, Category, Contact, Link, Tag, WebConfig};
 use App\Observers\
 {CategoryObserve, CommentObserve, ContactObserve, LinkObserve, WebConfigObserve};
+use EasyWeChat\Factory;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Overtrue\Socialite\SocialiteManager;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -91,6 +94,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        //小程序
+        $this->app->singleton('miniProgram', function () {
+            $config = config('wechat');
+            return Factory::miniProgram($config);
+        });
 
+        //三方登录
+        $this->app->singleton('socialite', function () {
+            $config = config('socialite');
+            return new SocialiteManager($config,new Request());
+        });
     }
 }

@@ -1,8 +1,8 @@
 var index_ops = {
-    init:function () {
+    init: function () {
         this.eventBind();
     },
-    eventBind:function () {
+    eventBind: function () {
 
         $.goup({
             trigger: 100,
@@ -19,7 +19,7 @@ var index_ops = {
             }
             btn.addClass('disabled');
             $.ajax({
-                url: "/home/wechat/getScene",
+                url: "/wechat/scene",
                 type: 'GET',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -40,11 +40,11 @@ var index_ops = {
         });
 
         $(".link .oauth_quit").click(function () {
-           $.get("/user/quit",function (res) {
-               if(res.code==200){
-                   window.location.href = window.location.href;
-               }
-           });
+            $.get("/user/quit", function (res) {
+                if (res.code == 200) {
+                    window.location.href = window.location.href;
+                }
+            });
         });
 
         $(".link_modal").click(function () {
@@ -54,44 +54,84 @@ var index_ops = {
         $("#hx_link_modal .save").click(function () {
             var btn = $(this);
             if (btn.hasClass('disabled')) {
-                common_ops.alert('正在处理，请勿重复提交！');
+                Swal({
+                    position: 'center',
+                    type: 'error',
+                    title: '正在处理,请勿重复点击!',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
                 return false;
             }
             var ur_name = $("#hx_link_modal input[name=ur_name]").val();
             var ur_url = $("#hx_link_modal input[name=ur_url]").val();
             var ur_description = $("#hx_link_modal textarea[name=ur_description]").val();
-            if(ur_name.length<1){
-                common_ops.tip('请输入正确的友链名字！',$("#hx_link_modal input[name=ur_name]"));
+            if (ur_name.length < 1) {
+                Swal({
+                    position: 'center',
+                    type: 'error',
+                    title: '请输入正确的友链名字！',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
                 return false;
             }
-            var Expression=/http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
-            var objExp=new RegExp(Expression);
-            if(objExp.test(ur_url)!=true)
-            {
-                common_ops.tip('请输入正确的友链地址！',$("#hx_link_modal input[name=ur_url]"));
+            var Expression = /http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
+            var objExp = new RegExp(Expression);
+            if (objExp.test(ur_url) != true) {
+                Swal({
+                    position: 'center',
+                    type: 'error',
+                    title: '请输入正确的友链地址！',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
                 return false;
             }
-            if(ur_description.length<1){
-                common_ops.tip('请对你的友链进行描述！',$("#hx_link_modal textarea[name=ur_description]"));
+            if (ur_description.length < 1) {
+                Swal({
+                    position: 'center',
+                    type: 'error',
+                    title: '请对你的友链进行描述！',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
                 return false;
             }
             btn.addClass('disabled');
             $.ajax({
-                url:'/link/store',
+                url: '/link',
                 type: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data: {
-                    ur_url:ur_url,
-                    ur_name:ur_name,
-                    ur_description:ur_description
+                    url: ur_url,
+                    name: ur_name,
+                    description: ur_description
                 },
                 dataType: 'json',
                 success: function (res) {
                     btn.removeClass('disabled');
                     if (res.code == 200) {
+                        Swal({
+                            position: 'center',
+                            type: 'success',
+                            title: res.msg,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        setTimeout(function () {
                             window.location.href = window.location.href;
+                        }, 1600);
+                    }else {
+                        Swal({
+                            position: 'center',
+                            type: 'error',
+                            title: res.msg,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
                     }
                 },
                 error: function (res) {
@@ -104,13 +144,13 @@ var index_ops = {
         let dsq = function () {
             if (timeout) return;
             $.ajax({
-                url:'/home/wechat/getStatus',
+                url: '/wechat/status',
                 type: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data: {
-                    scene:window.scene
+                    scene: window.scene
                 },
                 dataType: 'json',
                 success: function (res) {
@@ -124,24 +164,24 @@ var index_ops = {
                     console.log(res.responseText);
                 }
             });
-            dd = setTimeout(dsq,3000);
+            dd = setTimeout(dsq, 3000);
         };
 
         $('.hx-wechat').click(function () {
             let i = $(this);
-           if(timeout){
-               timeout = false;
-               sleep(1000);
-               dsq();
-           }else {
-               dsq();
-           }
-           let image = `<img src="https://www.ohdata.top/home/wechat/qrcode/${window.scene}">`;
-           i.attr('data-content',image);
-           i.popover('show');
+            if (timeout) {
+                timeout = false;
+                sleep(1000);
+                dsq();
+            } else {
+                dsq();
+            }
+            let image = `<img src="${APP_URL}/wechat/qrcode/${window.scene}">`;
+            i.attr('data-content', image);
+            i.popover('show');
             setTimeout(function () {
                 clearTimeout(dd);
-            },60000);
+            }, 60000);
         });
     },
 };

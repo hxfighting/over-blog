@@ -38,6 +38,7 @@
     <![endif]-->
     <link rel="stylesheet" href="{{asset('css/home/animate.css')}}">
     <link rel="stylesheet" href="{{asset('css/home/index.css')}}">
+    <link rel="stylesheet" href="{{asset('css/swrrtalert2.min.css')}}">
     @stack('other-css')
     {!! config('websiteConfig.web_count') !!}
 
@@ -67,7 +68,7 @@
                             <li style="cursor: pointer"><a title="退出登录" class="oauth_quit"><i class="fa fa-user"></i>
                                     退出登录</a></li>
                         @endauth
-                        <li><a title="联系我" href="{{url('category/8')}}"><i class="fa fa-comments"></i>↓联系我↓</a></li>
+                        <li><a title="联系我" href="{{url('/contact')}}"><i class="fa fa-comments"></i>↓联系我↓</a></li>
                     </ul>
                 </div>
             </div>
@@ -168,7 +169,7 @@
                     <br/>
                     <div class="content">
                         <form role="form" class="form-horizontal" method="get" action="{{url('search')}}">
-                            <input type="text" placeholder="回车键搜索文章" value="" name="searcharticle"
+                            <input type="text" placeholder="回车键搜索文章" value="" name="search"
                                    id="v_search" class="form-control">
                         </form>
                     </div>
@@ -348,9 +349,11 @@
 
         });
     });
+    let APP_URL = "{{config('app.url')}}"
 </script>
 {!! config('websiteConfig.web_push') !!}
 <script src="{{asset('js/layer/layer.js')}}"></script>
+<script src="{{asset('js/sweetalert2.all.min.js')}}"></script>
 <script src="{{asset('js/common.js'.'?ver='.RELEASE_VERSION)}}"></script>
 <script src="{{asset('js/home/jquery.goup.min.js').'?ver='.RELEASE_VERSION}}"></script>
 <script src="{{asset('js/home/a_index.js').'?ver='.RELEASE_VERSION}}"></script>
