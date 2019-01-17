@@ -4,13 +4,15 @@ namespace App\Http\Models;
 
 
 use EloquentFilter\Filterable;
+use Watson\Rememberable\Rememberable;
 
 class ArticleComment extends BasicModel
 {
-    use Filterable;
+    use Filterable,Rememberable;
     protected $table = 'article_comment';
     protected $dateFormat = 'U';
     protected $guarded = [];
+    protected $rememberCacheTag = 'h_comment_cache';
 
     public function getCreatedAtAttribute($value)
     {

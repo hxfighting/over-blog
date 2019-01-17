@@ -8,7 +8,7 @@ export const getRotation = () => {
     })
 }
 
-//获取轮播图
+//获取分类
 export const getCategory = () => {
     return axios.request({
         url: 'home/category',

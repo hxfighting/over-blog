@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Models\Image;
 use App\Http\Models\RotationImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class RotationController extends Controller
 {
+    //多态关联时轮播图对应的图片类型
+    private $rotation_image_type = 'App\Http\Models\RotationImage';
+
     //获取轮播图列表数据
     public function getList(Request $request,Image $image)
     {
@@ -25,11 +29,12 @@ class RotationController extends Controller
         {
             DB::transaction(function () use ($image, $data) {
                 $where = [
-                    'image_type'=>$this->image_type,
+                    'image_type'=>$this->rotation_image_type,
                     'image_id'  =>$data['id']
                 ];
                 Image::where($where)->delete();
                 $image->destroy($data['id']);
+                Cache::forget(config('blog.rotation_cache_key'));
             });
             return renderSuccess('删除轮播图成功');
         } catch (\Exception $e)
@@ -50,6 +55,7 @@ class RotationController extends Controller
             DB::transaction(function () use ($image, $data) {
                 $res = $image->create(['words' => $data['words']]);
                 $res->images()->create(['image_url' => $data['image_url']]);
+                Cache::forget(config('blog.rotation_cache_key'));
             });
             return renderSuccess('添加轮播图成功');
         } catch (\Exception $e)
@@ -71,10 +77,11 @@ class RotationController extends Controller
             DB::transaction(function () use ($image, $data) {
                 $image->where('id',$data['id'])->update(['words' => $data['words']]);
                 $where = [
-                    'image_type'=>$this->image_type,
+                    'image_type'=>$this->rotation_image_type,
                     'image_id'  =>$data['id']
                 ];
                 Image::where($where)->update(['image_url'=>$data['image_url']]);
+                Cache::forget(config('blog.rotation_cache_key'));
             });
             return renderSuccess('修改轮播图成功');
         } catch (\Exception $e)

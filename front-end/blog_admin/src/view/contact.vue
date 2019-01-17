@@ -174,6 +174,7 @@
                 if (e.target.value === '') this.insideTableData = this.value
             },
             handleSearch() {
+                this.listData.pageNum = 1;
                 this.getContactList();
             },
             //处理button的loading状态

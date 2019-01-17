@@ -15,10 +15,7 @@ class ArticleController extends Controller
     public function getList(Request $request,Article $article,Category $category,Tag $tag)
     {
         $request_data = $request->all();
-        $list = $article->with('tags:tag.id,name','category:category.id,category.title')
-            ->withCount('comments')
-            ->filter($request_data)
-            ->get();
+        $list = $article->getList($request_data,true);
         $category = $category->getArticleCategory();
         $tag = $tag->get(['id','name']);
         if($list->isNotEmpty()){

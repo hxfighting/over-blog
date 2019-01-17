@@ -23,6 +23,8 @@ Route::group(['prefix'=>'admin'],function (){
 
         //图片上传
         Route::post('/upload','UploadController@upload');
+        //获取dashboard的统计数据
+        Route::get('/count','DashboardController@index');
 
         //错误日志组
         Route::group(['prefix'=>'error'],function (){
@@ -158,6 +160,18 @@ Route::group(['prefix'=>'admin'],function (){
             Route::delete('/','CommentController@destroy');
         });
 
+        //配置组
+        Route::group(['prefix'=>'config'],function (){
+            //获取配置列表
+            Route::get('/','ConfigController@getList');
+            //添加配置
+            Route::post('/','ConfigController@store');
+            //修改配置
+            Route::put('/','ConfigController@update');
+            //删除配置
+            Route::delete('/','ConfigController@delete');
+        });
+
     });
 
     //不需要登录的接口
@@ -183,5 +197,11 @@ Route::group(['prefix'=>'home','namespace'=>'Home'],function(){
         Route::get('/category','IndexController@category');
         //首页轮播图
         Route::get('/rotation','IndexController@rotation');
+        //获取文章列表
+        Route::get('/article','IndexController@getArticleList');
+        //获取footer内容
+        Route::get('/footer','IndexController@getFooter');
+        //获取侧边栏数据
+        Route::get('/sidebar','IndexController@getSidebarData');
     });
 });

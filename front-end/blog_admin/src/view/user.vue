@@ -186,6 +186,7 @@
                 if (e.target.value === '') this.insideTableData = this.value
             },
             handleSearch() {
+                this.listData.pageNum = 1;
                 this.getUserList();
             },
             getUserList() {

@@ -8,7 +8,11 @@
  */
 
 define('LARAVEL_START', microtime(true));
-
+if(file_exists('./version_book')){
+    define("RELEASE_VERSION",trim(file_get_contents('./version_book')));
+}else{
+    define("RELEASE_VERSION",time());
+}
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader

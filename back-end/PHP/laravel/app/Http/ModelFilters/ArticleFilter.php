@@ -27,9 +27,14 @@ class ArticleFilter extends ModelFilter
         return $this->where('id',$id);
     }
 
+    public function show($value)
+    {
+        return $this->where('is_show',$value);
+    }
+
     public function order($value)
     {
-        return $this->latest($value);
+        return $value=='created_at'?$this->latest($value):$this->orderByDesc('is_top')->latest('created_at');
     }
 
     public function pageSize($value)

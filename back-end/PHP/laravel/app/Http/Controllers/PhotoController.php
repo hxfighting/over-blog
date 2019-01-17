@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Models\Image;
 use App\Http\Models\Photo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class PhotoController extends Controller
 {
+    //多态关联时照片对应的图片类型
+    private $photo_image_type = 'App\Http\Models\Photo';
+
     //获取照片列表数据
     public function getList(Request $request,Image $image)
     {
@@ -25,11 +29,12 @@ class PhotoController extends Controller
         {
             DB::transaction(function () use ($photo, $data) {
                 $where = [
-                    'image_type'=>$this->image_type,
+                    'image_type'=>$this->photo_image_type,
                     'image_id'  =>$data['id']
                 ];
                 Image::where($where)->delete();
                 $photo->destroy($data['id']);
+                Cache::forget(config('blog.rotation_cache_key'));
             });
             return renderSuccess('删除照片成功');
         } catch (\Exception $e)
@@ -49,6 +54,7 @@ class PhotoController extends Controller
             DB::transaction(function () use ($photo, $data) {
                 $res = $photo->create();
                 $res->images()->create(['image_url' => $data['image_url']]);
+                Cache::forget(config('blog.rotation_cache_key'));
             });
             return renderSuccess('添加照片成功');
         } catch (\Exception $e)
@@ -65,11 +71,14 @@ class PhotoController extends Controller
             'image_url'=>'required|url'
         ]);
         $where = [
-            'image_type'=>$this->image_type,
+            'image_type'=>$this->photo_image_type,
             'image_id'  =>$data['id']
         ];
         $res = $image->where($where)->update(['image_url'=>$data['image_url']]);
-        return $res?renderSuccess('修改照片成功')
-            :renderError('修改照片失败,请稍后再试！');
+        if($res){
+            Cache::forget(config('blog.rotation_cache_key'));
+            return renderSuccess('修改照片成功');
+        }
+        return renderError('修改照片失败,请稍后再试！');
     }
 }

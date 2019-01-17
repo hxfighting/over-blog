@@ -4,13 +4,15 @@ namespace App\Http\Models;
 
 use EloquentFilter\Filterable;
 use Illuminate\Http\JsonResponse;
+use Watson\Rememberable\Rememberable;
 
 class Article extends BasicModel
 {
-    use Filterable;
+    use Filterable,Rememberable;
     protected $table = 'article';
     protected $dateFormat = 'U';
     protected $guarded = [];
+    protected $rememberCacheTag = 'h_article_cache';
 
     //多态关联
     public function images()
@@ -46,6 +48,11 @@ class Article extends BasicModel
         return date('Y/m/d H:i:s', $value);
     }
 
+    public function scopeShow($query,int $is_show)
+    {
+        return $query->where('is_show',$is_show);
+    }
+
     //如果描述为空,默认文章前200个字
     public function setDescriptionAttribute($value)
     {
@@ -67,6 +74,15 @@ class Article extends BasicModel
         })->when($category_id, function ($q) use ($category_id) {
             return $q->where('category_id', $category_id);
         })->count();
+    }
+
+    //获取文章列表
+    public function getList(array $data=[],bool $flag=false)
+    {
+        $query = $this->with('tags:tag.id,name','category:category.id,category.title')
+            ->withCount('comments');
+        return $flag?$query->filter($data)->get()
+            :$query->latest('is_top')->latest('created_at')->show(1)->paginate(8);
     }
 
 }

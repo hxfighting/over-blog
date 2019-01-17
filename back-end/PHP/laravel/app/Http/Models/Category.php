@@ -3,11 +3,15 @@
 namespace App\Http\Models;
 
 
+use Watson\Rememberable\Rememberable;
+
 class Category extends BasicModel
 {
+    use Rememberable;
     protected $table = 'category';
     protected $dateFormat = 'U';
     protected $fillable = ['pid','title'];
+    protected $rememberCacheTag = 'h_category_cache';
 
     public function children()
     {
@@ -17,7 +21,7 @@ class Category extends BasicModel
     //获取文章分类
     public function getArticleCategory()
     {
-        $data = $this->where('is_article_category',1)->select('id','title')->get();
+        $data = $this->where('type',1)->select('id','title')->get();
         return $data->isNotEmpty()?$data:null;
     }
 

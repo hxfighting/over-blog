@@ -4,13 +4,15 @@ namespace App\Http\Models;
 
 
 use EloquentFilter\Filterable;
+use Watson\Rememberable\Rememberable;
 
 class Link extends BasicModel
 {
-    use Filterable;
+    use Filterable,Rememberable;
     protected $table = 'link';
     protected $dateFormat = 'U';
     protected $guarded = [];
+    protected $rememberCacheTag = 'h_link_cache';
 
     public function getCreatedAtAttribute($value)
     {
@@ -20,6 +22,11 @@ class Link extends BasicModel
     public function getUpdatedAtAttribute($value)
     {
         return date('Y/m/d H:i:s',$value);
+    }
+
+    public function scopeShow($query,int $is_show)
+    {
+        return $query->where('is_show',$is_show);
     }
 
     //统计相关友联

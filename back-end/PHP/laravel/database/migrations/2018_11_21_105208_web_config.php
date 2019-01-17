@@ -18,9 +18,7 @@ class WebConfig extends Migration
             $table->string('title',100)->comment('配置名称');
             $table->string('name',100)->comment('配置变量名');
             $table->text('val')->comment('配置值');
-            $table->unsignedTinyInteger('order')->comment('配置排序');
-            $table->string('description',255)->comment('配置描述');
-            $table->unsignedTinyInteger('field_type')->comment('字段类型,1:input,2:radio,3:textarea');
+            $table->unsignedTinyInteger('type')->comment('字段类型,1:社交地址,2footer内容,3其他配置');
             $table->unsignedInteger('created_at')->nullable()->comment('创建时间');
             $table->unsignedInteger('updated_at')->nullable()->comment('修改时间');
         });
