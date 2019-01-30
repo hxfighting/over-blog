@@ -4,16 +4,17 @@ var comment_ops = {
     },
     eventBind:function () {
         $(".a_comment .save").click(function () {
+            alert(123)
             var btn = $(this);
             if (btn.hasClass('disabled')) {
                 common_ops.alert('正在处理，请勿重复提交！');
                 return false;
             }
-            if (user_id.length < 1 || isNaN(user_id)) {
-                $("#b-modal-login").modal("show");
-                return false;
-            }
-            var co_aid = $(this).attr('data');
+            // if (user_id.length < 1 || isNaN(user_id)) {
+            //     $("#b-modal-login").modal("show");
+            //     return false;
+            // }
+            let article_id = $(this).attr('data');
             var co_email = $(".a_comment input[name=email]").val();
             var co_content = $(".a_comment textarea[name=message]").val();
             var pattern = /^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
@@ -31,15 +32,14 @@ var comment_ops = {
             }
             btn.addClass('disabled');
             $.ajax({
-                url: "/comment/store",
+                url: "/comment",
                 type: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data: {
-                    co_uid: user_id,
-                    co_rid:0,
-                    co_aid: co_aid,
+                    user_id: user_id,
+                    article_id: co_aid,
                     co_email: co_email,
                     co_content:co_content,
                     user_name:user_name
@@ -60,34 +60,34 @@ var comment_ops = {
             });
         });
 
-        $(".hx-comments .c_reply").click(function () {
-            if (user_id.length < 1 || isNaN(user_id)) {
-                $("#b-modal-login").modal("show");
-                return false;
-            }
-            $(this).parents('.wrapper').next().css('display', 'block');
-        });
-        $(".hx-comments .co_cancel").click(function () {
-            if (user_id.length < 1 || isNaN(user_id)) {
-                $("#b-modal-login").modal("show");
-                return false;
-            }
-           $(this).parent('.hx_group').css('display','none');
-        });
-        $(".hx-comments .hx_child_co_reply").click(function () {
-            if (user_id.length < 1 || isNaN(user_id)) {
-                $("#b-modal-login").modal("show");
-                return false;
-            }
-            $(this).parents('.child_wrapper').next().css('display','block');
-        });
-        $(".hx-comments .child_co_cancel").click(function () {
-            if (user_id.length < 1 || isNaN(user_id)) {
-                $("#b-modal-login").modal("show");
-                return false;
-            }
-            $(this).parent('.hx_child_group').css('display','none');
-        });
+        // $(".hx-comments .c_reply").click(function () {
+        //     if (user_id.length < 1 || isNaN(user_id)) {
+        //         $("#b-modal-login").modal("show");
+        //         return false;
+        //     }
+        //     $(this).parents('.wrapper').next().css('display', 'block');
+        // });
+        // $(".hx-comments .co_cancel").click(function () {
+        //     if (user_id.length < 1 || isNaN(user_id)) {
+        //         $("#b-modal-login").modal("show");
+        //         return false;
+        //     }
+        //    $(this).parent('.hx_group').css('display','none');
+        // });
+        // $(".hx-comments .hx_child_co_reply").click(function () {
+        //     if (user_id.length < 1 || isNaN(user_id)) {
+        //         $("#b-modal-login").modal("show");
+        //         return false;
+        //     }
+        //     $(this).parents('.child_wrapper').next().css('display','block');
+        // });
+        // $(".hx-comments .child_co_cancel").click(function () {
+        //     if (user_id.length < 1 || isNaN(user_id)) {
+        //         $("#b-modal-login").modal("show");
+        //         return false;
+        //     }
+        //     $(this).parent('.hx_child_group').css('display','none');
+        // });
         $(".hx-comments .co_reply").click(function () {
             var btn = $(this);
             if (btn.hasClass('disabled')) {

@@ -7,25 +7,29 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class ReplyUserMail extends Mailable implements ShouldQueue
+class CommentMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $subject;
 
-    public $reply_content;
+    public $title;
 
-    public $name;
+    public $username;
+
+    public $url;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($name,$reply_content = null)
+    public function __construct(string $title,string $username,string $url)
     {
-        $this->subject = config('app.name').'留言回复';
-        $this->name = $name;
-        $this->reply_content = $reply_content ?? '非常感谢你的留言,我会尽快回复你的.';
+        $this->subject = config('app.name');
+        $this->title = $title;
+        $this->username = $username;
+        $this->url = $url;
     }
 
     /**
@@ -35,6 +39,6 @@ class ReplyUserMail extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->markdown('reply');
+        return $this->markdown('CommentMail');
     }
 }

@@ -27,7 +27,7 @@ class OauthController extends BasicController
      * @param User    $user
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function callback(Request $request, $service,User $user)
+    public function callback(Request $request, $service, User $user)
     {
         $type = [
             'weibo' => 3,
@@ -43,14 +43,15 @@ class OauthController extends BasicController
         $exist_user->access_token = $oauth_user->getAccessToken();
         $exist_user->name = $oauth_user->getName();
         $exist_user->last_login_ip = $request->getClientIp();
-        $exist_user->login_times = isset($exist_user->login_times)?$exist_user->login_times+1:1;
+        $exist_user->login_times = isset($exist_user->login_times) ? $exist_user->login_times + 1 : 1;
         $exist_user->avatar = str_replace('http', 'https', $oauth_user->getAvatar());
         $exist_user->save();
         $sessionData = [
             'user' => [
                 'id' => $exist_user->id,
                 'name' => $oauth_user->getName(),
-                'is_admin' => $exist_user->is_admin
+                'is_admin' => $exist_user->is_admin,
+                'email' => $exist_user->email ?? null
             ]
         ];
         session($sessionData);

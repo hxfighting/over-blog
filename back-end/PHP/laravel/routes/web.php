@@ -18,7 +18,7 @@ Route::group(['namespace'=>'Home'],function(){
         //文章详情页
         Route::get('/article/{id}.html', 'ArticleController@index')->where('id','\d+');
         //说说页面
-        Route::get('/chat','ChatController@index');
+        Route::get('/chat.html','ChatController@index');
         //分类文章页面
         Route::get('/category/{id}.html','CategoryController@index')->where('id','\d+');
         //标签文章页面
@@ -27,6 +27,12 @@ Route::group(['namespace'=>'Home'],function(){
         Route::get('/search','ArticleController@search');
         //添加友联
         Route::post('/link','LinkController@store');
+        //联系我页面
+        Route::get('/contact.html','ContactController@index');
+        //添加留言
+        Route::post('/contact','ContactController@store');
+        //添加评论
+        Route::post('/comment','CommentController@store');
     });
 
     //微信组

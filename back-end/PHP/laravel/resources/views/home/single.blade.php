@@ -115,7 +115,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <input type="email" class="form-control input-lg" name="email" id="email"
-                                           placeholder="接收回复的邮箱" required="required"/>
+                                           placeholder="接收回复的邮箱" required="required" value="{{session('user.email') ?? ''}}"/>
                                 </div>
                             </div>
                         </div>
@@ -125,7 +125,7 @@
                                     <textarea name="message" id="message" class="form-control" rows="4" cols="25"
                                               required="required" placeholder="评论内容"></textarea>
                                 </div>
-                                <button type="submit" class="btn btn-4 btn-block save" data="{{$single->id ?? ''}}">
+                                <button type="submit" class="btn btn-4 btn-block save" data="{{$single->id ?? ''}}" style="background-color: #f0efee">
                                     立即评论
                                 </button>
                             </div>
@@ -140,14 +140,14 @@
                         @if($comment->isNotEmpty())
                             @foreach($comment as $com)
                                 <div class="post">
-                                    <img src="{{asset($com->user_avatar)}}" class="img-circle" title="{{$com->username}}"/>
+                                    <img src="{{$com->user_avatar}}" class="img-circle" title="{{$com->username}}"/>
                                     <div class="wrapper" style="max-width: 620px;display: inline-block;text-align: left;margin-left: 5px">
                                         <ul class="list-inline">
                                             <li>{{$com->username}}&emsp;评论:</li>
                                         </ul>
                                         <h5>{{$com->content ?? ''}}</h5>
                                         <ul class="list-inline">
-                                            <li><i class="fa fa-calendar"></i>{{$com->created_at ?? ''}}</li>
+                                            <li><i class="fa fa-calendar"></i> {{$com->created_at ?? ''}}</li>
                                             <li style="cursor: pointer" class="c_reply"><i class="fa fa-comment"></i>回复</li>
                                         </ul>
                                     </div>

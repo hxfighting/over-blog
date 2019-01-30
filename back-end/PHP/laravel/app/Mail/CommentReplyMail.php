@@ -11,7 +11,7 @@ class CommentReplyMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public $subject = '拖油瓶博客评论回复';
+    public $subject;
 
     public $reply_content;
 
@@ -27,6 +27,7 @@ class CommentReplyMail extends Mailable implements ShouldQueue
      */
     public function __construct($reply_name,$comment_name,$title,$reply_content)
     {
+        $this->subject = config('app.name').'评论回复';
         $this->reply_name = $reply_name;
         $this->comment_name = $comment_name;
         $this->reply_content = $reply_content;

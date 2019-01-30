@@ -38,7 +38,7 @@
     <![endif]-->
     <link rel="stylesheet" href="{{asset('css/home/animate.css')}}">
     <link rel="stylesheet" href="{{asset('css/home/index.css')}}">
-    <link rel="stylesheet" href="{{asset('css/swrrtalert2.min.css')}}">
+    <link rel="stylesheet" href="{{asset('css/sweetalert2.min.css')}}">
     @stack('other-css')
     {!! config('websiteConfig.web_count') !!}
 

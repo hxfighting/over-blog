@@ -4,36 +4,15 @@
 
 
     <div id="main-content" class="col-md-8">
-        <div class="btn-success" style="background-color: white">
-            @if(count($errors)>0)
-                @if(is_object($errors))
-                    @foreach($errors->all() as $error)
-                        <div class="row b-tag-title">
-                            <div class="col-xs-12 col-md-12 col-lg-12">
-                                <h3 style="color: red">{{ $error }}</h3>
-                            </div>
-                        </div>
-                    @endforeach
-                @else
-                    <div class="row b-tag-title">
-                        <div class="col-xs-12 col-md-12 col-lg-12">
-                            <h3 style="color: red">{{ $errors }}</h3>
-                        </div>
-                    </div>
-                @endif
-            @endif
-        </div>
         <div class="box">
             <center>
                 <div class="box-header">
-                    <h1 class="center">Contact</h1>
+                    <h1 class="center">留言</h1>
                 </div>
             </center>
             <div class="box-content">
-                <div id="contact_form">
-                    <form name="contact1" id="ff" method="post" action="{{url('contact')}}" onSubmit="return submitOnce(this)">
-                        <input type="hidden" name="token2" value="{{session('token2')}}"/>
-                        {{csrf_field()}}
+                <div id="contact_form" class="my_contact">
+                    <div id="ff">
                         <label>
                             <span>请输入你的名字:</span>
                             <input type="text" name="name" id="name" required placeholder="任意名字都可以哦！">
@@ -47,27 +26,111 @@
                             <textarea name="content" id="message"
                                       placeholder="说点你对这个家伙想说的话！,如果是交换友链，请写下你的友链地址和友链名字。"></textarea>
                         </label>
-                        <center><input class="sendButton" type="submit" name="Submit" value="确定"></center>
-                    </form>
+                        <center><input class="sendButton" type="submit" name="Submit" value="确定" onclick="contact()"></center>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 @endsection
 
-<script language="javascript">
-    var submitcount=0;
-    function submitOnce (form){
-        if (submitcount == 0){
-            submitcount++;
-            return true;
-        } else{
-            alert("正在操作，请不要重复提交，谢谢！");
+<script>
+    function contact(){
+        var btn = $(this);
+        if (btn.hasClass('disabled')) {
+            Swal({
+                position: 'center',
+                type: 'error',
+                title: '正在处理,请勿重复点击!',
+                showConfirmButton: false,
+                timer: 1500
+            })
             return false;
         }
+        let name = $("input[name=name]").val(),
+            email = $("input[name=email]").val(),
+            content = $('textarea[name=content]').val();
+        if (name.length < 1) {
+            Swal({
+                position: 'center',
+                type: 'error',
+                title: '请输入正确的名字！',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            return false;
+        }
+        if(email.length<1){
+            Swal({
+                position: 'center',
+                type: 'error',
+                title: '请输入正确的邮箱！',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            return false;
+        }
+        var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+        if (!reg.test(email)) {
+            Swal({
+                position: 'center',
+                type: 'error',
+                title: '请输入正确的邮箱！',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            return false;
+        }
+        if(content.length<1){
+            Swal({
+                position: 'center',
+                type: 'error',
+                title: '随便写点什么内容吧！',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            return false;
+        }
+        btn.addClass('disabled');
+        $.ajax({
+            url: '/contact',
+            type: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                name: name,
+                email: email,
+                content: content
+            },
+            dataType: 'json',
+            success: function (res) {
+                btn.removeClass('disabled');
+                if (res.code == 200) {
+                    Swal({
+                        position: 'center',
+                        type: 'success',
+                        title: res.msg,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    setTimeout(function () {
+                        window.location.href = window.location.href;
+                    }, 1600);
+                }else {
+                    Swal({
+                        position: 'center',
+                        type: 'error',
+                        title: res.msg,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            },
+            error: function (res) {
+                console.log(res.responseText);
+            }
+        });
     }
 </script>
 @endsection
-@push('scripts')
-    @include('flashy::message')
-@endpush

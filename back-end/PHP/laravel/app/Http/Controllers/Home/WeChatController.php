@@ -93,7 +93,8 @@ class WeChatController extends BasicController
                 'user' => [
                     'id' => $exist_user->id,
                     'name' => $data['name'],
-                    'is_admin' => $exist_user->is_admin
+                    'is_admin' => $exist_user->is_admin,
+                    'email' => $exist_user->email ?? null
                 ]
             ];
             Cache::put($data['sence'], $sessionData, 60 * 60 * 24);
