@@ -1,12 +1,11 @@
 @component('mail::message')
-# Introduction
+    {{$username}}在文章<<{{$title}}>>中评论了。<br/>
+    评论内容：{{$content}}
 
-The body of your message.
-
-@component('mail::button', ['url' => ''])
-Button Text
+@component('mail::button', ['url' => $url])
+    {{$title}}
 @endcomponent
 
 Thanks,<br>
-{{ config('app.name') }}
+[{{config('app.name')}}]({{config('blog.blog_home')}})
 @endcomponent

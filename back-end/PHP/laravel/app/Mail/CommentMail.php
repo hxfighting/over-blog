@@ -19,17 +19,20 @@ class CommentMail extends Mailable
 
     public $url;
 
+    public $content;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(string $title,string $username,string $url)
+    public function __construct(string $title,string $username,string $url,string $content)
     {
         $this->subject = config('app.name');
         $this->title = $title;
         $this->username = $username;
         $this->url = $url;
+        $this->content = $content;
     }
 
     /**

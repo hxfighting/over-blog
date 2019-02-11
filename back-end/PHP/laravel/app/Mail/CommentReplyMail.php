@@ -20,18 +20,22 @@ class CommentReplyMail extends Mailable implements ShouldQueue
     public $comment_name;
 
     public $title;
+
+    public $url;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($reply_name,$comment_name,$title,$reply_content)
+    public function __construct($reply_name,$comment_name,$title,$reply_content,$url)
     {
         $this->subject = config('app.name').'评论回复';
         $this->reply_name = $reply_name;
         $this->comment_name = $comment_name;
         $this->reply_content = $reply_content;
         $this->title = $title;
+        $this->url = $url;
     }
 
     /**

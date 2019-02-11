@@ -4,29 +4,28 @@ var comment_ops = {
     },
     eventBind:function () {
         $(".a_comment .save").click(function () {
-            alert(123)
             var btn = $(this);
             if (btn.hasClass('disabled')) {
                 common_ops.alert('正在处理，请勿重复提交！');
                 return false;
             }
-            // if (user_id.length < 1 || isNaN(user_id)) {
-            //     $("#b-modal-login").modal("show");
-            //     return false;
-            // }
-            let article_id = $(this).attr('data');
-            var co_email = $(".a_comment input[name=email]").val();
-            var co_content = $(".a_comment textarea[name=message]").val();
+            if (user_id.length < 1 || isNaN(user_id)) {
+                $("#b-modal-login").modal("show");
+                return false;
+            }
+            let article_id = $(this).attr('data'),
+                email = $(".a_comment input[name=email]").val(),
+                content = $(".a_comment textarea[name=message]").val();
             var pattern = /^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
-            if (co_email.length < 1 || !pattern.test(co_email)) {
+            if (email.length < 1 || !pattern.test(email)) {
                 common_ops.tip('请输入正确的邮箱！', $(".a_comment input[name=email]"));
                 return false;
             }
-            if (co_content.length < 1) {
+            if (content.length < 1) {
                 common_ops.tip('说点评论内容吧！', $(".a_comment textarea[name=message]"));
                 return false;
             }
-            if (co_aid.length < 1 || isNaN(co_aid)) {
+            if (article_id.length < 1 || isNaN(article_id)) {
                 common_ops.alert('请选择要评论的文章！');
                 return false;
             }
@@ -39,55 +38,78 @@ var comment_ops = {
                 },
                 data: {
                     user_id: user_id,
-                    article_id: co_aid,
-                    co_email: co_email,
-                    co_content:co_content,
-                    user_name:user_name
+                    article_id: article_id,
+                    email: email,
+                    content:content
                 },
                 dataType: 'json',
                 success: function (res) {
                     btn.removeClass('disabled');
                     if (res.code == 200) {
-                        window.location.href = window.location.href;
-                        layer.msg(res.msg,{icon:6});
+                        Swal({
+                            position: 'center',
+                            type: 'success',
+                            title: res.msg,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        setTimeout(function () {
+                            window.location.href = window.location.href;
+                        }, 1600);
+                    }else {
+                        Swal({
+                            position: 'center',
+                            type: 'error',
+                            title: res.msg,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
                     }
                 },
                 error: function (res) {
-                    window.location.href = window.location.href;
-                    layer.msg('评论失败，请稍后再试',{icon:5});
-                    console.log(res.responseText);
+                    btn.removeClass('disabled');
+                    Swal({
+                        position: 'center',
+                        type: 'error',
+                        title: '评论失败，请稍后再试',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    // setTimeout(function () {
+                    //     window.location.href = window.location.href;
+                    // }, 1600);
                 }
             });
         });
 
-        // $(".hx-comments .c_reply").click(function () {
-        //     if (user_id.length < 1 || isNaN(user_id)) {
-        //         $("#b-modal-login").modal("show");
-        //         return false;
-        //     }
-        //     $(this).parents('.wrapper').next().css('display', 'block');
-        // });
-        // $(".hx-comments .co_cancel").click(function () {
-        //     if (user_id.length < 1 || isNaN(user_id)) {
-        //         $("#b-modal-login").modal("show");
-        //         return false;
-        //     }
-        //    $(this).parent('.hx_group').css('display','none');
-        // });
-        // $(".hx-comments .hx_child_co_reply").click(function () {
-        //     if (user_id.length < 1 || isNaN(user_id)) {
-        //         $("#b-modal-login").modal("show");
-        //         return false;
-        //     }
-        //     $(this).parents('.child_wrapper').next().css('display','block');
-        // });
-        // $(".hx-comments .child_co_cancel").click(function () {
-        //     if (user_id.length < 1 || isNaN(user_id)) {
-        //         $("#b-modal-login").modal("show");
-        //         return false;
-        //     }
-        //     $(this).parent('.hx_child_group').css('display','none');
-        // });
+        $(".hx-comments .c_reply").click(function () {
+            if (user_id.length < 1 || isNaN(user_id)) {
+                $("#b-modal-login").modal("show");
+                return false;
+            }
+            $(this).parents('.wrapper').next().css('display', 'block');
+        });
+        $(".hx-comments .co_cancel").click(function () {
+            if (user_id.length < 1 || isNaN(user_id)) {
+                $("#b-modal-login").modal("show");
+                return false;
+            }
+            $(this).parent('.hx_group').css('display','none');
+        });
+        $(".hx-comments .hx_child_co_reply").click(function () {
+            if (user_id.length < 1 || isNaN(user_id)) {
+                $("#b-modal-login").modal("show");
+                return false;
+            }
+            $(this).parents('.child_wrapper').next().css('display','block');
+        });
+        $(".hx-comments .child_co_cancel").click(function () {
+            if (user_id.length < 1 || isNaN(user_id)) {
+                $("#b-modal-login").modal("show");
+                return false;
+            }
+            $(this).parent('.hx_child_group').css('display','none');
+        });
         $(".hx-comments .co_reply").click(function () {
             var btn = $(this);
             if (btn.hasClass('disabled')) {
@@ -119,32 +141,52 @@ var comment_ops = {
             }
             btn.addClass('disabled');
             $.ajax({
-                url:"/comment/store",
+                url:"/comment",
                 type: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data: {
-                    co_uid:co_uid,
-                    co_aid:co_aid,
-                    co_rid:co_rid,
-                    co_pid: co_pid,
-                    co_email:co_email,
-                    co_content: co_content,
-                    user_name:user_name
+                    user_id: co_uid,
+                    article_id: co_aid,
+                    email: co_email,
+                    content:co_content,
+                    reply_id:co_rid,
+                    pid: co_pid
                 },
                 dataType: 'json',
                 success: function (res) {
                     btn.removeClass('disabled');
                     if (res.code == 200) {
-                        window.location.href = window.location.href;
-                        layer.msg(res.msg,{icon:6});
+                        Swal({
+                            position: 'center',
+                            type: 'success',
+                            title: res.msg,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        setTimeout(function () {
+                            window.location.href = window.location.href;
+                        }, 1600);
+                    }else {
+                        Swal({
+                            position: 'center',
+                            type: 'error',
+                            title: res.msg,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
                     }
                 },
                 error: function (res) {
-                    window.location.href = window.location.href;
-                    layer.msg('回复失败，请稍后再试！',{icon:5});
-                    console.log(res.responseText);
+                    btn.removeClass('disabled');
+                    Swal({
+                        position: 'center',
+                        type: 'error',
+                        title: '评论失败，请稍后再试',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
                 }
             });
         });
@@ -183,32 +225,52 @@ var comment_ops = {
             }
             btn.addClass('disabled');
             $.ajax({
-                url:"/comment/store",
+                url:"/comment",
                 type: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data: {
-                    co_uid:co_uid,
-                    co_aid:co_aid,
-                    co_pid:co_pid,
-                    co_rid:co_rid,
-                    co_email: co_email,
-                    co_content: co_content,
-                    user_name:user_name
+                    user_id: co_uid,
+                    article_id: co_aid,
+                    email: co_email,
+                    content:co_content,
+                    reply_id:co_rid,
+                    pid: co_pid
                 },
                 dataType: 'json',
                 success: function (res) {
                     btn.removeClass('disabled');
                     if (res.code == 200) {
-                        window.location.href = window.location.href;
-                        layer.msg(res.msg,{icon:6});
+                        Swal({
+                            position: 'center',
+                            type: 'success',
+                            title: res.msg,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        setTimeout(function () {
+                            window.location.href = window.location.href;
+                        }, 1600);
+                    }else {
+                        Swal({
+                            position: 'center',
+                            type: 'error',
+                            title: res.msg,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
                     }
                 },
                 error: function (res) {
-                    window.location.href = window.location.href;
-                    layer.msg('回复失败，请稍后再试！',{icon:5});
-                    console.log(res.responseText);
+                    btn.removeClass('disabled');
+                    Swal({
+                        position: 'center',
+                        type: 'error',
+                        title: '评论失败，请稍后再试',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
                 }
             });
         });
@@ -216,5 +278,5 @@ var comment_ops = {
 };
 
 $(document).ready(function () {
-   comment_ops.init();
+    comment_ops.init();
 });

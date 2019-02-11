@@ -9,6 +9,7 @@ use App\Mail\CommentMail;
 use App\Mail\CommentReplyMail;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class NotifyUserListener implements ShouldQueue
@@ -35,20 +36,20 @@ class NotifyUserListener implements ShouldQueue
             $data = $event->data;
             $comment_user_name = User::where('id', $data['user_id'])->value('name');
             $article_title = Article::where('id', $data['article_id'])->value('title');
+            $url = config('app.url') . '/article/' . $data['article_id'] . '.html';
             if (isset($data['reply_id']) && $data['reply_id'])
             {
                 $reply_user = User::find($data['reply_id']);
                 Mail::to($reply_user->email)
-                    ->queue(new CommentReplyMail($reply_user->name, $comment_user_name, $article_title, $data['content']));
+                    ->queue(new CommentReplyMail($reply_user->name, $comment_user_name, $article_title, $data['content'],$url));
             } else
             {
-                $url = config('app.url') . '/article/' . $data['article_id'] . '.html';
                 Mail::to(config('mail.from.address'))
-                    ->queue(new CommentMail($article_title, $comment_user_name, $url));
+                    ->queue(new CommentMail($article_title, $comment_user_name, $url, $data['content']));
             }
         } catch (\Exception $e)
         {
-
+            Log::error($e->getMessage());
         }
     }
 }

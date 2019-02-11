@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Home;
 
 use App\Events\NotifyUserEvent;
-use App\Http\Models\ArticleComment;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
 class CommentController extends Controller
@@ -15,12 +14,11 @@ class CommentController extends Controller
      * 评论
      * Date: 2019-01-29 11:46
      * @param Request        $request
-     * @param ArticleComment $comment
      * @return JsonResponse
      * @throws \Illuminate\Validation\ValidationException
      * @throws \Throwable
      */
-    public function store(Request $request,ArticleComment $comment): JsonResponse
+    public function store(Request $request): JsonResponse
     {
         $data = $this->validate($request, [
             'email' => 'required|email',
@@ -32,18 +30,20 @@ class CommentController extends Controller
         ]);
         try
         {
-            DB::transaction(function () use ($data, $comment) {
+            DB::transaction(function () use ($data) {
                 $email = $data['email'];
+                $data['created_at'] = time();
+                $data['updated_at'] = time();
                 unset($data['email']);
-                $comment->create($data);
+                \db('article_comment')->insert($data);
                 \db('user')->where('id', $data['user_id'])->update(['email' => $email]);
-                session()->push('user.email',$email);
+                session(['user.email'=>$email]);
                 $this->sendCommentEmail($data,$email);
             });
             return renderSuccess('评论成功！');
         } catch (\Exception $e)
         {
-            return renderError('评论失败，请稍后再试！');
+            return renderError($e->getMessage().'|'.$e->getFile().'|'.$e->getLine());
         }
     }
 

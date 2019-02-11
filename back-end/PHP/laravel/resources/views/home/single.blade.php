@@ -153,8 +153,8 @@
                                     </div>
                                     <div class="form-group hx_group" style="display: none">
                                         <textarea id="co_content" name="co_content" class="form-control co_content" required="required" placeholder="回复内容"></textarea>
-                                        <input class="pull-left co_email" type="email" name="co_email" placeholder="请输入接收回复的邮箱" required="required"/>
-                                        <button type="submit" class="btn btn-success co_reply" data-pid="{{$com->id ?? ''}}" data-aid="{{$single->id ?? ''}}" data-rid="{{$com->id ?? ''}}">回复</button>
+                                        <input class="pull-left co_email" type="email" name="co_email" placeholder="请输入接收回复的邮箱" required="required" value="{{session('user.email') ?? ''}}"/>
+                                        <button type="submit" class="btn btn-success co_reply" data-pid="{{$com->id ?? ''}}" data-aid="{{$single->id ?? ''}}" data-rid="{{$com->user_id ?? ''}}">回复</button>
                                         <button type="submit" class="btn btn-success co_cancel">取消</button>
                                     </div>
                                     @if($com->children->isNotEmpty())
@@ -173,8 +173,8 @@
                                                 </div>
                                                 <div class="form-group hx_child_group" style="display: none">
                                                     <textarea id="co_content" name="co_content" class="form-control co_content" required="required" placeholder="回复内容"></textarea>
-                                                    <input class="pull-left co_email" type="email" name="co_email" placeholder="请输入接收回复的邮箱" required="required"/>
-                                                    <button type="submit" class="btn btn-success child_co_reply" data-pid="{{$com->id or ''}}" data-aid="{{$single->id or ''}}" data-rid="{{$childComment->id or ''}}">回复</button>
+                                                    <input class="pull-left co_email" type="email" name="co_email" placeholder="请输入接收回复的邮箱" required="required" value="{{session('user.email') ?? ''}}"/>
+                                                    <button type="submit" class="btn btn-success child_co_reply" data-pid="{{$childComment->pid ?? ''}}" data-aid="{{$childComment->article_id ?? ''}}" data-rid="{{$childComment->user_id ?? ''}}">回复</button>
                                                     <button type="submit" class="btn btn-success child_co_cancel">取消</button>
                                                 </div>
                                             </div>

@@ -16,7 +16,8 @@ class CommentObserve
         $reply_user = User::find($comment->reply_id);
         $comment_user_name = User::where('id',$comment->user_id)->value('name');
         $article_title = Article::where('id',$comment->article_id)->value('title');
+        $url = config('app.url') . '/article/' . $comment->article_id . '.html';
         Mail::to($reply_user->email)
-            ->queue(new CommentReplyMail($reply_user->name,$comment_user_name,$article_title,$comment->content));
+            ->queue(new CommentReplyMail($reply_user->name,$comment_user_name,$article_title,$comment->content,$url));
     }
 }
