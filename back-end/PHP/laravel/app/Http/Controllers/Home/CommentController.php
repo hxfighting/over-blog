@@ -43,7 +43,7 @@ class CommentController extends Controller
             return renderSuccess('评论成功！');
         } catch (\Exception $e)
         {
-            return renderError($e->getMessage().'|'.$e->getFile().'|'.$e->getLine());
+            return renderError('评论失败，请稍后再试！');
         }
     }
 
