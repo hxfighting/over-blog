@@ -4,14 +4,22 @@
 - PHP 7.1+
 - MySQL 5.7+
 - Redis 3.0+
+- node.js 8.0+
 
-##安装
+## 安装
 
 1. git clone https://github.com/hxfighting/over-blog.git -b 3.0
-2. 发布配置文件 `cp .env.example .env`,然后将.env中的配置项填写完整
+2. 发布配置文件 `cd over-blog/back-end/PHP/laravel && cp .env.example .env`,然后将.env中的配置项填写完整
 3. 安装依赖 `composer install`
 4. 生成APP_KEY `/over-blog/back-end/PHP/laravel/php artisan key:g`
 5. 生成JWT的key `/over-blog/back-end/PHP/laravel/php artisan jwt:s`
+
+
+## 后台管理系统
+
+1. `cd over-blog/front-end/blog_admin && npm install`
+2. 修改over-blog/front-end/blog_admin/src/config 中的index.js文件配置
+3. `npm run dev`
 
 ## 扩展包使用情况
 
