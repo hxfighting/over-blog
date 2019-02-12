@@ -263,6 +263,7 @@
                     if (data.code == 200) {
                         this.tableData = data.data;
                     } else {
+                        this.tableData = [];
                         this.$Message.error(data.msg);
                     }
                 })
