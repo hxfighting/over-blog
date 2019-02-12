@@ -44,7 +44,7 @@ Route::group(['namespace'=>'Home'],function(){
         //获取小程序scene
         Route::get('/scene', 'WeChatController@getScene');
         //获取小程序码
-        Route::get('/qrcode/{scene}', 'WeChatController@getQrCode')->where('scene','/^([a-fA-F0-9]{32})$/');
+        Route::get('/qrcode/{scene}', 'WeChatController@getQrCode');
         //获取微信登录状态
         Route::get('/status', 'WeChatController@getLoginResult');
     });

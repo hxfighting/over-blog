@@ -31,7 +31,8 @@ class WeChatController extends BasicController
     public function getQrCode($scene)
     {
         $image = app('miniProgram')->app_code->getUnlimit($scene, ['width' => 200]);
-        session(['target_url' => $_SERVER['HTTP_REFERER']]);
+        $target_url = $_SERVER['HTTP_REFERER'] ?? config('blog.blog_home');
+        session(['target_url' => $target_url]);
         return $image;
     }
 
