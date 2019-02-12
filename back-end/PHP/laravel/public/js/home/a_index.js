@@ -40,7 +40,7 @@ var index_ops = {
         });
 
         $(".link .oauth_quit").click(function () {
-            $.get("/user/quit", function (res) {
+            $.get("/logout", function (res) {
                 if (res.code == 200) {
                     window.location.href = window.location.href;
                 }

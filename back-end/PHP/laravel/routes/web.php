@@ -33,6 +33,8 @@ Route::group(['namespace'=>'Home'],function(){
         Route::post('/contact','ContactController@store');
         //添加评论
         Route::post('/comment','CommentController@store');
+        //退出登录
+        Route::get('/logout','OauthController@logout');
     });
 
     //微信组
