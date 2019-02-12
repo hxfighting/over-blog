@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.7.25 on 2019-02-08 21:02:22.
+ * Generated for Laravel 5.7.25 on 2019-02-12 13:34:19.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -14271,6 +14271,211 @@ namespace Mews\Captcha\Facades {
  
 }
 
+namespace Sentry\Laravel { 
+
+    /**
+     * 
+     *
+     */ 
+    class Facade {
+        
+        /**
+         * Gets the client bound to the top of the stack.
+         *
+         * @return \Sentry\State\ClientInterface|null 
+         * @static 
+         */ 
+        public static function getClient()
+        {
+            return \Sentry\State\Hub::getClient();
+        }
+        
+        /**
+         * Gets the scope bound to the top of the stack.
+         *
+         * @return \Sentry\State\Scope 
+         * @static 
+         */ 
+        public static function getScope()
+        {
+            return \Sentry\State\Hub::getScope();
+        }
+        
+        /**
+         * Gets the ID of the last captured event.
+         *
+         * @return null|string 
+         * @static 
+         */ 
+        public static function getLastEventId()
+        {
+            return \Sentry\State\Hub::getLastEventId();
+        }
+        
+        /**
+         * Creates a new scope to store context information that will be layered on
+         * top of the current one. It is isolated, i.e. all breadcrumbs and context
+         * information added to this scope will be removed once the scope ends. Be
+         * sure to always remove this scope with {@see Hub::popScope} when the
+         * operation finishes or throws.
+         *
+         * @return \Sentry\State\Scope 
+         * @static 
+         */ 
+        public static function pushScope()
+        {
+            return \Sentry\State\Hub::pushScope();
+        }
+        
+        /**
+         * Removes a previously pushed scope from the stack. This restores the state
+         * before the scope was pushed. All breadcrumbs and context information added
+         * since the last call to {@see Hub::pushScope} are discarded.
+         *
+         * @return bool 
+         * @static 
+         */ 
+        public static function popScope()
+        {
+            return \Sentry\State\Hub::popScope();
+        }
+        
+        /**
+         * Creates a new scope with and executes the given operation within. The scope
+         * is automatically removed once the operation finishes or throws.
+         *
+         * @param callable $callback The callback to be executed
+         * @static 
+         */ 
+        public static function withScope($callback)
+        {
+            return \Sentry\State\Hub::withScope($callback);
+        }
+        
+        /**
+         * Calls the given callback passing to it the current scope so that any
+         * operation can be run within its context.
+         *
+         * @param callable $callback The callback to be executed
+         * @static 
+         */ 
+        public static function configureScope($callback)
+        {
+            return \Sentry\State\Hub::configureScope($callback);
+        }
+        
+        /**
+         * Binds the given client to the current scope.
+         *
+         * @param \Sentry\State\ClientInterface $client The client
+         * @static 
+         */ 
+        public static function bindClient($client)
+        {
+            return \Sentry\State\Hub::bindClient($client);
+        }
+        
+        /**
+         * Captures a message event and sends it to Sentry.
+         *
+         * @param string $message The message
+         * @param \Sentry\State\Severity $level The severity level of the message
+         * @return null|string 
+         * @static 
+         */ 
+        public static function captureMessage($message, $level = null)
+        {
+            return \Sentry\State\Hub::captureMessage($message, $level);
+        }
+        
+        /**
+         * Captures an exception event and sends it to Sentry.
+         *
+         * @param \Throwable $exception The exception
+         * @return null|string 
+         * @static 
+         */ 
+        public static function captureException($exception)
+        {
+            return \Sentry\State\Hub::captureException($exception);
+        }
+        
+        /**
+         * Captures a new event using the provided data.
+         *
+         * @param array $payload The data of the event being captured
+         * @return null|string 
+         * @static 
+         */ 
+        public static function captureEvent($payload)
+        {
+            return \Sentry\State\Hub::captureEvent($payload);
+        }
+        
+        /**
+         * Captures an event that logs the last occurred error.
+         *
+         * @return null|string 
+         * @static 
+         */ 
+        public static function captureLastError()
+        {
+            return \Sentry\State\Hub::captureLastError();
+        }
+        
+        /**
+         * Records a new breadcrumb which will be attached to future events. They
+         * will be added to subsequent events to provide more context on user's
+         * actions prior to an error or crash.
+         *
+         * @param \Sentry\State\Breadcrumb $breadcrumb The breadcrumb to record
+         * @return bool Whether the breadcrumb was actually added to the current scope
+         * @static 
+         */ 
+        public static function addBreadcrumb($breadcrumb)
+        {
+            return \Sentry\State\Hub::addBreadcrumb($breadcrumb);
+        }
+        
+        /**
+         * Returns the current global Hub.
+         *
+         * @return self 
+         * @static 
+         */ 
+        public static function getCurrent()
+        {
+            return \Sentry\State\Hub::getCurrent();
+        }
+        
+        /**
+         * Sets the Hub as the current.
+         *
+         * @param self $hub The Hub that will become the current one
+         * @return self 
+         * @static 
+         */ 
+        public static function setCurrent($hub)
+        {
+            return \Sentry\State\Hub::setCurrent($hub);
+        }
+        
+        /**
+         * Gets the integration whose FQCN matches the given one if it's available on the current client.
+         *
+         * @param string $className The FQCN of the integration
+         * @return null|\Sentry\State\IntegrationInterface 
+         * @static 
+         */ 
+        public static function getIntegration($className)
+        {
+            return \Sentry\State\Hub::getIntegration($className);
+        }
+         
+    }
+ 
+}
+
 namespace Torann\GeoIP\Facades { 
 
     /**
@@ -17311,6 +17516,8 @@ namespace  {
     class Agent extends \Jenssegers\Agent\Facades\Agent {}
 
     class Captcha extends \Mews\Captcha\Facades\Captcha {}
+
+    class Sentry extends \Sentry\Laravel\Facade {}
 
     class GeoIP extends \Torann\GeoIP\Facades\GeoIP {}
 

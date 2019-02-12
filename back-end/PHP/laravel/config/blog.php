@@ -50,5 +50,21 @@ return [
     /**
      * 后台页面url
      */
-    'blog_admin_url' => env('BLOG_ADMIN_URL')
+    'blog_admin_url' => env('BLOG_ADMIN_URL'),
+    /**
+     * 电话1
+     */
+    'phone_one' => env('PHONE_ONE'),
+    /**
+     * 电话1模板
+     */
+    'phone_one_template' => env('PHONE_ONE_TEMPLATE'),
+    /**
+     * 电话2
+     */
+    'phone_two' => env('PHONE_TWO'),
+    /**
+     * 电话2模板
+     */
+    'phone_two_template' => env('PHONE_TWO_TEMPLATE')
 ];
