@@ -34,6 +34,7 @@
                                 :multiple="false"
                                 type="drag"
                                 :action="upload_url"
+                                :headers="uploadHeader"
                                 style="display: inline-block;width:58px;">
                             <div style="width: 58px;height:58px;line-height: 58px;">
                                 <Icon type="ios-camera" size="20"></Icon>
@@ -75,6 +76,7 @@
                                 :multiple="false"
                                 type="drag"
                                 :action="upload_url"
+                                :headers="uploadHeader"
                                 style="display: inline-block;width:58px;">
                             <div style="width: 58px;height:58px;line-height: 58px;">
                                 <Icon type="ios-camera" size="20"></Icon>
@@ -97,10 +99,13 @@
     import config from '@/config'
     import {getRotationList,addRotation,updateRotation,deleteRotation} from '../api/rotation'
     const { baseUrl,imageUrl,uploadUrl } = config
+    import {getToken} from "../libs/util";
+
     export default {
         name: 'rotationPage',
         data() {
             return {
+                uploadHeader:{Authorization:getToken()},
                 formCustom: {
                     words:null,
                     image_url:null,
@@ -191,6 +196,7 @@
                                             const param = params.row;
                                             this.formCustom.image_url = param.image_url;
                                             this.formCustom.id = param.image.id;
+                                            this.formCustom.words = param.image.words;
                                             this.modal_update = true;
                                         }
                                     }

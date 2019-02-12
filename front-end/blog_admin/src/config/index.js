@@ -17,8 +17,8 @@ export default {
    * @description api请求基础路径
    */
   baseUrl: {
-    dev: 'http://192.168.1.161:8300/api/',
-    pro: 'http://192.168.1.161:8300/api/'
+    dev: 'http://192.168.1.121:3026/api/',
+    pro: 'http://192.168.1.121:3026/api/'
   },
   /**
    * @description 默认打开的首页的路由name值，默认为home
@@ -42,6 +42,6 @@ export default {
   /**
    * 上传图片地址
    */
-  uploadUrl:'http://192.168.1.161:8300/api/admin/upload'
+  uploadUrl:'http://192.168.1.121:3026/api/admin/upload'
 
 }

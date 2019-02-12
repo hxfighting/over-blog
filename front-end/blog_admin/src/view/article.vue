@@ -68,6 +68,7 @@
                                 :multiple="false"
                                 type="drag"
                                 :action="upload_url"
+                                :headers="uploadHeader"
                                 style="display: inline-block;width:58px;">
                             <div style="width: 58px;height:58px;line-height: 58px;">
                                 <Icon type="ios-camera" size="20"></Icon>
@@ -120,6 +121,8 @@
     import config from '@/config'
     import {mavonEditor} from 'mavon-editor'
     import 'mavon-editor/dist/css/index.css'
+    import {getToken} from "../libs/util";
+
 
     const {baseUrl, imageUrl,uploadUrl} = config
     export default {
@@ -143,6 +146,7 @@
                 }
             }
             return {
+                uploadHeader:{Authorization:getToken()},
                 tableData: [],
                 loading: false,
                 category: [],
@@ -471,7 +475,8 @@
             imgAdd(pos, $file) {
                 let formdata = new FormData();
                 formdata.append('file', $file);
-                uploadImage(formdata).then(res => {
+                let token = getToken();
+                uploadImage({formdata,token}).then(res => {
                     let data = res.data;
                     if (data.code == 200) {
                         this.$refs.md.$img2Url(pos, imageUrl + data.data);

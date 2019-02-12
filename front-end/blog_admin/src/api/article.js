@@ -15,12 +15,12 @@ export const getArticleList = ({search,pageSize,pageNum,category_id}) => {
     })
 }
 
-export const uploadImage = formdata => {
+export const uploadImage = ({formdata,token}) => {
   return axios.request({
-    url: 'upload',
+    url: 'admin/upload',
     method: 'post',
     data:formdata,
-    headers: { 'Content-Type': 'multipart/form-data' }
+    headers: { 'Content-Type': 'multipart/form-data' , 'Authorization':token}
   })
 }
 
