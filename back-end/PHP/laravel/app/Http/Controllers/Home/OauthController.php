@@ -13,10 +13,10 @@ class OauthController extends BasicController
      * @param $service
      * @return mixed
      */
-    public function oauth($service)
+    public function oauth(Request $request,$service)
     {
         session(['target_url' => $_SERVER['HTTP_REFERER']]);
-        return app('socialite')->driver($service)->redirect();
+        return app('socialite')->setRequest($request)->driver($service)->redirect();
     }
 
     /**
@@ -34,7 +34,7 @@ class OauthController extends BasicController
             'wechat' => 2,
             'qq' => 1
         ];
-        $oauth_user = app('socialite')->driver($service)->user();
+        $oauth_user = app('socialite')->setRequest($request)->driver($service)->user();
         $data = [
             'openid' => $oauth_user->getId(),
             'type' => $type[$service],
