@@ -145,7 +145,7 @@ var index_ops = {
             if (timeout) return;
             $.ajax({
                 url: '/wechat/status',
-                type: 'POST',
+                type: 'get',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
