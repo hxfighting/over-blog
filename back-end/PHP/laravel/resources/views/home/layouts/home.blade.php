@@ -57,7 +57,7 @@
                         @if(session('user.is_admin')==0 || is_null(session('user')))
                             <li><a title="首页" href="{{url('/')}}"><i class="fa fa-home"></i> 首页</a></li>
                         @else
-                            <li style="cursor: pointer"><a title="后台" href="{{url('/ohdata')}}"><i
+                            <li style="cursor: pointer"><a title="后台" href="{{config('blog.blog_admin_url')}}" target="_blank"><i
                                             class="fa fa-home"></i> 后台</a></li>
                         @endif
                         @guest

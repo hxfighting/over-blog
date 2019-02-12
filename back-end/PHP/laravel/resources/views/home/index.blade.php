@@ -22,7 +22,7 @@ $agent = new \Jenssegers\Agent\Agent();
                 <!-- Wrapper for slides -->
 
                 <div class="carousel-inner">
-                    @foreach($rotation as $v)
+                @foreach($rotation as $v)
                     <div class="item @if($v->id==1) active @endif">
                         <img src="{{$v->image_url}}" alt="拖油瓶">
                         <!-- Static Header -->
@@ -34,7 +34,7 @@ $agent = new \Jenssegers\Agent\Agent();
                                 <br>
                                 <br/>
                                 <br>
-                                <h3>{{$v->image->words or ''}}</h3>
+                                <h3>{{$v->image->words ?? ''}}</h3>
                                 <br>
                             </div>
                         </div><!-- /header-text -->

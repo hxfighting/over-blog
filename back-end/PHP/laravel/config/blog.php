@@ -46,5 +46,9 @@ return [
     /**
      * footer内容缓存cache
      */
-    'blog_footer_cache_key'=>'blog_footer_cache'
+    'blog_footer_cache_key'=>'blog_footer_cache',
+    /**
+     * 后台页面url
+     */
+    'blog_admin_url' => env('BLOG_ADMIN_URL')
 ];
