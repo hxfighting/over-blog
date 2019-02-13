@@ -30,7 +30,7 @@
                     <div class="zoom-container">
                         <div class="zoom-caption" title="{{$ra->title}}">
                             <span></span>
-                            <a href="{{url('article/'.$ra->id.'.html')}}">
+                            <a href="{{url('article/'.$ra->id)}}">
                                 <i class="" style="color: #fff"></i>
                             </a>
                         </div>
@@ -63,7 +63,7 @@
                         @if(is_null($prev))
                             <span>没有了</span>
                         @else
-                            <a href="{{ url('article/'.$prev->id.'.html') }}"
+                            <a href="{{ url('article/'.$prev->id) }}"
                                style="color: black">{{ $prev->title }}</a>
                         @endif
 
@@ -73,7 +73,7 @@
                         @if(is_null($next))
                             <span>没有了</span>
                         @else
-                            <a href="{{ url('article/'.$next->id.'.html') }}"
+                            <a href="{{ url('article/'.$next->id) }}"
                                style="color: black">{{ $next->title }}</a>
                         @endif
                     </li>
@@ -104,7 +104,7 @@
                 <h6>标签</h6>
                 <div class="vid-tags">
                     @foreach($single->tags as $tag)
-                        <a href="{{url('tag/'.$tag->id.'.html')}}">{{$tag->name}}</a>
+                        <a href="{{url('tag/'.$tag->id)}}">{{$tag->name}}</a>
                     @endforeach
                 </div>
                 <div class="line"></div>

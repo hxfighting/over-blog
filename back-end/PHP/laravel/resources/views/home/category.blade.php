@@ -55,7 +55,7 @@
                         @foreach($list as $ph)
                             <div class="row b-one-article">
                                 <h3 class="col-xs-12 col-md-12 col-lg-12">
-                                    <a class="b-oa-title" href="{{url('article/'.$ph->id.'.html')}}"
+                                    <a class="b-oa-title" href="{{url('article/'.$ph->id)}}"
                                        style="color: black;">{{mb_strimwidth($ph->title,0,30,'...','utf8')}}</a>
                                 </h3>
                                 <div class="col-xs-12 col-md-12 col-lg-12 b-date">
@@ -82,7 +82,7 @@
                                         <!-- 文章封面图片开始 -->
                                         <div class="col-sm-6 col-md-6 col-lg-4 hidden-xs">
                                             <figure class="b-oa-pic b-style1">
-                                                <a href="{{url('article/'.$ph->id.'.html')}}">
+                                                <a href="{{url('article/'.$ph->id)}}">
                                                     <img src="{{$ph->thumb}}" alt="胡鑫" title="胡鑫">
                                                 </a>
                                                 <figcaption>
@@ -99,7 +99,7 @@
                                         <!-- 文章描述结束 -->
                                     </div>
                                 </div>
-                                <a class=" b-readall" href="{{url('article/'.$ph->id.'.html')}}">阅读全文</a>
+                                <a class=" b-readall" href="{{url('article/'.$ph->id)}}">阅读全文</a>
                             </div>
                         @endforeach
                         <div class="ca_page" style="text-align: center">

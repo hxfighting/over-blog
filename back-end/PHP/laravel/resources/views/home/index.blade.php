@@ -80,7 +80,7 @@ $agent = new \Jenssegers\Agent\Agent();
                             @foreach($newArticle as $new)
                                 <div class="row b-one-article">
                                     <h3 class="col-xs-12 col-md-12 col-lg-12">
-                                        <a class="b-oa-title" href="{{url('article/'.$new->id.'.html')}}"
+                                        <a class="b-oa-title" href="{{url('article/'.$new->id)}}"
                                            style="color: black;" title="{{$new->title}}">{{mb_strimwidth($new->title,0,30,'...','utf8')}}</a>
                                         @if($new->is_top==1)
                                         <label class="btn btn-danger pull-right inline" style="font-size: 10px;">置顶</label>
@@ -111,11 +111,11 @@ $agent = new \Jenssegers\Agent\Agent();
                                             <!-- 文章封面图片开始 -->
                                             <div class="col-sm-6 col-md-6 col-lg-4 hidden-xs">
                                                 <figure class="b-oa-pic b-style1">
-                                                    <a href="{{url('article/'.$new->id.'.html')}}">
+                                                    <a href="{{url('article/'.$new->id)}}">
                                                         <img src="{{$new->thumb}}" alt="{{$new->title}}" title="{{$new->title}}">
                                                     </a>
                                                     <figcaption>
-                                                        <a href="{{url('article/'.$new->id.'.html')}}"></a>
+                                                        <a href="{{url('article/'.$new->id)}}"></a>
                                                     </figcaption>
                                                 </figure>
                                             </div>
@@ -128,7 +128,7 @@ $agent = new \Jenssegers\Agent\Agent();
                                             <!-- 文章描述结束 -->
                                         </div>
                                     </div>
-                                    <a class=" b-readall" href="{{url('article/'.$new->id.'.html')}}">阅读全文</a>
+                                    <a class=" b-readall" href="{{url('article/'.$new->id)}}">阅读全文</a>
                                 </div>
                             @endforeach
                             <div class="a_page" style="text-align: center">

@@ -16,19 +16,19 @@ Route::group(['namespace'=>'Home'],function(){
         //前台首页路由
         Route::get('/', 'IndexController@index')->name('index');
         //文章详情页
-        Route::get('/article/{id}.html', 'ArticleController@index')->where('id','\d+');
+        Route::get('/article/{id}', 'ArticleController@index')->where('id','\d+');
         //说说页面
-        Route::get('/chat.html','ChatController@index');
+        Route::get('/chat','ChatController@index');
         //分类文章页面
-        Route::get('/category/{id}.html','CategoryController@index')->where('id','\d+');
+        Route::get('/category/{id}','CategoryController@index')->where('id','\d+');
         //标签文章页面
-        Route::get('/tag/{id}.html','TagController@index')->where('id','\d+');
+        Route::get('/tag/{id}','TagController@index')->where('id','\d+');
         //搜索文章
         Route::get('/search','ArticleController@search');
         //添加友联
         Route::post('/link','LinkController@store');
         //联系我页面
-        Route::get('/contact.html','ContactController@index');
+        Route::get('/contact','ContactController@index');
         //添加留言
         Route::post('/contact','ContactController@store');
         //添加评论

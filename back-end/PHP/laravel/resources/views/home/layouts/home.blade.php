@@ -129,13 +129,13 @@
                 @foreach($dh as $k => $v)
                     @if(!$v->children->isEmpty())
                         <li class="dropdown">
-                            <a href="{{strlen($v->url)==1?url($v->url):url($v->url).'.html'}}" class="dropdown-toggle"
+                            <a href="{{url($v->url)}}" class="dropdown-toggle"
                                title="{{$v->title}}">{{$v->title}}</a>
                             <div class="dropdown-menu">
                                 <div class="dropdown-inner">
                                     <ul class="list-unstyled">
                                         @foreach($v->children as $m)
-                                            <li><a href="{{$m->url.'.html'}}">{{$m->title}}</a></li>
+                                            <li><a href="{{$m->url}}">{{$m->title}}</a></li>
                                         @endforeach
                                     </ul>
                                 </div>
@@ -143,7 +143,7 @@
                         </li>
                     @else
                         <li>
-                            <a href="{{url($v->url.'.html')}}" title="{{$v->title}}">{{$v->title}}</a>
+                            <a href="{{url($v->url)}}" title="{{$v->title}}">{{$v->title}}</a>
                         </li>
                     @endif
                 @endforeach
@@ -182,7 +182,7 @@
                     <br/>
                     <div class="content">
                         @foreach($tagCloud as $tag)
-                            <a class="label" href="{{url('tag/'.$tag['id'].'.html')}}">{{$tag['name']}}</a>
+                            <a class="label" href="{{url('tag/'.$tag['id'])}}">{{$tag['name']}}</a>
                         @endforeach
                     </div>
                 </div>
@@ -192,7 +192,7 @@
                     <div class="content">
                         @foreach($hotArticle as $hot)
                             <div class="wrap-vid">
-                                <h3 class="vid-name"><a href="{{url('article/'.$hot->id.'.html')}}"
+                                <h3 class="vid-name"><a href="{{url('article/'.$hot->id)}}"
                                                         title="{{$hot->title}}">{{mb_strwidth($hot->title)>30?mb_strimwidth($hot->title,0,30,'...','utf8'):$hot->title}}</a>
                                 </h3>
                                 <div class="info">
@@ -217,7 +217,7 @@
                                     <a> <img src="{{url($v->avatar)}}" class="img-circle img-responsive"
                                              title="{{$v->name}}"/></a>
                                     <div class="wrapper">
-                                        <a href="{{url('article/'.$v->article_id.'.html')}}"
+                                        <a href="{{url('article/'.$v->article_id)}}"
                                            title="{{$v->content}}"><span>{{mb_strimwidth($v->content,0,23,'...','utf8')}}</span></a>
                                         <ul class="list-inline">
                                             <li><i class="fa fa-calendar"></i>&nbsp;{{$v->created_at ?? ''}}</li>
