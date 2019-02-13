@@ -14,6 +14,7 @@
 4. 生成APP_KEY `/over-blog/back-end/PHP/laravel/php artisan key:g`
 5. 生成JWT的key `/over-blog/back-end/PHP/laravel/php artisan jwt:s`
 6. 更新ip `/over-blog/back-end/PHP/laravel/php artisan geoip:update`
+7. 生成数据库数据表 `/over-blog/back-end/PHP/laravel/php artisan migrate`
 
 
 ## 后台管理系统
