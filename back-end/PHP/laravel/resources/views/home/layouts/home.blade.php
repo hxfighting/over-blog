@@ -57,7 +57,8 @@
                         @if(session('user.is_admin')==0 || is_null(session('user')))
                             <li><a title="首页" href="{{url('/')}}"><i class="fa fa-home"></i> 首页</a></li>
                         @else
-                            <li style="cursor: pointer"><a title="后台" href="{{config('blog.blog_admin_url')}}" target="_blank"><i
+                            <li style="cursor: pointer"><a title="后台" href="{{config('blog.blog_admin_url')}}"
+                                                           target="_blank"><i
                                             class="fa fa-home"></i> 后台</a></li>
                         @endif
                         @guest
@@ -128,7 +129,8 @@
                 @foreach($dh as $k => $v)
                     @if(!$v->children->isEmpty())
                         <li class="dropdown">
-                            <a href="{{url($v->url).'.html'}}" class="dropdown-toggle" title="{{$v->title}}">{{$v->title}}</a>
+                            <a href="{{strlen($v->url)==1?url($v->url):url($v->url).'.html'}}" class="dropdown-toggle"
+                               title="{{$v->title}}">{{$v->title}}</a>
                             <div class="dropdown-menu">
                                 <div class="dropdown-inner">
                                     <ul class="list-unstyled">
@@ -315,7 +317,8 @@
                         <ul>
                             @if(isset($footerData['blogger_collection']))
                                 @foreach($footerData['blogger_collection'] as $bl)
-                                    <li><a href="{{$bl->val}}" target="_blank" title="{{$bl->title}}" style="color: whitesmoke">{{$bl->title}}</a>
+                                    <li><a href="{{$bl->val}}" target="_blank" title="{{$bl->title}}"
+                                           style="color: whitesmoke">{{$bl->title}}</a>
                                     </li>
                                 @endforeach
                             @endif
