@@ -17,7 +17,10 @@
         "php": ">=5.4.0",
         "yiisoft/yii2": "~2.0.14",
         "yiisoft/yii2-bootstrap": "~2.0.0",
-        "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0"
+        "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
+        "riskivy/yii2-rest-api-captcha": "^2.1",
+        "mikk150/yii2-phone-validator": "^1.0",
+        "lcobucci/jwt": "^3.2"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

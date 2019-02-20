@@ -38,7 +38,7 @@ class Admin extends Authenticatable implements JWTSubject
     //登录
     public function login(array $data): JsonResponse
     {
-//        if(Captcha::check_api($data['captcha'],$data['key'])){
+        if(Captcha::check_api($data['captcha'],$data['key'])){
             $user = $this->where('name', $data['name'])->first();
             if ($user && password_verify($data['password'], $user->password))
             {
@@ -47,8 +47,8 @@ class Admin extends Authenticatable implements JWTSubject
                 return renderSuccess('登录成功', $token);
             }
             return renderError('登录失败,用户名或密码错误');
-//        }
-//        return renderError('验证码错误');
+        }
+        return renderError('验证码错误');
     }
 
     //获取管理员信息
