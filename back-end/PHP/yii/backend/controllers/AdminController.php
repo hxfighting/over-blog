@@ -3,7 +3,7 @@
 namespace backend\controllers;
 
 use app\models\Admin;
-use Lcobucci\JWT\Builder;
+use common\helper\Token;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 
@@ -46,38 +46,35 @@ class AdminController extends BasicController
             {
                 return $this->error('用户名或密码错误！');
             }
-            $token = $this->getToken($exist_admin->id);
-            $token = 'Bearer ' . $token;
+            $token = Token::getToken($exist_admin->id);
             return $this->success('登录成功！', $token);
         }else{
             return $this->error(current($admin->firstErrors));
         }
     }
 
+
     /**
-     * 生成token
-     * Date: 2019-02-20 09:44
-     * @param $user_id
-     * @return mixed
+     * 获取管理员信息
+     * Date: 2019-02-21 11:38
+     * @return \yii\web\Response
      */
-    private function getToken($user_id)
-    {
-        $token = (new Builder())
-            ->setIssuer(\Yii::$app->params['issuer'])// Configures the issuer (iss claim)
-            ->setAudience(\Yii::$app->params['audience'])// Configures the audience (aud claim)
-            ->setId(\Yii::$app->params['jwt_id'], true)// Configures the id (jti claim), replicating as a header item
-            ->setIssuedAt(time())// Configures the time that the token was issue (iat claim)
-            ->setNotBefore(time())// Configures the time before which the token cannot be accepted (nbf claim)
-            ->setExpiration(time() + \Yii::$app->params['jwt_expire'])// Configures the expiration time of the token (exp claim)
-            ->set('uid', $user_id)// Configures a new claim, called "uid"
-//            ->sign($sign,\Yii::$app->params['jwt_sign'])
-            ->getToken(); // Retrieves the generated token
-        return $token;
-    }
-
-
     public function actionAdminInfo()
     {
-        var_dump(123);
+        $user = Admin::find()->where(['id'=>$this->user_id])->one();
+        if(!$user){
+            return $this->error('暂无该用户信息！');
+        }
+        $index = strripos($user->avatar,'/');
+        $user_data = [
+            'avatar'    => $user->avatar,
+            'name'      => $user->name,
+            'user_id'   => $user->id,
+            'access'    => ['super_admin'],
+            'email'     => $user->email,
+            'avatarName'=> substr($user->avatar,$index+1),
+            'mobile'    => $user->mobile
+        ];
+        return $this->success('获取用户信息成功', $user_data);
     }
 }

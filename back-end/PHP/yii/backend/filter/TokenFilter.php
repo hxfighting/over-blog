@@ -9,9 +9,8 @@
 namespace backend\filter;
 
 
-use Lcobucci\JWT\Builder;
+use common\helper\Token;
 use Lcobucci\JWT\Parser;
-use Lcobucci\JWT\ValidationData;
 use yii\base\ActionFilter;
 use yii\web\Response;
 
@@ -29,9 +28,6 @@ class TokenFilter extends ActionFilter
     {
         if ($code = $this->validateToken())
         {
-            if($code==$this->code['expire']){
-                $this->expire = true;
-            }
             return parent::beforeAction($action);
         } else
         {
@@ -46,6 +42,11 @@ class TokenFilter extends ActionFilter
         }
     }
 
+    /**
+     * 验证token
+     * Date: 2019-02-21 09:37
+     * @return mixed
+     */
     private function validateToken()
     {
         $token = \Yii::$app->request->headers->get('Authorization', null);
@@ -53,6 +54,7 @@ class TokenFilter extends ActionFilter
         {
             return $this->code['error'];
         }
+        $key = md5($token);
         preg_match('/^Bearer\s+(.*?)$/', $token, $matches);
         if (!isset($matches[1]) || empty($matches[1]))
         {
@@ -60,16 +62,11 @@ class TokenFilter extends ActionFilter
         }
         try
         {
-            $token = (new Parser())->parse($matches[1]);
-            if(!$this->checkExpire($token)){
-                return $this->code['expire'];
+            $token = $this->parseToken($matches[1]);
+            if(!$this->checkExpire($token,$key)){
+                return $this->code['error'];
             }
-            $data = new ValidationData();
-            $data->setIssuer(\Yii::$app->params['issuer']);
-            $data->setAudience(\Yii::$app->params['audience']);
-            $data->setId(\Yii::$app->params['jwt_id']);
-            return $token->validate($data)?$this->code['success']
-                :$this->code['error'];
+            return $this->code['success'];
         } catch (\Exception $e)
         {
             return $this->code['error'];
@@ -77,22 +74,35 @@ class TokenFilter extends ActionFilter
     }
 
     /**
-     * 检测是否是当天的token
-     * Date: 2019-02-20 17:21
+     * 解析token
+     * Date: 2019-02-21 09:34
+     * @param string $token
+     * @return \Lcobucci\JWT\Token
+     */
+    private function parseToken(string $token)
+    {
+        return (new Parser())->parse($token);
+    }
+
+    /**
+     * 检测token过期
+     * Date: 2019-02-21 10:21
      * @param $token
+     * @param $key
      * @return bool
      */
-    private function checkExpire($token)
+    private function checkExpire($token,$key)
     {
-        $expire = $token->getClaim('exp');
-        if (!$expire)
-        {
+        $redis = \Yii::$app->redis;
+        $exist_token = $redis->get($key);
+        if(!$exist_token){
             return false;
         }
-        $diff_day = (time() - $expire) / 86400;
-        if($diff_day>=1){
+        if(time()>(int)$exist_token){
+            $this->expire = true;
             $this->user_id = $token->getClaim('uid',0);
-            return false;
+            $redis->del($key);
+            return true;
         }
         return true;
     }
@@ -101,27 +111,8 @@ class TokenFilter extends ActionFilter
     {
         if($this->expire){
             $headers = \Yii::$app->response->headers;
-            $headers->set('Authorization',$this->getToken());
+            $headers->set('Authorization',Token::getToken($this->user_id));
         }
         return parent::afterAction($action, $result);
-    }
-
-    /**
-     * 获得token
-     * Date: 2019-02-20 17:48
-     * @return string
-     */
-    private function getToken()
-    {
-        $token = (new Builder())
-            ->setIssuer(\Yii::$app->params['issuer'])// Configures the issuer (iss claim)
-            ->setAudience(\Yii::$app->params['audience'])// Configures the audience (aud claim)
-            ->setId(\Yii::$app->params['jwt_id'], true)// Configures the id (jti claim), replicating as a header item
-            ->setIssuedAt(time())// Configures the time that the token was issue (iat claim)
-            ->setNotBefore(time())// Configures the time before which the token cannot be accepted (nbf claim)
-            ->setExpiration(time() + \Yii::$app->params['jwt_expire'])// Configures the expiration time of the token (exp claim)
-            ->set('uid', $this->user_id)// Configures a new claim, called "uid"
-            ->getToken(); // Retrieves the generated token
-        return 'Bearer '.$token;
     }
 }
