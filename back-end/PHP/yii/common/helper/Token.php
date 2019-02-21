@@ -65,4 +65,21 @@ class Token
         $user_id = $token->getClaim('uid');
         return $user_id;
     }
+
+    /**
+     * 删除缓存token
+     * Date: 2019-02-21 11:50
+     * @return bool
+     */
+    public static function removeToken()
+    {
+        $token = \Yii::$app->request->headers->get('Authorization', null);
+        if(!$token){
+            return false;
+        }
+        $key = md5($token);
+        $redis = \Yii::$app->redis;
+        $res = $redis->del($key);
+        return $res;
+    }
 }

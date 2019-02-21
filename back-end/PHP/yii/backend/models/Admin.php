@@ -23,6 +23,8 @@ use yii\web\IdentityInterface;
 class Admin extends \yii\db\ActiveRecord implements IdentityInterface
 {
     public $captcha;
+    public $password_confirmation;
+
     /**
      * {@inheritdoc}
      */
@@ -38,17 +40,21 @@ class Admin extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             ['name', 'required', 'on' => ['changeInfo', 'login']],
-//            ['captcha', 'required','on' => 'login'],
-//            ['captcha', 'validateCaptcha','on' => 'login'],
+            ['captcha', 'required','on' => 'login'],
+            ['captcha', 'validateCaptcha','on' => 'login'],
             ['name', 'string', 'max' => 30, 'on' => ['changeInfo', 'login']],
             [['email', 'mobile', 'avatar'], 'required', 'on' => 'changeInfo'],
             ['avatar', 'url', 'on' => 'changeInfo'],
             ['password', 'required', 'on' => ['changePassword', 'login']],
+            ['password_confirmation','required','on' => 'changePassword'],
+            ['password', 'compare', 'compareAttribute' => 'password_confirmation','on' => 'changePassword'],
             ['password', 'string', 'min' => 6, 'max' => 16, 'on' => ['changePassword', 'login']],
             [['email'], 'string', 'max' => 60, 'on' => 'changeInfo'],
             [['email'], 'email', 'on' => 'changeInfo'],
             [['mobile'], 'string', 'max' => 11, 'on' => 'changeInfo'],
-            ['mobile', PhoneNumberValidator::className(), 'country' => 'zh-CN', 'on' => 'changeInfo']
+            ['mobile', PhoneNumberValidator::class, 'country' => 'CN',
+                'on' => 'changeInfo','message' => '请输入正确的电话号码',
+                'invalidFormatMessage' => '请输入正确的电话号码']
         ];
     }
 
