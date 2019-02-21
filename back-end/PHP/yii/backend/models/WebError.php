@@ -19,6 +19,8 @@ use yii\db\ActiveRecord;
  */
 class WebError extends \yii\db\ActiveRecord
 {
+    public $ids;
+
     /**
      * {@inheritdoc}
      */
@@ -33,11 +35,32 @@ class WebError extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['type', 'code', 'mes', 'url'], 'required'],
-            ['type', 'string', 'max' => 20],
-            [['mes', 'url'], 'string', 'max' => 255],
-            ['url', 'url']
+            [['type', 'code', 'mes', 'url'], 'required', 'on' => 'logError'],
+            ['type', 'string', 'max' => 20, 'on' => 'logError'],
+            [['mes', 'url'], 'string', 'max' => 255, 'on' => 'logError'],
+            ['url', 'url', 'on' => 'logError'],
+            ['ids', 'required', 'on' => 'delError'],
+            ['ids', 'validateIds','on' => 'delError']
         ];
+    }
+
+    public function validateIds($attribute, $params)
+    {
+        if (!is_array($this->$attribute))
+        {
+            $this->addError($attribute, 'ids格式错误！');
+        }
+        if (!empty($this->$attribute))
+        {
+            $this->addError($attribute, 'ids不能为空');
+        }
+        foreach ($this->$attribute as $item)
+        {
+            if (!is_numeric($item))
+            {
+                $this->addError($attribute, 'ids格式错误！');
+            }
+        }
     }
 
     public function behaviors()

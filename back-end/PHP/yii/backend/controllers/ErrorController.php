@@ -19,25 +19,15 @@ class ErrorController extends BasicController
 {
     public $enableCsrfValidation = false;
 
-    public function behaviors()
-    {
-        return ArrayHelper::merge([
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'log-error'  => ['post'],
-                ],
-            ],
-        ], parent::behaviors());
-    }
-
     public function actionIndex()
     {
         $exception = \Yii::$app->errorHandler->exception;
-        if($exception instanceof NotFoundHttpException){
+        if ($exception instanceof NotFoundHttpException)
+        {
             return $this->error('路由不存在！');
         }
-        if($exception instanceof MethodNotAllowedHttpException){
+        if ($exception instanceof MethodNotAllowedHttpException)
+        {
             return $this->error('请求方式错误！');
         }
         return $this->error($exception->getMessage());
@@ -52,9 +42,26 @@ class ErrorController extends BasicController
     {
         $data = $this->post();
         $error = new WebError();
+        $error->scenario = 'logError';
         $error->attributes = $data;
         $res = $error->save();
-        return $res?$this->success('记录错误成功！')
-            :$this->error(current($error->firstErrors));
+        return $res ? $this->success('记录错误成功！')
+            : $this->error(current($error->firstErrors));
+    }
+
+    /**
+     * 删除错误信息
+     * Date: 2019-02-21 16:06
+     * @return \yii\web\Response
+     */
+    public function actionDelError()
+    {
+        $data = $this->post();
+        $error = new WebError();
+        $error->scenario = 'delError';
+        $error->attributes = $data;
+        $res = $error->find()->where(['in', 'id', $data['ids']])->delete();
+        return $res ? $this->success('错误信息删除成功！')
+            : $this->error('错误信息删除失败，请稍后再试！');
     }
 }

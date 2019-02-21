@@ -40,8 +40,8 @@ class Admin extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             ['name', 'required', 'on' => ['changeInfo', 'login']],
-            ['captcha', 'required','on' => 'login'],
-            ['captcha', 'validateCaptcha','on' => 'login'],
+//            ['captcha', 'required','on' => 'login'],
+//            ['captcha', 'validateCaptcha','on' => 'login'],
             ['name', 'string', 'max' => 30, 'on' => ['changeInfo', 'login']],
             [['email', 'mobile', 'avatar'], 'required', 'on' => 'changeInfo'],
             ['avatar', 'url', 'on' => 'changeInfo'],
@@ -70,7 +70,7 @@ class Admin extends \yii\db\ActiveRecord implements IdentityInterface
     {
         $res = (new CaptchaHelper())->verify($this->$attribute);
         if(!$res){
-            $this->addError($attribute,$this->$attribute);
+            $this->addError($attribute,'验证码错误！');
         }
     }
 
