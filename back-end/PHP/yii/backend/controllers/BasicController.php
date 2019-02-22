@@ -57,12 +57,12 @@ class BasicController extends Controller
 
     /**
      * 获取get参数
-     * Date: 2019-02-18 17:27
-     * @param        $key
-     * @param string $value
+     * Date: 2019-02-22 11:25
+     * @param null $key
+     * @param null $value
      * @return array|mixed
      */
-    public function get($key, $value = '')
+    public function get($key = null, $value = null)
     {
         return \Yii::$app->request->get($key, $value);
     }
