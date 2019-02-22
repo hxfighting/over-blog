@@ -14,6 +14,15 @@ return [
         'POST api/admin/login' => 'admin/login',                //管理员登录
         'POST api/admin/logout' => 'admin/logout',              //管理员退出登录
 
-        'GET api/admin/count' => 'dashboard/dashboard-count'    //后台首页获取统计数据
+        'GET api/admin/count' => 'dashboard/dashboard-count',   //后台首页获取统计数据
+
+        /**
+         * 标签组
+         */
+        'GET api/admin/tag' => 'tag/tag-list',                  //获取标签列表
+        'POST api/admin/tag' => 'tag/add-tag',                  //添加标签
+        'PUT api/admin/tag' => 'tag/update-tag',                //修改标签
+        'DELETE api/admin/tag' => 'tag/del-tag',                //删除标签
+
     ],
 ];

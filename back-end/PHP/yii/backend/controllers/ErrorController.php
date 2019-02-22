@@ -60,8 +60,12 @@ class ErrorController extends BasicController
         $error = new WebError();
         $error->scenario = 'delError';
         $error->attributes = $data;
-        $res = $error->find()->where(['in', 'id', $data['ids']])->delete();
-        return $res ? $this->success('错误信息删除成功！')
-            : $this->error('错误信息删除失败，请稍后再试！');
+        if($error->validate()){
+            $exist_error = $error->findAll($data['ids']);
+            $res = $exist_error->delete();
+            return $res ? $this->success('错误信息删除成功！')
+                : $this->error('错误信息删除失败，请稍后再试！');
+        }
+        return $this->error(current($error->firstErrors));
     }
 }
