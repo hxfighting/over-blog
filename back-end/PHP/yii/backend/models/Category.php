@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\AttributeTypecastBehavior;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "category".
@@ -25,32 +27,45 @@ class Category extends \yii\db\ActiveRecord
         return 'category';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
+    public function behaviors()
     {
         return [
-            [['title', 'pid'], 'required'],
-            [['pid', 'created_at', 'updated_at', 'type'], 'integer'],
-            [['title'], 'string', 'max' => 50],
-            [['url'], 'string', 'max' => 100],
+            'typecast' => [
+                'class' => AttributeTypecastBehavior::class,
+                'attributeTypes' => [
+                    'created_at' => function ($value) {
+                        return date('Y-m-d H:i:s', $value);
+                    },
+                    'updated_at' => function ($value) {
+                        return date('Y-m-d H:i:s', $value);
+                    }
+                ],
+                'typecastAfterValidate' => true,
+                'typecastBeforeSave' => false,
+                'typecastAfterFind' => true,
+            ],
+            [
+                'class' => TimestampBehavior::class
+            ]
         ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function rules()
     {
         return [
-            'id' => 'ID',
-            'title' => 'Title',
-            'pid' => 'Pid',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
-            'url' => 'Url',
-            'type' => 'Type',
+            ['id','required','on' => ['categoryUpdate','delCategory']],
+            ['id','integer','on' => ['categoryUpdate','delCategory']],
+            [['title', 'pid'], 'required','on' => ['categoryAdd','categoryUpdate']],
+            ['pid', 'integer','on' => ['categoryAdd','categoryUpdate']],
+            [['title'], 'string', 'max' => 50, 'on' => ['categoryAdd','categoryUpdate']]
         ];
+    }
+
+    public function getChildren()
+    {
+        return $this->hasMany(self::class,['pid'=>'id']);
     }
 }

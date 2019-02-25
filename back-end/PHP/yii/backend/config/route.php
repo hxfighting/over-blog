@@ -24,5 +24,13 @@ return [
         'PUT api/admin/tag' => 'tag/update-tag',                //修改标签
         'DELETE api/admin/tag' => 'tag/del-tag',                //删除标签
 
+        /**
+         * 分类组
+         */
+        'GET api/admin/category' => 'category/category-list',   //获取分类列表
+        'POST api/admin/category' => 'category/category-add',   //添加分类
+        'PUT api/admin/category' => 'category/category-update', //修改分类
+        'DELETE api/admin/category' => 'category/del-category', //删除分类
+
     ],
 ];
