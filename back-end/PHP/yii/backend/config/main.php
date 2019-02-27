@@ -36,8 +36,7 @@ return [
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
-                    'logFile' => 'backend\runtime\logs\error.log'
+                    'levels' => ['error', 'warning']
                 ],
             ],
         ],
