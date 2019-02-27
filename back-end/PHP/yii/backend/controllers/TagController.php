@@ -33,11 +33,15 @@ class TagController extends BasicController
         $this->tag->scenario = 'tagList';
         $this->tag->attributes = $data;
         if($this->tag->validate()){
-            $list = $this->tag->find()
+            $query = $this->tag->find();
+            $total = $query->count();
+            $list = $query
                 ->offset(($data['pageNum'] - 1) * $data['pageSize'])
                 ->limit($data['pageSize'])
+                ->orderBy('created_at DESC')
                 ->all();
-            return !empty($list)?$this->success('获取标签列表成功！',$list)
+            $data = compact('list','total');
+            return !empty($list)?$this->success('获取标签列表成功！',$data)
                 :$this->error('暂无标签列表数据！');
         }
         return $this->error(current($this->tag->firstErrors));

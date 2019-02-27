@@ -39,49 +39,49 @@ class DashboardController extends BasicController
             [
                 'title' => '用户统计',
                 'icon' => 'md-people',
-                'count' => $user,
+                'count' => (int)$user,
                 'color' => '#2d8cf0'
             ],
             [
                 'title' => '友联统计',
                 'icon' => 'ios-link',
-                'count' => $link,
+                'count' => (int)$link,
                 'color' => '#19be6b'
             ],
             [
                 'title' => '文章统计',
                 'icon' => 'ios-book',
-                'count' => $article,
+                'count' => (int)$article,
                 'color' => '#ff9900'
             ],
             [
                 'title' => '评论统计',
                 'icon' => 'ios-chatboxes',
-                'count' => $comment,
+                'count' => (int)$comment,
                 'color' => '#ed3f14'
             ],
             [
                 'title' => '标签统计',
                 'icon' => 'md-pricetags',
-                'count' => $tag,
+                'count' => (int)$tag,
                 'color' => '#E46CBB'
             ],
             [
                 'title' => '分类统计',
                 'icon' => 'md-list',
-                'count' => $category,
+                'count' => (int)$category,
                 'color' => '#9A66E4'
             ],
             [
                 'title' => '留言统计',
                 'icon' => 'md-mail',
-                'count' => $contact,
+                'count' => (int)$contact,
                 'color' => '#FF99CC'
             ],
             [
                 'title' => '说说统计',
                 'icon' => 'ios-chatbubbles',
-                'count' => $chat,
+                'count' => (int)$chat,
                 'color' => '#FFFF00'
             ]
         ];

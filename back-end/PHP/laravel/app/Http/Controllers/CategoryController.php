@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Models\Category;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -30,14 +31,23 @@ class CategoryController extends Controller
     public function destroy(Request $request, Category $category): JsonResponse
     {
         $data = $this->validate($request, ['id' => 'required|integer']);
-        $exist_category = $category->find($data['id']);
-        if ($exist_category->type != self::ARTICLE_TYPE)
+        try
         {
-            return renderError('不能删除此分类');
+            DB::beginTransaction();
+            $exist_category = $category->find($data['id']);
+            if ($exist_category->type != self::ARTICLE_TYPE)
+            {
+                return renderError('不能删除此分类');
+            }
+            $category->where('pid', $data['id'])->delete();
+            $exist_category->delete();
+            DB::commit();
+            return renderSuccess('删除分类成功');
+        } catch (\Exception $e)
+        {
+            DB::rollBack();
+            return renderError('删除分类失败,请稍后再试！');
         }
-        $res = $exist_category->delete();
-        return $res ? renderSuccess('删除分类成功')
-            : renderError('删除分类失败,请稍后再试！');
     }
 
     //添加分类

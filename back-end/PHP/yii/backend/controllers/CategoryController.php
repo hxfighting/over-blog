@@ -10,9 +10,13 @@ namespace backend\controllers;
 
 
 use app\models\Category;
+use yii\db\Exception;
 
 class CategoryController extends BasicController
 {
+    //文章分类type
+    private const ARTICLE_TYPE = 1;
+
     public $enableCsrfValidation = false;
     private $category;
 
@@ -37,6 +41,8 @@ class CategoryController extends BasicController
         if(!empty($list)){
             foreach ($list as &$item)
             {
+                $item['pid'] = (int)$item['pid'];
+                $item['type'] = (int)$item['type'];
                 $item['expand'] = true;
             }
             unset($item);
@@ -75,9 +81,10 @@ class CategoryController extends BasicController
         $this->category->attributes = $data;
         if($this->category->validate()){
             $exist_category = $this->category->findOne($data['id']);
-            $res = $exist_category->save(false,['title','pid','updated_at']);
-            return $res?$this->success('添加分类成功！')
-                :$this->error('添加分类失败，请稍后再试！');
+            $exist_category->title = $data['title'];
+            $res = $exist_category->save(false,['title','updated_at']);
+            return $res?$this->success('修改分类成功！')
+                :$this->error('修改分类失败，请稍后再试！');
         }
         return $this->error(current($this->category->firstErrors));
     }
@@ -93,10 +100,23 @@ class CategoryController extends BasicController
         $this->category->scenario = 'delCategory';
         $this->category->attributes = $data;
         if($this->category->validate()){
-            $exist_tag = $this->category->findOne($data['id']);
-            $res = $exist_tag->delete();
-            return $res?$this->success('删除分类成功！')
-                :$this->error('删除分类失败，请稍后再试！');
+            $transaction = \Yii::$app->db->beginTransaction();
+            try
+            {
+                $exist_tag = $this->category->findOne($data['id']);
+                if ($exist_tag->type != self::ARTICLE_TYPE)
+                {
+                    return $this->error('不能删除此分类！');
+                }
+                $this->category->deleteAll(['pid' => $data['id']]);
+                $exist_tag->delete();
+                $transaction->commit();
+                return $this->success('删除分类成功！');
+            } catch (Exception $e)
+            {
+                $transaction->rollBack();
+                return $this->error('删除分类失败，请稍后再试！');
+            }
         }
         return $this->error(current($this->tag->firstErrors));
     }

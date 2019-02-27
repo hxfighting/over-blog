@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\AttributeTypecastBehavior;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "chat".
@@ -15,6 +17,8 @@ use Yii;
  */
 class Chat extends \yii\db\ActiveRecord
 {
+    public $pageSize;
+    public $pageNum;
     /**
      * {@inheritdoc}
      */
@@ -23,29 +27,43 @@ class Chat extends \yii\db\ActiveRecord
         return 'chat';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
+    public function behaviors()
     {
         return [
-            [['content'], 'required'],
-            [['is_show', 'created_at', 'updated_at'], 'integer'],
-            [['content'], 'string', 'max' => 255],
+            'typecast' => [
+                'class' => AttributeTypecastBehavior::class,
+                'attributeTypes' => [
+                    'created_at' => function ($value) {
+                        return date('Y-m-d H:i:s', $value);
+                    },
+                    'updated_at' => function ($value) {
+                        return date('Y-m-d H:i:s', $value);
+                    }
+                ],
+                'typecastAfterValidate' => true,
+                'typecastBeforeSave' => false,
+                'typecastAfterFind' => true,
+            ],
+            [
+                'class' => TimestampBehavior::class
+            ]
         ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function rules()
     {
         return [
-            'id' => 'ID',
-            'content' => 'Content',
-            'is_show' => 'Is Show',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            ['id','required','on' => ['updateChat','chatDelete']],
+            ['id','integer','on' => ['updateChat','chatDelete']],
+            [['pageSize','pageNum'],'required','on' => 'chatList'],
+            [['pageSize','pageNum'],'integer','on' => 'chatList'],
+            [['pageSize','pageNum'],'number','min' => 1,'on' => 'chatList'],
+            [['content','is_show'], 'required','on' => ['addChat','updateChat']],
+            [['is_show'], 'integer','on' => ['addChat','updateChat']],
+            [['content'], 'string', 'max' => 255,'on' => ['addChat','updateChat']],
         ];
     }
 }

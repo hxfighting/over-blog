@@ -77,8 +77,8 @@ class Category extends \yii\db\ActiveRecord
         return [
             ['id','required','on' => ['categoryUpdate','delCategory']],
             ['id','integer','on' => ['categoryUpdate','delCategory']],
-            [['title', 'pid'], 'required','on' => ['categoryAdd','categoryUpdate']],
-            ['pid', 'integer','on' => ['categoryAdd','categoryUpdate']],
+            [['title', 'pid'], 'required','on' => ['categoryAdd']],
+            ['pid', 'integer','on' => ['categoryAdd']],
             [['title'], 'string', 'max' => 50, 'on' => ['categoryAdd','categoryUpdate']],
             ['title','unique','on' => 'categoryAdd']
         ];

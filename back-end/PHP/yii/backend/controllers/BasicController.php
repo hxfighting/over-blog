@@ -39,7 +39,8 @@ class BasicController extends Controller
                 'cors' => [
                     'Origin' => ['*'],
                     'Access-Control-Request-Method' => ['*'],
-                    'Access-Control-Request-Headers' => ['*']
+                    'Access-Control-Request-Headers' => ['*'],
+                    'Access-Control-Max-Age' => 86400
                 ],
 
             ],

@@ -32,5 +32,13 @@ return [
         'PUT api/admin/category' => 'category/category-update', //修改分类
         'DELETE api/admin/category' => 'category/del-category', //删除分类
 
+        /**
+         * 说说组
+         */
+        'GET api/admin/chat' => 'chat/chat-list',               //获取说说列表
+        'POST api/admin/chat' => 'chat/chat-add',               //添加说说
+        'PUT api/admin/chat' => 'chat/chat-update',             //修改说说
+        'DELETE api/admin/chat' => 'chat/del-chat',             //删除说说
+
     ],
 ];
