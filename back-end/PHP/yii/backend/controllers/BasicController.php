@@ -40,7 +40,8 @@ class BasicController extends Controller
                     'Origin' => ['*'],
                     'Access-Control-Request-Method' => ['*'],
                     'Access-Control-Request-Headers' => ['*'],
-                    'Access-Control-Max-Age' => 86400
+                    'Access-Control-Max-Age' => 86400,
+                    'Access-Control-Expose-Headers' => ['Authorization']
                 ],
 
             ],

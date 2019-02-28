@@ -40,5 +40,13 @@ return [
         'PUT api/admin/chat' => 'chat/chat-update',             //修改说说
         'DELETE api/admin/chat' => 'chat/del-chat',             //删除说说
 
+        /**
+         * 轮播图组
+         */
+        'GET api/admin/rotation' => 'rotation/rotation-list',   //获取轮播图列表
+        'POST api/admin/rotation' => 'rotation/rotation-add',   //添加轮播图
+        'PUT api/admin/rotation' => 'rotation/rotation-update', //修改轮播图
+        'DELETE api/admin/rotation' => 'rotation/del-rotation', //删除轮播图
+
     ],
 ];

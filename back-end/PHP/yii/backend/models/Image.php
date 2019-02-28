@@ -31,7 +31,6 @@ class Image extends \yii\db\ActiveRecord
     {
         return [
             [['image_type', 'image_id', 'image_url'], 'required'],
-            [['image_id', 'created_at', 'updated_at'], 'integer'],
             [['image_type'], 'string', 'max' => 191],
             [['image_url'], 'string', 'max' => 255],
         ];

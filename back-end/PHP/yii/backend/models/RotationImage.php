@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "rotation_image".
@@ -14,6 +15,7 @@ use Yii;
  */
 class RotationImage extends \yii\db\ActiveRecord
 {
+    public $image_url;
     /**
      * {@inheritdoc}
      */
@@ -22,14 +24,26 @@ class RotationImage extends \yii\db\ActiveRecord
         return 'rotation_image';
     }
 
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::class
+            ]
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['created_at', 'updated_at'], 'integer'],
-            [['words'], 'string', 'max' => 100],
+            ['id','required','on' => ['rotationUpdate','delRotation']],
+            ['id','integer','on' => ['rotationUpdate','delRotation']],
+            [['image_url','words'],'required','on' => ['rotationAdd','rotationUpdate']],
+            ['image_url','url','on' => ['rotationAdd','rotationUpdate']],
+            ['words', 'string', 'max' => 100,'min' => 2,'on' => ['rotationAdd','rotationUpdate']]
         ];
     }
 
