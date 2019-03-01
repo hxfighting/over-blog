@@ -48,5 +48,12 @@ return [
         'PUT api/admin/rotation' => 'rotation/rotation-update', //修改轮播图
         'DELETE api/admin/rotation' => 'rotation/del-rotation', //删除轮播图
 
+        /**
+         * 照片组
+         */
+        'GET api/admin/photo' => 'photo/photo-list',            //获取照片列表
+        'POST api/admin/photo' => 'photo/photo-add',            //添加照片
+        'PUT api/admin/photo' => 'photo/photo-update',          //修改照片
+        'DELETE api/admin/photo' => 'photo/del-photo',          //删除照片
     ],
 ];

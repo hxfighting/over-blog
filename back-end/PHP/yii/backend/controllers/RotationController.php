@@ -19,6 +19,14 @@ class RotationController extends BasicController
     //轮播图type
     private $rotation_type = 'App\Http\Models\RotationImage';
 
+    private $rotation;
+
+    public function init()
+    {
+        parent::init();
+        $this->rotation = new RotationImage();
+    }
+
     /**
      * 获取轮播图列表
      * Date: 2019-02-28 11:26
@@ -66,15 +74,14 @@ class RotationController extends BasicController
     public function actionRotationAdd()
     {
         $data = $this->post();
-        $rotation = new RotationImage();
-        $rotation->scenario = 'rotationAdd';
-        $rotation->attributes = $data;
-        if($rotation->validate()){
+        $this->rotation->scenario = 'rotationAdd';
+        $this->rotation->attributes = $data;
+        if($this->rotation->validate()){
             $tr = \Yii::$app->db->beginTransaction();
             try
             {
-                $rotation->save(false, ['words','created_at','updated_at']);
-                $image_data = $this->getImageData($rotation->id, $data['image_url']);
+                $this->rotation->save(false, ['words','created_at','updated_at']);
+                $image_data = $this->getImageData($this->rotation->id, $data['image_url']);
                 \Yii::$app->db->createCommand()->insert('image',$image_data)->execute();
                 $tr->commit();
                 return $this->success('添加轮播图成功！');
@@ -84,7 +91,7 @@ class RotationController extends BasicController
                 return $this->error('添加轮播图失败，请稍后再试！');
             }
         }
-        return $this->error(current($rotation->firstErrors));
+        return $this->error(current($this->rotation->firstErrors));
     }
 
     /**
@@ -114,14 +121,13 @@ class RotationController extends BasicController
     public function actionRotationUpdate()
     {
         $data = $this->post();
-        $rotation = new RotationImage();
-        $rotation->scenario = 'rotationUpdate';
-        $rotation->attributes = $data;
-        if($rotation->validate()){
+        $this->rotation->scenario = 'rotationUpdate';
+        $this->rotation->attributes = $data;
+        if($this->rotation->validate()){
             $tr = \Yii::$app->db->beginTransaction();
             try
             {
-                $exist_rotation = $rotation->findOne($data['id']);
+                $exist_rotation = $this->rotation->findOne($data['id']);
                 $exist_rotation->words = $data['words'];
                 $exist_rotation->save(false, ['words','updated_at']);
                 $type = implode('\\\\',explode('\\',$this->rotation_type));
@@ -137,7 +143,7 @@ class RotationController extends BasicController
                 return $this->error('修改轮播图失败，请稍后再试！');
             }
         }
-        return $this->error(current($rotation->firstErrors));
+        return $this->error(current($this->rotation->firstErrors));
     }
 
     /**
@@ -148,14 +154,13 @@ class RotationController extends BasicController
     public function actionDelRotation()
     {
         $data = $this->post();
-        $rotation = new RotationImage();
-        $rotation->scenario = 'delRotation';
-        $rotation->attributes = $data;
-        if($rotation->validate()){
+        $this->rotation->scenario = 'delRotation';
+        $this->rotation->attributes = $data;
+        if($this->rotation->validate()){
             $tr = \Yii::$app->db->beginTransaction();
             try
             {
-                $rotation->deleteAll(['id'=>$data['id']]);
+                $this->rotation->deleteAll(['id'=>$data['id']]);
                 $type = implode('\\\\',explode('\\',$this->rotation_type));
                 \Yii::$app->db
                     ->createCommand()
@@ -169,6 +174,6 @@ class RotationController extends BasicController
                 return $this->error('删除轮播图失败，请稍后再试！');
             }
         }
-        return $this->error(current($rotation->firstErrors));
+        return $this->error(current($this->rotation->firstErrors));
     }
 }

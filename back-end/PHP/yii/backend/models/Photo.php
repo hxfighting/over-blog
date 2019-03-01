@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "photo".
@@ -13,6 +14,7 @@ use Yii;
  */
 class Photo extends \yii\db\ActiveRecord
 {
+    public $image_url;
     /**
      * {@inheritdoc}
      */
@@ -21,25 +23,24 @@ class Photo extends \yii\db\ActiveRecord
         return 'photo';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
+    public function behaviors()
     {
         return [
-            [['created_at', 'updated_at'], 'integer'],
+            [
+                'class' => TimestampBehavior::class
+            ]
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
+    public function rules()
     {
         return [
-            'id' => 'ID',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            ['id','required','on' => 'delPhoto'],
+            ['id','integer','on' => 'delPhoto'],
+            ['image_url','required','on' => ['photoAdd','photoUpdate']],
+            ['image_url','url','on' => ['photoAdd','photoUpdate']]
         ];
     }
+
+
 }
