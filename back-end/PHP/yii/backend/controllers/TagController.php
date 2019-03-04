@@ -96,8 +96,7 @@ class TagController extends BasicController
         $this->tag->scenario = 'tagDelete';
         $this->tag->attributes = $data;
         if($this->tag->validate()){
-            $exist_tag = $this->tag->findOne($data['id']);
-            $res = $exist_tag->delete();
+            $res = $this->tag->deleteAll(['id'=>$data['id']]);
             return $res?$this->success('删除标签成功！')
                 :$this->error('删除标签失败，请稍后再试！');
         }

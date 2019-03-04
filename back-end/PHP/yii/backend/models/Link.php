@@ -18,6 +18,8 @@ use Yii;
  */
 class Link extends \yii\db\ActiveRecord
 {
+    public $pageSize;
+    public $pageNum;
     /**
      * {@inheritdoc}
      */
@@ -32,10 +34,15 @@ class Link extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['url', 'name', 'description'], 'required'],
-            [['order', 'is_show', 'created_at', 'updated_at'], 'integer'],
-            [['url'], 'string', 'max' => 255],
-            [['name', 'description'], 'string', 'max' => 50],
+            ['id','required','on' => ['updateLink','delLink']],
+            ['id','integer','min' => 1,'on' => ['updateLink','delLink']],
+            [['pageSize','pageNum'],'required','on' => 'linkList'],
+            [['pageSize','pageNum'],'integer','min' => 1,'on' => 'linkList'],
+            [['name','url','description','order','is_show'], 'required','on' => ['addLink','updateLink']],
+            [['name','description'], 'string','min' => 1,'max' => 50,'on' => ['addLink','updateLink']],
+            [['order','is_show'],'integer','on' => ['addLink','updateLink']],
+            [['url'], 'string', 'max' => 255,'on' => ['addLink','updateLink']],
+            [['url'], 'url', 'max' => 255,'on' => ['addLink','updateLink']]
         ];
     }
 
