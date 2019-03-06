@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\AttributeTypecastBehavior;
 
 /**
  * This is the model class for table "contact".
@@ -19,6 +20,8 @@ use Yii;
  */
 class Contact extends \yii\db\ActiveRecord
 {
+    public $pageSize;
+    public $pageNum;
     /**
      * {@inheritdoc}
      */
@@ -33,29 +36,35 @@ class Contact extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'content', 'email'], 'required'],
-            [['created_at', 'updated_at', 'is_reply', 'replied_at'], 'integer'],
-            [['name'], 'string', 'max' => 30],
-            [['content', 'reply_content'], 'string', 'max' => 255],
-            [['email'], 'string', 'max' => 60],
+            ['id','required','on' => ['delContact','contactReply']],
+            ['id','integer','min' => 1,'on' => ['delContact','contactReply']],
+            [['pageSize','pageNum'],'required','on' => 'contactList'],
+            [['pageSize','pageNum'],'integer','min' => 1,'on' => 'contactList'],
+            ['reply_content', 'required','on' => 'contactReply'],
+            ['reply_content', 'string', 'max' => 255,'on' => 'contactReply']
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
+    public function behaviors()
     {
         return [
-            'id' => 'ID',
-            'name' => 'Name',
-            'content' => 'Content',
-            'email' => 'Email',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
-            'is_reply' => 'Is Reply',
-            'reply_content' => 'Reply Content',
-            'replied_at' => 'Replied At',
+            'typecast' => [
+                'class' => AttributeTypecastBehavior::class,
+                'attributeTypes' => [
+                    'created_at' => function ($value) {
+                        return date('Y-m-d H:i:s', $value);
+                    },
+                    'updated_at' => function ($value) {
+                        return date('Y-m-d H:i:s', $value);
+                    },
+                    'replied_at' => function ($value) {
+                        return $value?date('Y-m-d H:i:s', $value):null;
+                    },
+                ],
+                'typecastAfterValidate' => true,
+                'typecastBeforeSave' => false,
+                'typecastAfterFind' => true,
+            ]
         ];
     }
 }

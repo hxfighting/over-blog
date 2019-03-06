@@ -55,5 +55,12 @@ return [
         'POST api/admin/photo' => 'photo/photo-add',            //添加照片
         'PUT api/admin/photo' => 'photo/photo-update',          //修改照片
         'DELETE api/admin/photo' => 'photo/del-photo',          //删除照片
+
+        /**
+         * 留言组
+         */
+        'GET api/admin/contact' => 'contact/contact-list',      //获取留言列表
+        'DELETE api/admin/contact' => 'contact/del-contact',    //删除留言
+        'POST api/admin/contact/reply' => 'contact/reply',      //回复留言
     ],
 ];

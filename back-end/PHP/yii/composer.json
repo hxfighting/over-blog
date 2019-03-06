@@ -21,7 +21,8 @@
         "riskivy/yii2-rest-api-captcha": "^2.1",
         "mikk150/yii2-phone-validator": "^1.0",
         "lcobucci/jwt": "^3.2",
-        "yiisoft/yii2-redis": "^2.0"
+        "yiisoft/yii2-redis": "^2.0",
+        "yiisoft/yii2-queue": "^2.1"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

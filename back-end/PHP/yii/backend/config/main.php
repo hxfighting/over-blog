@@ -10,7 +10,10 @@ return [
     'id' => 'app-backend',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
-    'bootstrap' => ['log'],
+    'bootstrap' => [
+        'log',
+        'queue',
+    ],
     'language'=>'zh-CN',
     'timeZone'=>'Asia/Shanghai',
     'modules' => [],
@@ -57,6 +60,17 @@ return [
             'port' => 6379,
             'database' => 0,
         ],
+        'queue' => [
+            'class' => 'yii\queue\redis\Queue',
+            'as log' => \yii\queue\LogBehavior::class,
+            'ttr' => 5 * 60,
+            'attempts' => 3,
+            'redis' => 'redis'
+        ],
+        'jwt' => [
+            'class' => 'sizeg\jwt\Jwt',
+            'key'   => '',
+        ]
 
     ],
     'params' => $params,

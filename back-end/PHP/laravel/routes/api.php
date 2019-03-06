@@ -132,9 +132,9 @@ Route::group(['prefix'=>'admin'],function (){
 
         //留言组
         Route::group(['prefix'=>'contact'],function (){
-            //友联列表
+            //留言列表
             Route::get('/','ContactController@getList');
-            //删除友联
+            //删除留言
             Route::delete('/','ContactController@destroy');
             //回复留言
             Route::post('/reply','ContactController@reply');
