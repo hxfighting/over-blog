@@ -16,6 +16,13 @@ use yii\db\Exception;
 class ContactController extends BasicController
 {
     public $enableCsrfValidation = false;
+    private $contact;
+
+    public function init()
+    {
+        parent::init();
+        $this->contact = new Contact();
+    }
 
     /**
      * 获取留言列表
@@ -25,11 +32,10 @@ class ContactController extends BasicController
     public function actionContactList()
     {
         $data = $this->get();
-        $contact = new Contact();
-        $contact->scenario = 'contactList';
-        $contact->attributes = $data;
-        if($contact->validate()){
-            $query = $contact->find();
+        $this->contact->scenario = 'contactList';
+        $this->contact->attributes = $data;
+        if($this->contact->validate()){
+            $query = $this->contact->find();
             if(isset($data['search']) && !empty($data['search'])){
                 $query = $query->where(['like','name',$data['search']])
                     ->orWhere(['like','email',$data['search']]);
@@ -44,7 +50,7 @@ class ContactController extends BasicController
             return !empty($list)?$this->success('获取留言列表成功！',$data)
                 :$this->error('暂无留言列表数据！');
         }
-        return $this->error(current($contact->firstErrors));
+        return $this->error(current($this->contact->firstErrors));
     }
 
     /**
@@ -55,14 +61,13 @@ class ContactController extends BasicController
     public function actionReply()
     {
         $data = $this->post();
-        $contact = new Contact();
-        $contact->scenario = 'contactReply';
-        $contact->attributes = $data;
-        if($contact->validate()){
+        $this->contact->scenario = 'contactReply';
+        $this->contact->attributes = $data;
+        if($this->contact->validate()){
             $tr = \Yii::$app->db->beginTransaction();
             try
             {
-                $exist_contact = $contact->findOne($data['id']);
+                $exist_contact = $this->contact->findOne($data['id']);
                 $exist_contact->is_reply = 1;
                 $exist_contact->reply_content = $data['reply_content'];
                 $exist_contact->replied_at = time();
@@ -81,7 +86,7 @@ class ContactController extends BasicController
                 return $this->error('回复留言失败，请稍后再试！');
             }
         }
-        return $this->error(current($contact->firstErrors));
+        return $this->error(current($this->contact->firstErrors));
     }
 
     /**
@@ -92,15 +97,14 @@ class ContactController extends BasicController
     public function actionDelContact()
     {
         $data = $this->post();
-        $contact = new Contact();
-        $contact->scenario = 'delContact';
-        $contact->attributes = $data;
-        if($contact->validate()){
-            $res = $contact->deleteAll(['id'=>$data['id']]);
+        $this->contact->scenario = 'delContact';
+        $this->contact->attributes = $data;
+        if($this->contact->validate()){
+            $res = $this->contact->deleteAll(['id'=>$data['id']]);
             return $res?$this->success('删除留言成功！')
                 :$this->error('删除留言失败，请稍后再试！');
         }
-        return $this->error(current($contact->firstErrors));
+        return $this->error(current($this->contact->firstErrors));
     }
 
 }
