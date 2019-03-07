@@ -70,7 +70,10 @@ return [
         'jwt' => [
             'class' => 'sizeg\jwt\Jwt',
             'key'   => '',
-        ]
+        ],
+        'geoip' => [
+            'class' => 'coderius\geoIp\GeoIP'
+        ],
 
     ],
     'params' => $params,

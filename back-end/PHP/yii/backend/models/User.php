@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\AttributeTypecastBehavior;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "user".
@@ -23,6 +25,8 @@ use Yii;
  */
 class User extends \yii\db\ActiveRecord
 {
+    public $pageSize;
+    public $pageNum;
     /**
      * {@inheritdoc}
      */
@@ -37,33 +41,68 @@ class User extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['type', 'name', 'avatar', 'openid', 'access_token', 'last_login_ip'], 'required'],
-            [['type', 'login_times', 'is_admin', 'created_at', 'updated_at'], 'integer'],
-            [['name', 'openid', 'access_token', 'email', 'remember_token'], 'string', 'max' => 100],
-            [['avatar'], 'string', 'max' => 255],
-            [['last_login_ip'], 'string', 'max' => 45],
+            ['id','required','on' => ['updateUser','delUser']],
+            ['id','integer','min' => 1,'on' => ['updateUser','delUser']],
+            ['is_admin','required','on' => 'updateUser'],
+            ['is_admin','integer','on' => 'updateUser'],
+            [['pageSize', 'pageNum'], 'required', 'on' => 'userList'],
+            [['pageSize', 'pageNum'], 'integer', 'on' => 'userList']
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            'typecast' => [
+                'class' => AttributeTypecastBehavior::class,
+                'attributeTypes' => [
+                    'created_at' => function ($value) {
+                        return date('Y-m-d H:i:s', $value);
+                    },
+                    'updated_at' => function ($value) {
+                        return date('Y-m-d H:i:s', $value);
+                    },
+                    'last_login_ip' => function($value){
+                        return $this->transformIPToAddress($value);
+                    }
+                ],
+                'typecastAfterValidate' => true,
+                'typecastBeforeSave' => false,
+                'typecastAfterFind' => true,
+            ],
+            [
+                'class' => TimestampBehavior::class
+            ]
         ];
     }
 
     /**
-     * {@inheritdoc}
+     * 转换IP地址为具体地址
+     * Date: 2019-03-07 13:35
+     * @param $ip
+     * @return string
      */
-    public function attributeLabels()
+    private function transformIPToAddress($ip)
     {
-        return [
-            'id' => 'ID',
-            'type' => 'Type',
-            'name' => 'Name',
-            'avatar' => 'Avatar',
-            'openid' => 'Openid',
-            'access_token' => 'Access Token',
-            'last_login_ip' => 'Last Login Ip',
-            'login_times' => 'Login Times',
-            'email' => 'Email',
-            'is_admin' => 'Is Admin',
-            'remember_token' => 'Remember Token',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
-        ];
+        $address = \Yii::$app->geoip->ip($ip);
+        if($address->hasResult()){
+            return $this->handleAddress($address);
+        }
+        return '未知';
+    }
+
+    //处理转换后的地址数据
+    private function handleAddress($address)
+    {
+        switch ($address->country->isoCode){
+            case 'CN':
+                return $address->country->names->{'zh-CN'}.'-'.$address->city->names->{'zh-CN'};
+            case 'TW':
+                return '中国-台湾';
+            case 'MO':
+                return '中国-澳门';
+            default:
+                return $address->country->names->{'zh-CN'}.'-'.$address->city->names->{'zh-CN'};
+        }
     }
 }

@@ -4,14 +4,14 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6162873176dfa26fd91ff2082867608d",
+    "content-hash": "0d063d5cfe709a29ad4778c4c7962e1b",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
             "version": "v3.4.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/twbs/bootstrap.git",
+                "url": "git@github.com:twbs/bootstrap.git",
                 "reference": "4c547f2175b9a05aa43551f6927da83fe249ce42"
             },
             "dist": {
@@ -191,6 +191,91 @@
                 "markdown-extra"
             ],
             "time": "2018-03-26T11:24:36+00:00"
+        },
+        {
+            "name": "coderius/maxmind-geolite2-db",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/coderius/maxmind-geolite2-db.git",
+                "reference": "b10942b5428ae993b319bdfa06ff62952bcc51ed"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/coderius/maxmind-geolite2-db/zipball/b10942b5428ae993b319bdfa06ff62952bcc51ed",
+                "reference": "b10942b5428ae993b319bdfa06ff62952bcc51ed",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Creative Commons Attribution-ShareAlike 4.0 International License",
+                "Creative Commons Attribution 3.0 License"
+            ],
+            "keywords": [
+                "maxmind"
+            ],
+            "time": "2018-05-05T07:29:45+00:00"
+        },
+        {
+            "name": "coderius/yii2-geo-ip",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/coderius/yii2-geo-ip.git",
+                "reference": "7aff03e1b84e1e63b75e1c934697a97448413d08"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/coderius/yii2-geo-ip/zipball/7aff03e1b84e1e63b75e1c934697a97448413d08",
+                "reference": "7aff03e1b84e1e63b75e1c934697a97448413d08",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "coderius/maxmind-geolite2-db": "*",
+                "maxmind-db/reader": "~1.0",
+                "php": ">=5.4.0",
+                "yiisoft/yii2": "~2.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.4"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "coderius\\geoIp\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Serg Coderius",
+                    "email": "sunrise4fun@gmail.com"
+                }
+            ],
+            "description": "Yii 2 GeoIP extension. Returns country, city, lat, lng of current or specified IP (uses MaxMind's GeoIP2 databases)",
+            "keywords": [
+                "geoip",
+                "geolocation",
+                "maxmind",
+                "yii2"
+            ],
+            "time": "2018-05-05T14:04:05+00:00"
         },
         {
             "name": "doctrine/lexer",
@@ -560,6 +645,68 @@
                 "jwt"
             ],
             "time": "2018-11-11T12:22:26+00:00"
+        },
+        {
+            "name": "maxmind-db/reader",
+            "version": "v1.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/maxmind/MaxMind-DB-Reader-php.git",
+                "reference": "eb83d0ee1c1f9b8a340206302136bc81ee02ae74"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/maxmind/MaxMind-DB-Reader-php/zipball/eb83d0ee1c1f9b8a340206302136bc81ee02ae74",
+                "reference": "eb83d0ee1c1f9b8a340206302136bc81ee02ae74",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "2.*",
+                "phpunit/phpunit": "4.* || 5.*",
+                "satooshi/php-coveralls": "1.0.*",
+                "squizlabs/php_codesniffer": "3.*"
+            },
+            "suggest": {
+                "ext-bcmath": "bcmath or gmp is required for decoding larger integers with the pure PHP decoder",
+                "ext-gmp": "bcmath or gmp is required for decoding larger integers with the pure PHP decoder",
+                "ext-maxminddb": "A C-based database decoder that provides significantly faster lookups"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MaxMind\\Db\\": "src/MaxMind/Db"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Gregory J. Oschwald",
+                    "email": "goschwald@maxmind.com",
+                    "homepage": "http://www.maxmind.com/"
+                }
+            ],
+            "description": "MaxMind DB Reader API",
+            "homepage": "https://github.com/maxmind/MaxMind-DB-Reader-php",
+            "keywords": [
+                "database",
+                "geoip",
+                "geoip2",
+                "geolocation",
+                "maxmind"
+            ],
+            "time": "2019-01-04T19:55:56+00:00"
         },
         {
             "name": "mikk150/yii2-phone-validator",

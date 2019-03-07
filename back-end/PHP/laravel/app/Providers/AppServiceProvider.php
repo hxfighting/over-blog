@@ -36,14 +36,14 @@ class AppServiceProvider extends ServiceProvider
 
         $social_data = WebConfig::type(1)->rememberForever()->get();
 
-        $minute = (strtotime(date('Y-m-d').' 23:59:59')-time())/60;
+        $seconds = (strtotime(date('Y-m-d').' 23:59:59')-time());
 
         //获取最热文章
         $h_hot_article = Article::latest('click')
             ->latest('created_at')
             ->selectRaw('id,title,created_at,click,
                 (select count(*) from article_comment where article_comment.article_id=article.id) as comment_count')
-            ->remember($minute)
+            ->remember($seconds)
             ->show(1)
             ->take(10)
             ->get();
@@ -52,14 +52,14 @@ class AppServiceProvider extends ServiceProvider
         $h_comment = ArticleComment::join('user','article_comment.user_id','=','user.id')
             ->select('article_comment.id','article_comment.article_id',
                 'article_comment.content','article_comment.created_at','user.name','user.avatar')
-            ->remember($minute)
+            ->remember($seconds)
             ->take(10)
             ->latest()
             ->get();
 
         //首页footer内容
         $footerData =  WebConfig::type(2)
-            ->remember($minute)
+            ->remember($seconds)
             ->cacheTags(config('blog.blog_footer_cache_key'))
             ->get()
             ->groupBy('name');

@@ -62,5 +62,12 @@ return [
         'GET api/admin/contact' => 'contact/contact-list',      //获取留言列表
         'DELETE api/admin/contact' => 'contact/del-contact',    //删除留言
         'POST api/admin/contact/reply' => 'contact/reply',      //回复留言
+
+        /**
+         * 用户组
+         */
+        'GET api/admin/user' => 'user/user-list',               //获取用户列表
+        'PUT api/admin/user' => 'user/user-update',             //修改会员信息
+        'DELETE api/admin/user' => 'user/del-user',             //删除会员
     ],
 ];

@@ -34,10 +34,10 @@ class LinkController extends BasicController
         $this->link->attributes = $data;
         if($this->link->validate()){
             $query = $this->link->find();
-            $total = $query->count();
             if(isset($data['name']) && !empty($data['name'])){
                 $query = $query->where(['like','name',$data['name']]);
             }
+            $total = $query->count();
             $list = $query
                 ->offset(($data['pageNum'] - 1) * $data['pageSize'])
                 ->limit($data['pageSize'])
