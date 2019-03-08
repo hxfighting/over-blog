@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\AttributeTypecastBehavior;
 
 /**
  * This is the model class for table "article_comment".
@@ -18,6 +19,11 @@ use Yii;
  */
 class ArticleComment extends \yii\db\ActiveRecord
 {
+
+    public $pageSize;
+    public $pageNum;
+    public $reply_content;
+
     /**
      * {@inheritdoc}
      */
@@ -32,26 +38,33 @@ class ArticleComment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pid', 'reply_id', 'user_id', 'article_id', 'created_at', 'updated_at'], 'integer'],
-            [['user_id', 'article_id', 'content'], 'required'],
-            [['content'], 'string', 'max' => 255],
+            ['id','required','on' => ['commentDelete','commentReply']],
+            ['id','integer','min' => 1,'on' => ['commentDelete','commentReply']],
+            ['reply_content','required','on' => 'commentReply'],
+            ['reply_content','string','min' => 2,'max' => 255,'on' => 'commentReply'],
+            [['pageSize','pageNum'],'required','on' => 'commentList'],
+            [['pageSize','pageNum'],'integer','min' => 1,'on' => 'commentList']
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
+    public function behaviors()
     {
         return [
-            'id' => 'ID',
-            'pid' => 'Pid',
-            'reply_id' => 'Reply ID',
-            'user_id' => 'User ID',
-            'article_id' => 'Article ID',
-            'content' => 'Content',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'typecast' => [
+                'class' => AttributeTypecastBehavior::class,
+                'attributeTypes' => [
+                    'created_at' => function ($value) {
+                        return date('Y-m-d H:i:s', $value);
+                    },
+                    'updated_at' => function ($value) {
+                        return date('Y-m-d H:i:s', $value);
+                    }
+                ],
+                'typecastAfterValidate' => true,
+                'typecastBeforeSave' => false,
+                'typecastAfterFind' => true,
+            ]
         ];
     }
+
 }

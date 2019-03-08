@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\AttributeTypecastBehavior;
 
 /**
  * This is the model class for table "article".
@@ -34,6 +35,25 @@ class Article extends \yii\db\ActiveRecord
         return 'article';
     }
 
+    public function behaviors()
+    {
+        return [
+            'typecast' => [
+                'class' => AttributeTypecastBehavior::class,
+                'attributeTypes' => [
+                    'created_at' => function ($value) {
+                        return date('Y-m-d H:i:s', $value);
+                    },
+                    'updated_at' => function ($value) {
+                        return date('Y-m-d H:i:s', $value);
+                    }
+                ],
+                'typecastAfterValidate' => true,
+                'typecastBeforeSave' => false,
+                'typecastAfterFind' => true,
+            ]
+        ];
+    }
     /**
      * {@inheritdoc}
      */
@@ -46,31 +66,6 @@ class Article extends \yii\db\ActiveRecord
             [['title'], 'string', 'max' => 100],
             [['author'], 'string', 'max' => 20],
             [['keywords', 'description', 'thumb'], 'string', 'max' => 255],
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'title' => 'Title',
-            'author' => 'Author',
-            'content_html' => 'Content Html',
-            'content_md' => 'Content Md',
-            'keywords' => 'Keywords',
-            'description' => 'Description',
-            'thumb' => 'Thumb',
-            'is_show' => 'Is Show',
-            'is_original' => 'Is Original',
-            'is_top' => 'Is Top',
-            'click' => 'Click',
-            'category_id' => 'Category ID',
-            'deleted_at' => 'Deleted At',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
         ];
     }
 }

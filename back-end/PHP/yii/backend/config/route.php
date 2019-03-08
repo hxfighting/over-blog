@@ -69,5 +69,12 @@ return [
         'GET api/admin/user' => 'user/user-list',               //获取用户列表
         'PUT api/admin/user' => 'user/user-update',             //修改会员信息
         'DELETE api/admin/user' => 'user/del-user',             //删除会员
+
+        /**
+         * 评论组
+         */
+        'GET api/admin/comment' => 'comment/comment-list',      //获取评论列表
+        'POST api/admin/comment' => 'comment/reply',      //获取评论列表
+        'DELETE api/admin/comment' => 'comment/del-comment',      //获取评论列表
     ],
 ];
