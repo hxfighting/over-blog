@@ -15,7 +15,9 @@ class OauthController extends BasicController
      */
     public function oauth(Request $request,$service)
     {
-        session(['target_url' => $_SERVER['HTTP_REFERER']]);
+        $http_referer = \request()->server('HTTP_REFERER');
+        $target_url = $http_referer ? $http_referer : config('blog.blog_home');
+        session(['target_url' => $target_url]);
         return app('socialite')->setRequest($request)->driver($service)->redirect();
     }
 

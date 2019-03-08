@@ -31,7 +31,8 @@ class WeChatController extends BasicController
     public function getQrCode($scene)
     {
         $image = app('miniProgram')->app_code->getUnlimit($scene, ['width' => 200]);
-        $target_url = $_SERVER['HTTP_REFERER'] ?? config('blog.blog_home');
+        $http_referer = \request()->server('HTTP_REFERER');
+        $target_url = $http_referer ? $http_referer : config('blog.blog_home');
         session(['target_url' => $target_url]);
         return $image;
     }
@@ -60,7 +61,7 @@ class WeChatController extends BasicController
             }
         } else
         {
-            return renderError('非法请求方式', null,403);
+            return renderError('非法请求方式', null, 403);
         }
     }
 
