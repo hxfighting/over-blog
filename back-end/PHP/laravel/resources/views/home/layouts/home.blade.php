@@ -40,7 +40,7 @@
     <link rel="stylesheet" href="{{asset('css/home/index.css')}}">
     <link rel="stylesheet" href="{{asset('css/sweetalert2.min.css')}}">
     @stack('other-css')
-    {!! config('websiteConfig.baidu_tongji') !!}
+    {!! config('webConfig.baidu_tongji') !!}
 
 </head>
 <body>
@@ -354,7 +354,7 @@
     });
     let APP_URL = "{{config('app.url')}}"
 </script>
-{!! config('websiteConfig.baidu_tuisong') !!}
+{!! config('webConfig.baidu_tuisong') !!}
 <script src="{{asset('js/layer/layer.js')}}"></script>
 <script src="{{asset('js/sweetalert2.all.min.js')}}"></script>
 <script src="{{asset('js/common.js'.'?ver='.RELEASE_VERSION)}}"></script>
