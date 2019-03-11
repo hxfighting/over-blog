@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\AttributeTypecastBehavior;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "web_config".
@@ -17,6 +19,8 @@ use Yii;
  */
 class WebConfig extends \yii\db\ActiveRecord
 {
+    public $pageSize;
+    public $pageNum;
     /**
      * {@inheritdoc}
      */
@@ -25,16 +29,65 @@ class WebConfig extends \yii\db\ActiveRecord
         return 'web_config';
     }
 
+    public function behaviors()
+    {
+        return [
+            'typecast' => [
+                'class' => AttributeTypecastBehavior::class,
+                'attributeTypes' => [
+                    'created_at' => function ($value) {
+                        return date('Y-m-d H:i:s', $value);
+                    },
+                    'updated_at' => function ($value) {
+                        return date('Y-m-d H:i:s', $value);
+                    }
+                ],
+                'typecastAfterValidate' => true,
+                'typecastBeforeSave' => false,
+                'typecastAfterFind' => true,
+            ],
+            [
+                'class' => TimestampBehavior::class
+            ]
+        ];
+    }
+
+    public function init()
+    {
+        parent::init();
+        $this->on(self::EVENT_AFTER_INSERT,[$this,'putConfigFile']);
+    }
+
+    public function putConfigFile($event)
+    {
+        $config_data = $this->find()
+            ->where(['type'=>3])
+            ->select('name', 'val')
+            ->asArray()
+            ->all();
+        $config_data = array_combine(array_column($config_data,'name'),array_column($config_data,'val'));
+        $path = __DIR__.'../config/webConfig.php';
+        chmod($path,777);
+        $str = '<?php return ' . var_export($config_data, true) . ';';    //将得到数组转换成字符串
+        file_put_contents($path, $str); //写入文件
+    }
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['title', 'name', 'val', 'type'], 'required'],
-            [['val'], 'string'],
-            [['type', 'created_at', 'updated_at'], 'integer'],
-            [['title', 'name'], 'string', 'max' => 100],
+            [['pageSize', 'pageNum'], 'required', 'on' => 'configList'],
+            [['pageSize', 'pageNum'], 'integer', 'on' => 'configList'],
+            [['pageSize', 'pageNum'], 'number', 'min' => 1, 'on' => 'configList'],
+            ['id', 'required', 'on' => ['configDelete','configUpdate']],
+            ['id', 'integer', 'on' => ['configDelete','configUpdate']],
+            ['id', 'exist', 'on' => ['configDelete','configUpdate']],
+            [['title', 'name', 'val', 'type'], 'required','on' => 'addConfig'],
+            ['val', 'string','on' => 'addConfig'],
+            ['type', 'integer','on' => 'addConfig'],
+            [['title', 'name'], 'string', 'max' => 100,'min' => 2,'on' => 'addConfig'],
         ];
     }
 

@@ -74,7 +74,15 @@ return [
          * 评论组
          */
         'GET api/admin/comment' => 'comment/comment-list',      //获取评论列表
-        'POST api/admin/comment' => 'comment/reply',      //获取评论列表
-        'DELETE api/admin/comment' => 'comment/del-comment',      //获取评论列表
+        'POST api/admin/comment' => 'comment/reply',            //回复评论
+        'DELETE api/admin/comment' => 'comment/del-comment',    //删除评论
+
+        /**
+         * 配置组
+         */
+        'GET api/admin/config' => 'config/config-list',         //获取配置列表
+        'POST api/admin/config' => 'config/add-config',         //添加配置
+        'PUT api/admin/config' => 'config/update-config',       //更新配置
+        'DELETE api/admin/config' => 'config/del-config',       //删除配置
     ],
 ];

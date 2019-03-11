@@ -85,6 +85,7 @@ class CommentController extends BasicController
             $datum['created_at'] = date('Y/m/d H:i:s', (int)$datum['created_at']);
             $datum['updated_at'] = date('Y/m/d H:i:s', (int)$datum['updated_at']);
         }
+        unset($datum);
         return $data;
     }
 

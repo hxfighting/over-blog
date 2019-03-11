@@ -1,4 +1,5 @@
 <?php
+$web_config = require __DIR__.'/webConfig.php';
 return [
     /**
      * jwt iss claim
@@ -27,5 +28,9 @@ return [
     /**
      * blog index 博客首页URL
      */
-    'blog_index_url' => 'https://www.ohdata.top'
+    'blog_index_url' => 'https://www.ohdata.top',
+    /**
+     * 网站配置
+     */
+    'web_config'=> $web_config
 ];
