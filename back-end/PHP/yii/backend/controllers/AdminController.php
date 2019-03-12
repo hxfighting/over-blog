@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use app\models\Admin;
+use backend\exception\ValidateException;
 use common\helper\Token;
 
 class AdminController extends BasicController
@@ -20,28 +21,22 @@ class AdminController extends BasicController
      * 登录
      * Date: 2019-02-20 09:43
      * @return \yii\web\Response
+     * @throws ValidateException
      */
     public function actionLogin()
     {
-        $this->admin->scenario = 'login';
-        $data = $this->post();
-        $this->admin->attributes = $data;
-        if ($this->admin->validate())
+        $this->basicValidate($this->admin,'login');
+        $exist_admin = $this->admin->find()->where(['name' => ($this->request_data)['name']])->one();
+        if (!$exist_admin)
         {
-            $exist_admin = $this->admin->find()->where(['name' => $data['name']])->one();
-            if (!$exist_admin)
-            {
-                return $this->error('用户名或密码错误！');
-            }
-            if (!password_verify($data['password'], $exist_admin->password))
-            {
-                return $this->error('用户名或密码错误！');
-            }
-            $token = Token::getToken($exist_admin->id);
-            return $this->success('登录成功！', $token);
-        }else{
-            return $this->error(current($this->admin->firstErrors));
+            return $this->error('用户名或密码错误！');
         }
+        if (!password_verify(($this->request_data)['password'], $exist_admin->password))
+        {
+            return $this->error('用户名或密码错误！');
+        }
+        $token = Token::getToken($exist_admin->id);
+        return $this->success('登录成功！', $token);
     }
 
 
@@ -85,20 +80,16 @@ class AdminController extends BasicController
      * 修改密码
      * Date: 2019-02-21 13:13
      * @return \yii\web\Response
+     * @throws ValidateException
      */
     public function actionPassword()
     {
-        $data = $this->post();
         $exist_admin = $this->admin->findOne($this->user_id);
-        $exist_admin->scenario = 'changePassword';
-        $exist_admin->attributes = $data;
-        if($exist_admin->validate()){
-            $exist_admin->password = password_hash($data['password'],PASSWORD_BCRYPT);
-            $res = $exist_admin->save(false,['password']);
-            return $res?$this->success('修改密码成功！')
-                :$this->error('修改密码失败，请稍后再试！');
-        }
-        return $this->error(current($exist_admin->firstErrors));
+        $exist_admin = $this->basicValidate($exist_admin,'changePassword');
+        $exist_admin->password = password_hash(($this->request_data)['password'],PASSWORD_BCRYPT);
+        $res = $exist_admin->save(false,['password']);
+        return $res?$this->success('修改密码成功！')
+            :$this->error('修改密码失败，请稍后再试！');
 
     }
 
@@ -106,20 +97,15 @@ class AdminController extends BasicController
      * 修改个人信息
      * Date: 2019-02-21 13:19
      * @return \yii\web\Response
+     * @throws ValidateException
      */
     public function actionChangeInfo()
     {
-        $data = $this->post();
         $exist_admin = $this->admin->findOne($this->user_id);
-        $exist_admin->scenario = 'changeInfo';
-        $exist_admin->attributes = $data;
-        if($exist_admin->validate()){
-            $exist_admin->mobile = ltrim($data['mobile'], '+86');
-            $res = $exist_admin->save(false);
-            return $res?$this->success('修改个人信息成功！')
-                :$this->error('修改个人信息失败，请稍后再试！');
-        }
-        return $this->error(current($exist_admin->firstErrors));
-
+        $exist_admin = $this->basicValidate($exist_admin,'changeInfo');
+        $exist_admin->mobile = ltrim(($this->request_data)['mobile'], '+86');
+        $res = $exist_admin->save(false);
+        return $res?$this->success('修改个人信息成功！')
+            :$this->error('修改个人信息失败，请稍后再试！');
     }
 }

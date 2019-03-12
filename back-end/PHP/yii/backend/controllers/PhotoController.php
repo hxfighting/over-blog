@@ -10,6 +10,7 @@ namespace backend\controllers;
 
 
 use app\models\Photo;
+use backend\exception\ValidateException;
 use yii\db\Query;
 
 class PhotoController extends BasicController
@@ -69,28 +70,25 @@ class PhotoController extends BasicController
      * 添加照片
      * Date: 2019-03-01 10:19
      * @return \yii\web\Response
+     * @throws ValidateException
      */
     public function actionPhotoAdd()
     {
-        $data = $this->post();
-        $this->photo->scenario = 'photoAdd';
-        $this->photo->attributes = $data;
-        if($this->photo->validate()){
-            $tr = \Yii::$app->db->beginTransaction();
-            try
-            {
-                $this->photo->save(false, ['created_at','updated_at']);
-                $image_data = $this->getImageData($this->photo->id, $data['image_url']);
-                \Yii::$app->db->createCommand()->insert('image',$image_data)->execute();
-                $tr->commit();
-                return $this->success('添加照片成功！');
-            } catch (\Exception $e)
-            {
-                $tr->rollBack();
-                return $this->error('添加照片失败，请稍后再试！');
-            }
+        $photo = $this->basicValidate($this->photo, 'photoAdd');
+        $data = $this->request_data;
+        $tr = \Yii::$app->db->beginTransaction();
+        try
+        {
+            $photo->save(false, ['created_at','updated_at']);
+            $image_data = $this->getImageData($this->photo->id, $data['image_url']);
+            \Yii::$app->db->createCommand()->insert('image',$image_data)->execute();
+            $tr->commit();
+            return $this->success('添加照片成功！');
+        } catch (\Exception $e)
+        {
+            $tr->rollBack();
+            return $this->error('添加照片失败，请稍后再试！');
         }
-        return $this->error(current($this->photo->firstErrors));
     }
 
     /**
@@ -116,62 +114,56 @@ class PhotoController extends BasicController
      * 修改照片
      * Date: 2019-03-01 10:19
      * @return \yii\web\Response
+     * @throws ValidateException
      */
     public function actionPhotoUpdate()
     {
-        $data = $this->post();
-        $this->photo->scenario = 'photoUpdate';
-        $this->photo->attributes = $data;
-        if($this->photo->validate()){
-            $tr = \Yii::$app->db->beginTransaction();
-            try
-            {
-                $exist_photo = $this->photo->findOne($data['id']);
-                $exist_photo->save(false, ['updated_at']);
-                $type = implode('\\\\',explode('\\',$this->photo_type));
-                \Yii::$app->db
-                    ->createCommand()
-                    ->update('image',['image_url'=>$data['image_url']],"image_id = {$data['id']} and image_type = '{$type}'")
-                    ->execute();
-                $tr->commit();
-                return $this->success('修改照片成功！');
-            } catch (\Exception $e)
-            {
-                $tr->rollBack();
-                return $this->error('修改照片失败，请稍后再试！');
-            }
+        $this->basicValidate($this->photo, 'photoUpdate');
+        $data = $this->request_data;
+        $tr = \Yii::$app->db->beginTransaction();
+        try
+        {
+            $exist_photo = $this->photo->findOne($data['id']);
+            $exist_photo->save(false, ['updated_at']);
+            $type = implode('\\\\',explode('\\',$this->photo_type));
+            \Yii::$app->db
+                ->createCommand()
+                ->update('image',['image_url'=>$data['image_url']],"image_id = {$data['id']} and image_type = '{$type}'")
+                ->execute();
+            $tr->commit();
+            return $this->success('修改照片成功！');
+        } catch (\Exception $e)
+        {
+            $tr->rollBack();
+            return $this->error('修改照片失败，请稍后再试！');
         }
-        return $this->error(current($this->photo->firstErrors));
     }
 
     /**
      * 删除照片
      * Date: 2019-03-01 10:18
      * @return \yii\web\Response
+     * @throws ValidateException
      */
     public function actionDelPhoto()
     {
-        $data = $this->post();
-        $this->photo->scenario = 'delPhoto';
-        $this->photo->attributes = $data;
-        if($this->photo->validate()){
-            $tr = \Yii::$app->db->beginTransaction();
-            try
-            {
-                $this->photo->deleteAll(['id'=>$data['id']]);
-                $type = implode('\\\\',explode('\\',$this->photo_type));
-                \Yii::$app->db
-                    ->createCommand()
-                    ->delete('image',"image_id = {$data['id']} and image_type = '{$type}'")
-                    ->execute();
-                $tr->commit();
-                return $this->success('删除照片成功！');
-            } catch (\Exception $e)
-            {
-                $tr->rollBack();
-                return $this->error('删除照片失败，请稍后再试！');
-            }
+        $this->basicValidate($this->photo, 'delPhoto');
+        $data = $this->request_data;
+        $tr = \Yii::$app->db->beginTransaction();
+        try
+        {
+            $this->photo->deleteAll(['id'=>$data['id']]);
+            $type = implode('\\\\',explode('\\',$this->photo_type));
+            \Yii::$app->db
+                ->createCommand()
+                ->delete('image',"image_id = {$data['id']} and image_type = '{$type}'")
+                ->execute();
+            $tr->commit();
+            return $this->success('删除照片成功！');
+        } catch (\Exception $e)
+        {
+            $tr->rollBack();
+            return $this->error('删除照片失败，请稍后再试！');
         }
-        return $this->error(current($this->photo->firstErrors));
     }
 }

@@ -10,6 +10,7 @@ namespace backend\controllers;
 
 
 use app\models\RotationImage;
+use backend\exception\ValidateException;
 use yii\db\Exception;
 use yii\db\Query;
 
@@ -35,14 +36,14 @@ class RotationController extends BasicController
     public function actionRotationList()
     {
         $query = new Query();
-        $list = $query->from('rotation_image as r')->leftJoin('image as i',"r.id = i.image_id")
+        $list = $query->from('rotation_image as r')->leftJoin('image as i', "r.id = i.image_id")
             ->select('r.*,i.image_url,i.id as img_id')
-            ->where(['i.image_type'=>$this->rotation_type])
+            ->where(['i.image_type' => $this->rotation_type])
             ->orderBy('r.created_at desc')
             ->all();
         $list = $this->handleRotationListData($list);
-        return !empty($list)?$this->success('获取轮播图成功！',$list)
-            :$this->error('暂无轮播图数据！');
+        return !empty($list) ? $this->success('获取轮播图成功！', $list)
+            : $this->error('暂无轮播图数据！');
     }
 
     /**
@@ -53,12 +54,13 @@ class RotationController extends BasicController
      */
     private function handleRotationListData(array $list)
     {
-        if(!empty($list)){
+        if (!empty($list))
+        {
             foreach ($list as &$item)
             {
-                $item['created_at'] = date('Y/m/d H:i:s',$item['created_at']);
-                $item['updated_at'] = date('Y/m/d H:i:s',$item['updated_at']);
-                $item['image'] = ['words'=>$item['words'],'id'=>$item['id']];
+                $item['created_at'] = date('Y/m/d H:i:s', $item['created_at']);
+                $item['updated_at'] = date('Y/m/d H:i:s', $item['updated_at']);
+                $item['image'] = ['words' => $item['words'], 'id' => $item['id']];
                 $item['id'] = $item['img_id'];
             }
             unset($item);
@@ -70,28 +72,25 @@ class RotationController extends BasicController
      * 添加轮播图
      * Date: 2019-02-28 11:46
      * @return \yii\web\Response
+     * @throws ValidateException
      */
     public function actionRotationAdd()
     {
-        $data = $this->post();
-        $this->rotation->scenario = 'rotationAdd';
-        $this->rotation->attributes = $data;
-        if($this->rotation->validate()){
-            $tr = \Yii::$app->db->beginTransaction();
-            try
-            {
-                $this->rotation->save(false, ['words','created_at','updated_at']);
-                $image_data = $this->getImageData($this->rotation->id, $data['image_url']);
-                \Yii::$app->db->createCommand()->insert('image',$image_data)->execute();
-                $tr->commit();
-                return $this->success('添加轮播图成功！');
-            } catch (Exception $e)
-            {
-                $tr->rollBack();
-                return $this->error('添加轮播图失败，请稍后再试！');
-            }
+        $rotation = $this->basicValidate($this->rotation, 'rotationAdd');
+        $data = $this->request_data;
+        $tr = \Yii::$app->db->beginTransaction();
+        try
+        {
+            $rotation->save(false, ['words', 'created_at', 'updated_at']);
+            $image_data = $this->getImageData($this->rotation->id, $data['image_url']);
+            \Yii::$app->db->createCommand()->insert('image', $image_data)->execute();
+            $tr->commit();
+            return $this->success('添加轮播图成功！');
+        } catch (Exception $e)
+        {
+            $tr->rollBack();
+            return $this->error('添加轮播图失败，请稍后再试！');
         }
-        return $this->error(current($this->rotation->firstErrors));
     }
 
     /**
@@ -101,14 +100,14 @@ class RotationController extends BasicController
      * @param string $image_url
      * @return array
      */
-    private function getImageData(int $rotation_id,string $image_url)
+    private function getImageData(int $rotation_id, string $image_url)
     {
         $image_data = [
-            'image_id'=>$rotation_id,
-            'image_type'=>$this->rotation_type,
-            'created_at'=>time(),
-            'updated_at'=>time(),
-            'image_url'=>$image_url
+            'image_id' => $rotation_id,
+            'image_type' => $this->rotation_type,
+            'created_at' => time(),
+            'updated_at' => time(),
+            'image_url' => $image_url
         ];
         return $image_data;
     }
@@ -117,63 +116,57 @@ class RotationController extends BasicController
      * 修改轮播图信息
      * Date: 2019-02-28 13:22
      * @return \yii\web\Response
+     * @throws ValidateException
      */
     public function actionRotationUpdate()
     {
-        $data = $this->post();
-        $this->rotation->scenario = 'rotationUpdate';
-        $this->rotation->attributes = $data;
-        if($this->rotation->validate()){
-            $tr = \Yii::$app->db->beginTransaction();
-            try
-            {
-                $exist_rotation = $this->rotation->findOne($data['id']);
-                $exist_rotation->words = $data['words'];
-                $exist_rotation->save(false, ['words','updated_at']);
-                $type = implode('\\\\',explode('\\',$this->rotation_type));
-                \Yii::$app->db
-                    ->createCommand()
-                    ->update('image',['image_url'=>$data['image_url']],"image_id = {$data['id']} and image_type = '{$type}'")
-                    ->execute();
-                $tr->commit();
-                return $this->success('修改轮播图成功！');
-            } catch (Exception $e)
-            {
-                $tr->rollBack();
-                return $this->error('修改轮播图失败，请稍后再试！');
-            }
+        $this->basicValidate($this->rotation, 'rotationUpdate');
+        $data = $this->request_data;
+        $tr = \Yii::$app->db->beginTransaction();
+        try
+        {
+            $exist_rotation = $this->rotation->findOne($data['id']);
+            $exist_rotation->words = $data['words'];
+            $exist_rotation->save(false, ['words', 'updated_at']);
+            $type = implode('\\\\', explode('\\', $this->rotation_type));
+            \Yii::$app->db
+                ->createCommand()
+                ->update('image', ['image_url' => $data['image_url']], "image_id = {$data['id']} and image_type = '{$type}'")
+                ->execute();
+            $tr->commit();
+            return $this->success('修改轮播图成功！');
+        } catch (Exception $e)
+        {
+            $tr->rollBack();
+            return $this->error('修改轮播图失败，请稍后再试！');
         }
-        return $this->error(current($this->rotation->firstErrors));
     }
 
     /**
      * 删除轮播图
      * Date: 2019-02-28 13:57
      * @return \yii\web\Response
+     * @throws ValidateException
      */
     public function actionDelRotation()
     {
-        $data = $this->post();
-        $this->rotation->scenario = 'delRotation';
-        $this->rotation->attributes = $data;
-        if($this->rotation->validate()){
-            $tr = \Yii::$app->db->beginTransaction();
-            try
-            {
-                $this->rotation->deleteAll(['id'=>$data['id']]);
-                $type = implode('\\\\',explode('\\',$this->rotation_type));
-                \Yii::$app->db
-                    ->createCommand()
-                    ->delete('image',"image_id = {$data['id']} and image_type = '{$type}'")
-                    ->execute();
-                $tr->commit();
-                return $this->success('删除轮播图成功！');
-            } catch (Exception $e)
-            {
-                $tr->rollBack();
-                return $this->error('删除轮播图失败，请稍后再试！');
-            }
+        $this->basicValidate($this->rotation, 'delRotation');
+        $data = $this->request_data;
+        $tr = \Yii::$app->db->beginTransaction();
+        try
+        {
+            $this->rotation->deleteAll(['id' => $data['id']]);
+            $type = implode('\\\\', explode('\\', $this->rotation_type));
+            \Yii::$app->db
+                ->createCommand()
+                ->delete('image', "image_id = {$data['id']} and image_type = '{$type}'")
+                ->execute();
+            $tr->commit();
+            return $this->success('删除轮播图成功！');
+        } catch (Exception $e)
+        {
+            $tr->rollBack();
+            return $this->error('删除轮播图失败，请稍后再试！');
         }
-        return $this->error(current($this->rotation->firstErrors));
     }
 }

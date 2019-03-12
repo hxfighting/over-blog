@@ -12,6 +12,7 @@ namespace backend\controllers;
 use app\models\Article;
 use app\models\ArticleComment;
 use app\models\User;
+use backend\exception\ValidateException;
 use backend\job\CommentReplyJob;
 use yii\db\Exception;
 use yii\db\Query;
@@ -31,40 +32,35 @@ class CommentController extends BasicController
      * 获取评论列表
      * Date: 2019-03-08 09:40
      * @return \yii\web\Response
+     * @throws ValidateException
      */
     public function actionCommentList()
     {
-        $data = $this->get();
-        $this->comment->scenario = 'commentList';
-        $this->comment->attributes = $data;
-        if ($this->comment->validate())
+        $this->basicValidate($this->comment, 'commentList');
+        $article = Article::find()->select('id,title')->all();
+        $query = ArticleComment::find()
+            ->alias('ac')
+            ->leftJoin('user as u', "ac.user_id = u.id")
+            ->leftJoin('user as r', "ac.reply_id = r.id")
+            ->select('ac.*,u.name as username,r.name as reply_name');
+        if (isset($data['article_id']) && is_numeric(($this->request_data)['article_id']))
         {
-            $article = Article::find()->select('id,title')->all();
-            $query = ArticleComment::find()
-                ->alias('ac')
-                ->leftJoin('user as u', "ac.user_id = u.id")
-                ->leftJoin('user as r', "ac.reply_id = r.id")
-                ->select('ac.*,u.name as username,r.name as reply_name');
-            if (isset($data['article_id']) && is_numeric($data['article_id']))
-            {
-                $query = $query->where(['article_id' => $data['article_id']]);
-            }
-            $total = (int)($query->count());
-            $list = $query
-                ->offset(($data['pageNum'] - 1) * $data['pageSize'])
-                ->limit($data['pageSize'])
-                ->orderBy('created_at DESC')
-                ->asArray()
-                ->all();
-            if (!empty($list))
-            {
-                $list = $this->handleCommentListData($list);
-                $data = compact('list', 'total', 'article');
-                return $this->success('获取评论列表成功！', $data);
-            }
-            return $this->error('暂无评论列表数据！');
+            $query = $query->where(['article_id' => ($this->request_data)['article_id']]);
         }
-        return $this->error(current($this->comment->firstErrors));
+        $total = (int)($query->count());
+        $list = $query
+            ->offset((($this->request_data)['pageNum'] - 1) * ($this->request_data)['pageSize'])
+            ->limit(($this->request_data)['pageSize'])
+            ->orderBy('created_at DESC')
+            ->asArray()
+            ->all();
+        if (!empty($list))
+        {
+            $list = $this->handleCommentListData($list);
+            $data = compact('list', 'total', 'article');
+            return $this->success('获取评论列表成功！', $data);
+        }
+        return $this->error('暂无评论列表数据！');
     }
 
     /**
@@ -93,77 +89,68 @@ class CommentController extends BasicController
      * 删除评论
      * Date: 2019-03-08 10:59
      * @return \yii\web\Response
+     * @throws ValidateException
      */
     public function actionDelComment()
     {
-        $data = $this->post();
-        $this->comment->scenario = 'commentDelete';
-        $this->comment->attributes = $data;
-        if ($this->comment->validate())
+        $this->basicValidate($this->comment, 'commentDelete');
+
+        $tr = \Yii::$app->db->beginTransaction();
+        try
         {
-            $tr = \Yii::$app->db->beginTransaction();
-            try
-            {
-                $this->comment->deleteAll(['id' => $data['id']]);
-                $this->comment->deleteAll(['pid' => $data['id']]);
-                $tr->commit();
-                return $this->success('删除评论成功！');
-            } catch (Exception $e)
-            {
-                $tr->rollBack();
-                return $this->error('删除评论失败，请稍后再试！');
-            }
+            $this->comment->deleteAll(['id' => ($this->request_data)['id']]);
+            $this->comment->deleteAll(['pid' => ($this->request_data)['id']]);
+            $tr->commit();
+            return $this->success('删除评论成功！');
+        } catch (Exception $e)
+        {
+            $tr->rollBack();
+            return $this->error('删除评论失败，请稍后再试！');
         }
-        return $this->error(current($this->comment->firstErrors));
     }
 
     /**
      * 回复评论
      * Date: 2019-03-08 11:39
      * @return \yii\web\Response
+     * @throws ValidateException
      */
     public function actionReply()
     {
-        $data = $this->post();
-        $this->comment->scenario = 'commentReply';
-        $this->comment->attributes = $data;
-        if ($this->comment->validate())
+        $this->basicValidate($this->comment, 'commentReply');
+        $exist_comment = $this->comment->findOne(($this->request_data)['id']);
+        $user_id = $this->getUserId($exist_comment['reply_id']);
+        if (!$user_id)
         {
-            $exist_comment = $this->comment->findOne($data['id']);
-            $user_id = $this->getUserId($exist_comment['reply_id']);
-            if (!$user_id)
-            {
-                return $this->error('请先绑定前台管理员！');
-            }
-            $co_data = [
-                'pid' => $exist_comment['pid'] ? $exist_comment['pid'] : $exist_comment['user_id'],
-                'content' => $data['reply_content'],
+            return $this->error('请先绑定前台管理员！');
+        }
+        $co_data = [
+            'pid' => $exist_comment['pid'] ? $exist_comment['pid'] : $exist_comment['user_id'],
+            'content' => ($this->request_data)['reply_content'],
+            'user_id' => $user_id,
+            'reply_id' => $exist_comment['user_id'],
+            'article_id' => $exist_comment['article_id'],
+            'created_at' => time(),
+            'updated_at' => time()
+        ];
+        $tr = \Yii::$app->db->beginTransaction();
+        try
+        {
+            \Yii::$app->db->createCommand()->insert('article_comment', $co_data)->execute();
+            $comment_data = [
+                'article_id' => $exist_comment['article_id'],
                 'user_id' => $user_id,
                 'reply_id' => $exist_comment['user_id'],
-                'article_id' => $exist_comment['article_id'],
-                'created_at' => time(),
-                'updated_at' => time()
+                'reply_content' => ($this->request_data)['reply_content']
             ];
-            $tr = \Yii::$app->db->beginTransaction();
-            try
-            {
-                \Yii::$app->db->createCommand()->insert('article_comment', $co_data)->execute();
-                $comment_data = [
-                    'article_id' => $exist_comment['article_id'],
-                    'user_id' => $user_id,
-                    'reply_id' => $exist_comment['user_id'],
-                    'reply_content' => $data['reply_content']
-                ];
-                \Yii::$app->queue->push(new CommentReplyJob($comment_data));
-                $tr->commit();
-                return $this->success('回复评论成功！');
-            } catch (Exception $e)
-            {
-                $tr->rollBack();
-                return $this->error('回复评论失败！');
-            }
+            \Yii::$app->queue->push(new CommentReplyJob($comment_data));
+            $tr->commit();
+            return $this->success('回复评论成功！');
+        } catch (Exception $e)
+        {
+            $tr->rollBack();
+            return $this->error('回复评论失败！');
         }
-        return $this->error(current($this->comment->firstErrors));
     }
 
     /**

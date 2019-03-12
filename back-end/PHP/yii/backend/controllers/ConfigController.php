@@ -10,6 +10,7 @@ namespace backend\controllers;
 
 
 use app\models\WebConfig;
+use backend\exception\ValidateException;
 
 class ConfigController extends BasicController
 {
@@ -32,61 +33,55 @@ class ConfigController extends BasicController
      * 获取配置列表
      * Date: 2019-03-11 09:42
      * @return \yii\web\Response
+     * @throws ValidateException
      */
     public function actionConfigList()
     {
-        $data = $this->get();
-        $this->config->scenario = 'configList';
-        $this->config->attributes = $data;
-        if($this->config->validate()){
-            $query = $this->config->find();
-            if(isset($data['type']) && !empty($data['type'])){
-                $query = $query->where(['type'=>$data['type']]);
-            }
-            $total = (int)($query->count());
-            $list = $query
-                ->offset(($data['pageNum'] - 1) * $data['pageSize'])
-                ->limit($data['pageSize'])
-                ->orderBy('created_at DESC')
-                ->all();
-            $data = compact('list','total');
-            return !empty($list)?$this->success('获取配置列表成功！',$data)
-                :$this->error('暂无配置列表数据！');
+        $this->basicValidate($this->config, 'configList');
+        $query = $this->config->find();
+        if (isset(($this->request_data)['type']) && !empty(($this->request_data)['type']))
+        {
+            $query = $query->where(['type' => ($this->request_data)['type']]);
         }
-        return $this->error(current($this->config->firstErrors));
+        $total = (int)($query->count());
+        $list = $query
+            ->offset((($this->request_data)['pageNum'] - 1) * ($this->request_data)['pageSize'])
+            ->limit(($this->request_data)['pageSize'])
+            ->orderBy('created_at DESC')
+            ->all();
+        $data = compact('list', 'total');
+        return !empty($list) ? $this->success('获取配置列表成功！', $data)
+            : $this->error('暂无配置列表数据！');
     }
 
     /**
      * 添加配置项
      * Date: 2019-03-11 09:50
      * @return \yii\web\Response
+     * @throws ValidateException
      */
     public function actionAddConfig()
     {
-        $data = $this->post();
-        $this->config->scenario = 'addConfig';
-        $this->config->attributes = $data;
-        if($this->config->validate()){
-            $check = $this->checkConfigVal($data);
-            if(!$check['flag']){
-                return $this->error($check['msg']);
-            }
-            $exist = $this->config->where(['name' => $data['name'], 'type' => $data['type']])->one();
-            if (!isset($exist['id']))
-            {
-                $this->config->name = $data['name'];
-                $this->config->type = $data['type'];
-                $this->config->title = $data['title'];
-                $this->config->val = $data['val'];
-                $res = $this->config->save(false);
-                return $res ? $this->success('添加配置项成功!')
-                    : $this->error('添加配置项失败,请稍后再试!');
-            } else
-            {
-                return $this->error('已添加该配置,请勿重复添加!');
-            }
+        $config = $this->basicValidate($this->config, 'addConfig');
+        $check = $this->checkConfigVal($this->request_data);
+        if (!$check['flag'])
+        {
+            return $this->error($check['msg']);
         }
-        return $this->error(current($this->config->firstErrors));
+        $exist = $this->config->where(['name' => ($this->request_data)['name'], 'type' => ($this->request_data)['type']])->one();
+        if (!isset($exist['id']))
+        {
+            $config->name = ($this->request_data)['name'];
+            $config->type = ($this->request_data)['type'];
+            $config->title = ($this->request_data)['title'];
+            $config->val = ($this->request_data)['val'];
+            $res = $config->save(false);
+            return $res ? $this->success('添加配置项成功!')
+                : $this->error('添加配置项失败,请稍后再试!');
+        } else
+        {
+            return $this->error('已添加该配置,请勿重复添加!');
+        }
     }
 
     //检查数据
@@ -97,63 +92,56 @@ class ConfigController extends BasicController
         {
             if ($data['name'] == 'copyright' && $count >= 1)
             {
-                return ['msg'=>'版权信息只能有一条!','flag'=>false];
+                return ['msg' => '版权信息只能有一条!', 'flag' => false];
             }
             if ($count >= 4)
             {
-                return ['msg'=>'footer内容每一项最多添加4个!','flag'=>false];
+                return ['msg' => 'footer内容每一项最多添加4个!', 'flag' => false];
             }
         }
-        return ['flag'=>true];
+        return ['flag' => true];
     }
 
     /**
      * 修改配置项
      * Date: 2019-03-11 09:56
      * @return \yii\web\Response
+     * @throws ValidateException
      */
     public function actionUpdateConfig()
     {
-        $data = $this->post();
-        $this->config->scenario = 'configUpdate';
-        $this->config->attributes = $data;
-        if($this->config->validate()){
-            $check = $this->checkConfigVal($data);
-            if(!$check['flag']){
-                return $this->error($check['msg']);
-            }
-            $exist = $this->config->where(['name' => $data['name'], 'type' => $data['type']])->one();
-            if (isset($exist['id']) && $exist['id'] != $data['id'])
-            {
-                return $this->error('已添加该配置,请勿重复添加!');
-            }
-            $exist_config = $this->config->findOne($data['id']);
-            $exist_config->name = $data['name'];
-            $exist_config->type = $data['type'];
-            $exist_config->title = $data['title'];
-            $exist_config->val = $data['val'];
-            $res = $exist_config->save(false,['updated_at','name','type','title','val']);
-            return $res ? $this->success('修改配置项成功!')
-                : $this->error('修改配置项失败,请稍后再试!');
+        $this->basicValidate($this->config, 'configUpdate');
+        $check = $this->checkConfigVal($this->request_data);
+        if (!$check['flag'])
+        {
+            return $this->error($check['msg']);
         }
-        return $this->error(current($this->config->firstErrors));
+        $exist = $this->config->where(['name' => ($this->request_data)['name'], 'type' => ($this->request_data)['type']])->one();
+        if (isset($exist['id']) && $exist['id'] != ($this->request_data)['id'])
+        {
+            return $this->error('已添加该配置,请勿重复添加!');
+        }
+        $exist_config = $this->config->findOne(($this->request_data)['id']);
+        $exist_config->name = ($this->request_data)['name'];
+        $exist_config->type = ($this->request_data)['type'];
+        $exist_config->title = ($this->request_data)['title'];
+        $exist_config->val = ($this->request_data)['val'];
+        $res = $exist_config->save(false, ['updated_at', 'name', 'type', 'title', 'val']);
+        return $res ? $this->success('修改配置项成功!')
+            : $this->error('修改配置项失败,请稍后再试!');
     }
 
     /**
      * 删除配置
      * Date: 2019-03-11 10:06
      * @return \yii\web\Response
+     * @throws ValidateException
      */
     public function actionDelConfig()
     {
-        $data = $this->post();
-        $this->config->scenario = 'configDelete';
-        $this->config->attributes = $data;
-        if($this->config->validate()){
-            $res = $this->config->deleteAll(['id'=>$data['id']]);
-            return $res ? $this->success('删除配置成功!')
-                : $this->error('删除配置失败,请稍后再试!');
-        }
-        return $this->error(current($this->config->firstErrors));
+        $this->basicValidate($this->config, 'configDelete');
+        $res = $this->config->deleteAll(['id' => ($this->request_data)['id']]);
+        return $res ? $this->success('删除配置成功!')
+            : $this->error('删除配置失败,请稍后再试!');
     }
 }

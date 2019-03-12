@@ -6,6 +6,9 @@
 - Redis 3.0+
 - node.js 8.0+
 
+## 说明
+> 目前Laravel版本已经完成，Yii2版本正在开发中，下面的操作是基于Laravel版本来进行的，微信小程序需要自己去编写小程序代码实现小程序登录，具体可以参考我这篇文章: [微信小程序实现微信扫码登录](https://www.ohdata.top/article/19)
+
 ## 安装
 
 1. git clone https://github.com/hxfighting/over-blog.git -b 3.0
