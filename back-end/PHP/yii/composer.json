@@ -23,7 +23,8 @@
         "lcobucci/jwt": "^3.2",
         "yiisoft/yii2-redis": "^2.0",
         "yiisoft/yii2-queue": "^2.1",
-        "coderius/yii2-geo-ip": "^1.0"
+        "coderius/yii2-geo-ip": "^1.0",
+        "kriss/yii2-filesystem-qiniu": "^1.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

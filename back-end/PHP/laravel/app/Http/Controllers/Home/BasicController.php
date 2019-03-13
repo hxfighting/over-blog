@@ -77,7 +77,7 @@ class BasicController extends Controller
             $val = db('web_config')
                 ->where('name','blog_view_count')
                 ->value('val');
-            Cache::put($key,$val,1440);
+            Cache::put($key,$val,86400);
         }
     }
 

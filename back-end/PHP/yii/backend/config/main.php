@@ -74,6 +74,13 @@ return [
         'geoip' => [
             'class' => 'coderius\geoIp\GeoIP'
         ],
+        'qiniu' => [
+            'class' => \kriss\qiniu\QiNiuComponent::class,
+            'access_key' => 'xxx',
+            'secret_key' => 'xxx',
+            'bucket' => 'xxx',
+            'domain' => 'xxx.xxx.com'
+        ],
 
     ],
     'params' => $params,

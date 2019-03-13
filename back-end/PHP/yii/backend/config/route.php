@@ -4,7 +4,7 @@ return [
     'enablePrettyUrl' => true,
     'showScriptName' => false,
     'rules' => [
-        'GET /' => 'dashboard/index',
+        'POST api/admin/upload' => 'upload/upload',
         'GET api/captcha' => 'basic/captcha',                   //获取验证码
         'GET api/admin' => 'admin/admin-info',                  //登录获取管理员信息
         'PUT api/admin' => 'admin/change-info',                 //管理员修改个人信息
