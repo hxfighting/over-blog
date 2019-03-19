@@ -146,10 +146,10 @@
                 {/foreach}
             </ul>
             <ul class="list-inline navbar-right top-social">
-                @foreach($socialData as $so)
-                <li><a title="博主" href=""
-                       target="_blank"><i class="fa fa-"></i></a></li>
-                @endforeach
+                {foreach $this->params['socialData'] as $so}
+                    <li><a title="博主" href="{$so.val}"
+                           target="_blank"><i class="fa fa-{$so.name}"></i></a></li>
+                {/foreach}
             </ul>
         </div>
     </nav>
@@ -178,27 +178,27 @@
                     <div class="heading"><h4>标签云</h4></div>
                     <br/>
                     <div class="content">
-                        @foreach($tagCloud as $tag)
-                        <a class="label" href="tag/'.$tag['id'])}}">ffff</a>
-                        @endforeach
+                        {foreach $this->params['tagCloud'] as $tag}
+                            <a class="label" href="/tag/{$tag.id}">{$tag.name}</a>
+                        {/foreach}
                     </div>
                 </div>
                 <div class="widget ">
                     <div class="heading"><h4>最热文章</h4></div>
                     <br/>
                     <div class="content">
-                        @foreach($hotArticle as $hot)
-                        <div class="wrap-vid">
-                            <h3 class="vid-name"><a href="article/'.$hot->id)}}"
-                                                    title="jjjjj">jjjjjj</a>
-                            </h3>
-                            <div class="info">
-                                <span><i class="fa fa-calendar"></i>jjjjj</span>
-                                <span><i class="fa fa-eye"></i>jjj</span>
-                                <span><i class="fa fa-comments-o"></i>jjj&nbsp;Comments</span>
+                        {foreach $this->params['hotArticle'] as $hot}
+                            <div class="wrap-vid">
+                                <h3 class="vid-name"><a href="/article/{$hot.id}"
+                                                        title="{$hot.title}">{$hot.title}</a>
+                                </h3>
+                                <div class="info">
+                                    <span><i class="fa fa-calendar"></i>{date('Y/m/d',intval($hot.created_at))}</span>
+                                    <span><i class="fa fa-eye"></i>{$hot.click}</span>
+                                    <span><i class="fa fa-comments-o"></i>{$hot.comment_count}&nbsp;Comments</span>
+                                </div>
                             </div>
-                        </div>
-                        @endforeach
+                        {/foreach}
                     </div>
                 </div>
                 <!---- Start Widget ---->

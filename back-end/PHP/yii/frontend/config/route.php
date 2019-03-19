@@ -7,6 +7,7 @@ return [
     'enablePrettyUrl' => true,
     'showScriptName' => false,
     'rules' => [
-        'GET /' => 'index/index'
+        'GET /' => 'index/index',
+        'GET /tag/<id>' =>'tag/index'
     ],
 ];
