@@ -36,7 +36,7 @@ class NotifyUserListener implements ShouldQueue
             $data = $event->data;
             $comment_user_name = User::where('id', $data['user_id'])->value('name');
             $article_title = Article::where('id', $data['article_id'])->value('title');
-            $url = config('app.url') . '/article/' . $data['article_id'] . '.html';
+            $url = config('app.url') . '/article/' . $data['article_id'];
             if (isset($data['reply_id']) && $data['reply_id'])
             {
                 $reply_user = User::find($data['reply_id']);

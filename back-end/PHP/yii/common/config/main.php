@@ -9,5 +9,13 @@ return [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
+        'view' => [
+            'renderers' => [
+                'tpl' => [
+                    'class' => 'yii\smarty\ViewRenderer',
+                    'cachePath' => '@runtime/Smarty/cache',
+                ],
+            ],
+        ],
     ],
 ];
