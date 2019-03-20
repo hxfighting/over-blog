@@ -19,4 +19,12 @@ return [
      * 热门文章缓存key
      */
     'hot_article_cache_key' => 'blog_hot_article',
+    /**
+     * 评论缓存key
+     */
+    'comment_cache_key' => 'blog_comment',
+    /**
+     * 友联缓存Key
+     */
+    'link_cache_key' => 'blog_link',
 ];

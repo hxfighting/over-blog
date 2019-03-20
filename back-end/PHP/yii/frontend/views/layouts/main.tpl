@@ -132,7 +132,7 @@
                                 <div class="dropdown-inner">
                                     <ul class="list-unstyled">
                                         {foreach $v.children as $child}
-                                        <li><a href="{$child.url}">{$child.title}</a></li>
+                                            <li><a href="{$child.url}">{$child.title}</a></li>
                                         {/foreach}
                                     </ul>
                                 </div>
@@ -190,7 +190,7 @@
                         {foreach $this->params['hotArticle'] as $hot}
                             <div class="wrap-vid">
                                 <h3 class="vid-name"><a href="/article/{$hot.id}"
-                                                        title="{$hot.title}">{$hot.title}</a>
+                                                        title="{$hot.title}">{mb_strimwidth($hot.title,0,30,'...','utf8')}</a>
                                 </h3>
                                 <div class="info">
                                     <span><i class="fa fa-calendar"></i>{date('Y/m/d',intval($hot.created_at))}</span>
@@ -206,33 +206,37 @@
                     <div class="heading"><h4>最新评论</h4></div>
                     <br/>
                     <div class="content">
-                        @if($comment_t->isEmpty())
-                        <h6 class="text-center">暂时没有评论</h6>
-                        @else
-                        @foreach($comment_t as $v)
-                        <div class="post">
-                            <a> <img src="" class="img-circle img-responsive"
-                                     title=""/></a>
-                            <div class="wrapper">
-                                <a href="article/'.$v->article_id)}}"
-                                   title=""><span></span></a>
-                                <ul class="list-inline">
-                                    <li><i class="fa fa-calendar"></i>&nbsp;</li>
-                                </ul>
-                            </div>
-                        </div>
-                        @endforeach
-                        @endif
+                        {if empty($this->params['comment_t']) }
+                            <h6 class="text-center">暂时没有评论</h6>
+                        {else}
+                            {foreach $this->params['comment_t'] as $v}
+                                <div class="post">
+                                    <a> <img src="{$v.avatar}" class="img-circle img-responsive"
+                                             title="{$v.name}"/></a>
+                                    <div class="wrapper">
+                                        <a href="/article/{$v.article_id}"
+                                           title="{$v.content}"><span>{mb_strimwidth($v.content,0,20,'...','utf8')}</span></a>
+                                        <ul class="list-inline">
+                                            <li><i class="fa fa-calendar"></i>&nbsp;{date('Y/m/d',$v.created_at)}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            {/foreach}
+                        {/if}
                     </div>
                 </div>
                 <div class="widget wid-tags">
                     <div class="heading"><h4>友情链接</h4></div>
                     <p><a style="color: black;cursor: pointer" class="link_modal">申请友链</a></p>
                     <div class="content">
-                        @foreach($friendLink as $link)
-                        <a class="label" href="" style="color: black"
-                           title="" target="_blank"></a>
-                        @endforeach
+                        {if !empty($this->params['friendLink']) }
+                            {foreach $this->params['friendLink'] as $link }
+                                <a class="label" href="{$link.url}" style="color: black"
+                                   title="{$link.description}" target="_blank">{$link.name}</a>
+                            {/foreach}
+                        {else}
+                            <span>暂无友联数据</span>
+                        {/if}
                     </div>
                 </div>
 

@@ -11,6 +11,8 @@ namespace frontend\controllers;
 
 use frontend\models\Article;
 use frontend\models\Category;
+use frontend\models\Comment;
+use frontend\models\Link;
 use frontend\models\Tag;
 use frontend\models\WebConfig;
 use yii\web\Controller;
@@ -41,6 +43,8 @@ class BasicController extends Controller
         $this->getSocialData();
         $this->getTagData();
         $this->getHotArticleData();
+        $this->getCommentData();
+        $this->getLinkData();
     }
 
     /**
@@ -102,6 +106,41 @@ class BasicController extends Controller
         },$seconds);
         \Yii::$app->view->params['hotArticle'] = $data;
     }
+
+    /**
+     * 获取评论
+     * Date: 2019-03-20 13:42
+     */
+    private function getCommentData()
+    {
+        $data = $this->cache->getOrSet(\Yii::$app->params['comment_cache_key'], function () {
+            return Comment::find()
+                ->join('LEFT JOIN','user','user.id=article_comment.user_id')
+                ->select('article_comment.*,user.name,user.avatar')
+                ->asArray()
+                ->limit(10)
+                ->orderBy('created_at desc')
+                ->all();
+        });
+        \Yii::$app->view->params['comment_t'] = $data;
+    }
+
+    /**
+     * 获取友联数据
+     * Date: 2019-03-20 13:47
+     */
+    private function getLinkData()
+    {
+        $data = $this->cache->getOrSet(\Yii::$app->params['link_cache_key'], function () {
+            return Link::find()
+                ->orderBy('order desc,created_at asc')
+                ->where(['is_show'=>1])
+                ->asArray()
+                ->all();
+        });
+        \Yii::$app->view->params['friendLink'] = $data;
+    }
+
 
 
 }

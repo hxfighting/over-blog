@@ -32,6 +32,14 @@ return [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
                 ],
+                [
+                    'class' => 'frontend\controllers\SqlController',
+                    'levels' => ['info'],
+                    'categories' => [
+                        'yii\db\Command::query',
+                        'yii\db\Command::execute',
+                    ]
+                ]
             ],
         ],
         'errorHandler' => [
