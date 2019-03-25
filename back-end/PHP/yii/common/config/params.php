@@ -27,4 +27,8 @@ return [
      * 友联缓存Key
      */
     'link_cache_key' => 'blog_link',
+    /**
+     * footer内容
+     */
+    'footer_cache_key' => 'blog_footer'
 ];

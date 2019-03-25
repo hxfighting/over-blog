@@ -45,6 +45,7 @@ class BasicController extends Controller
         $this->getHotArticleData();
         $this->getCommentData();
         $this->getLinkData();
+        $this->getFooterData();
     }
 
     /**
@@ -139,6 +140,44 @@ class BasicController extends Controller
                 ->all();
         });
         \Yii::$app->view->params['friendLink'] = $data;
+    }
+
+    /**
+     * 获取footer内容
+     * Date: 2019-03-25 15:32
+     */
+    private function getFooterData()
+    {
+        $data = $this->cache->getOrSet(\Yii::$app->params['footer_cache_key'], function () {
+            $data = WebConfig::find()
+                ->where(['type'=>2])
+                ->asArray()
+                ->all();
+            return $this->handleFooterData($data);
+        });
+
+        \Yii::$app->view->params['footerData'] = $data;
+    }
+
+    /**
+     * 处理footer内容
+     * Date: 2019-03-25 15:32
+     * @param $data
+     * @return array
+     */
+    private function handleFooterData($data)
+    {
+        $da = array_map(function ($value){
+            return [];
+        },array_flip(array_unique(array_column($data,'name'))));
+
+        foreach ($data as $datum)
+        {
+            if(isset($da[$datum['name']])){
+                $da[$datum['name']][] = $datum;
+            }
+        }
+        return $da;
     }
 
 

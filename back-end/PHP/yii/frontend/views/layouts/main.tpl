@@ -289,11 +289,13 @@
                     <div class="footer-heading"><h1><span style="color: #fff;">拖油瓶</span></h1></div>
                     <br/>
                     <div class="content">
-                        @if(isset($footerData['famous_remark']))
-                        @foreach($footerData['famous_remark'] as $fa)
-                        <p></p>
-                        @endforeach
-                        @endif
+                        {if isset($this->params['footerData']['famous_remark']) && !empty($this->params['footerData']['famous_remark']) }
+                            {foreach $this->params['footerData']['famous_remark'] as $v }
+                                <p>{$v.val}</p>
+                            {/foreach}
+                        {else}
+                            <p>暂无名言</p>
+                        {/if}
                     </div>
                 </div>
                 <div class="col-md-4 col-footer footer-3">
@@ -301,7 +303,9 @@
                     <br/>
                     <div class="content">
                         <ul>
-                            <li><i class="fa fa-cogs"></i>&nbsp;框架：</li>
+                            <li>
+                                <i class="fa fa-cogs"></i>&nbsp;框架：{$this->params['footerData']['blog_related'][0]['val']}
+                            </li>
                             <li><i class="fa fa-list-ol"></i>&nbsp;文章总计：&nbsp;&nbsp;篇</li>
                             <li>
                                 <i class="fa fa-group"></i>&nbsp;访问总计：&nbsp;
@@ -316,13 +320,15 @@
                     <br/>
                     <div class="content">
                         <ul>
-                            @if(isset($footerData['blogger_collection']))
-                            @foreach($footerData['blogger_collection'] as $bl)
-                            <li><a href="" target="_blank" title=""
-                                   style="color: whitesmoke"></a>
-                            </li>
-                            @endforeach
-                            @endif
+                            {if isset($this->params['footerData']['blogger_collection']) && !empty($this->params['footerData']['blogger_collection'])}
+                                {foreach $this->params['footerData']['blogger_collection'] as $v}
+                                    <li><a href="{$v.val}" target="_blank" title="{$v.title}"
+                                           style="color: whitesmoke">{$v.title}</a>
+                                    </li>
+                                {/foreach}
+                            {else}
+                                <li>暂无长逛内容</li>
+                            {/if}
                             <li><a></a>
                             </li>
                         </ul>
