@@ -167,10 +167,7 @@ class BasicController extends Controller
      */
     private function handleFooterData($data)
     {
-        $da = array_map(function ($value){
-            return [];
-        },array_flip(array_unique(array_column($data,'name'))));
-
+        $da = array_fill_keys(array_unique(array_column($data,'name')),[]);
         foreach ($data as $datum)
         {
             if(isset($da[$datum['name']])){
