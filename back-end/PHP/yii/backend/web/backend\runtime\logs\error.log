@@ -1,0 +1,2780 @@
+2019-02-21 11:38:52 [127.0.0.1][-][-][error][RuntimeException] RuntimeException: Error while decoding to JSON: Control character error, possibly incorrectly encoded in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/lcobucci/jwt/src/Parsing/Decoder.php:36
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/lcobucci/jwt/src/Parser.php(112): Lcobucci\JWT\Parsing\Decoder->jsonDecode('\x05\xE6\xABz\xB7\xB2'G\x97\x02#\xA2$\xA5u...')
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/lcobucci/jwt/src/Parser.php(60): Lcobucci\JWT\Parser->parseHeader('Bearer eyJ0eXAi...')
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/common/helper/Token.php(64): Lcobucci\JWT\Parser->parse('Bearer eyJ0eXAi...')
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/controllers/BasicController.php(47): common\helper\Token::getUserId()
+#4 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php(155): backend\controllers\BasicController->beforeAction(Object(yii\base\InlineAction))
+#5 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('admin-info', Array)
+#6 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('admin/admin-inf...', Array)
+#7 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#8 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#9 {main}
+2019-02-21 11:38:52 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG4dTKn4pcruX46vUOqguQAAAAQ'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG4dTKn4pcruX46vUOqguQAAAAQ'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => 'b6cff655-1fdb-49a3-99aa-ace936e84298'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '64'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '60587'
+    'REDIRECT_URL' => '/api/admin'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550720332.19
+    'REQUEST_TIME' => 1550720332
+]
+2019-02-21 11:39:16 [127.0.0.1][-][-][error][yii\base\ErrorException:2] yii\base\ErrorException: Invalid argument supplied for foreach() in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/Command.php:361
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/Command.php(361): yii\base\ErrorHandler->handleError(2, 'Invalid argumen...', '/Users/huxin/My...', 361, Array)
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/Connection.php(728): yii\db\Command->bindValues(1)
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/ActiveQuery.php(330): yii\db\Connection->createCommand('SELECT * FROM `...', 1)
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/Query.php(274): yii\db\ActiveQuery->createCommand(Object(yii\db\Connection))
+#4 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/ActiveQuery.php(300): yii\db\Query->one(NULL)
+#5 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/controllers/AdminController.php(64): yii\db\ActiveQuery->one()
+#6 [internal function]: backend\controllers\AdminController->actionAdminInfo()
+#7 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#8 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#9 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('admin-info', Array)
+#10 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('admin/admin-inf...', Array)
+#11 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#12 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#13 {main}
+2019-02-21 11:39:15 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG4dY5zdNw-OxrD-eeB7EAAAAAU'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG4dY5zdNw-OxrD-eeB7EAAAAAU'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => 'ad2a6681-210b-4a67-ad7f-9408b147629f'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '64'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '60686'
+    'REDIRECT_URL' => '/api/admin'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550720355.921
+    'REQUEST_TIME' => 1550720355
+]
+2019-02-21 11:39:45 [127.0.0.1][-][-][error][yii\base\InvalidArgumentException] yii\base\InvalidArgumentException: Operator 'ID' requires two operands. in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/conditions/SimpleCondition.php:79
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/QueryBuilder.php(1569): yii\db\conditions\SimpleCondition::fromArrayDefinition('ID', Array)
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/QueryBuilder.php(1539): yii\db\QueryBuilder->createConditionFromArray(Array)
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/QueryBuilder.php(1352): yii\db\QueryBuilder->buildCondition(Array, '<span class="st...')
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/QueryBuilder.php(235): yii\db\QueryBuilder->buildWhere(Array, '<span class="st...')
+#4 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/ActiveQuery.php(324): yii\db\QueryBuilder->build(Object(yii\db\Query))
+#5 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/Query.php(274): yii\db\ActiveQuery->createCommand(Object(yii\db\Connection))
+#6 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/ActiveQuery.php(300): yii\db\Query->one(NULL)
+#7 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/controllers/AdminController.php(64): yii\db\ActiveQuery->one()
+#8 [internal function]: backend\controllers\AdminController->actionAdminInfo()
+#9 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#10 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#11 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('admin-info', Array)
+#12 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('admin/admin-inf...', Array)
+#13 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#14 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#15 {main}
+2019-02-21 11:39:45 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG4dgVjS@2-ypIJ96Hgi9QAAAAM'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG4dgVjS@2-ypIJ96Hgi9QAAAAM'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => '48007f6d-d189-4481-baf6-2316aed9b98f'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '64'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '60805'
+    'REDIRECT_URL' => '/api/admin'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550720385.102
+    'REQUEST_TIME' => 1550720385
+]
+2019-02-21 13:22:44 [127.0.0.1][-][-][error][yii\base\ErrorException:8] yii\base\ErrorException: Undefined offset: 1 in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/common/helper/Token.php:64
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/common/helper/Token.php(64): yii\base\ErrorHandler->handleError(8, 'Undefined offse...', '/Users/huxin/My...', 64, Array)
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/controllers/BasicController.php(47): common\helper\Token::getUserId()
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php(155): backend\controllers\BasicController->beforeAction(Object(yii\base\InlineAction))
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('captcha', Array)
+#4 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('basic/captcha', Array)
+#5 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#6 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#7 {main}
+2019-02-21 13:22:44 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'PHPSESSID' => '3e9ecc12e965af91681772f9e7b5e6b8'
+    '_csrf' => '132efc87d50d6e47dc35e9757708a95bc03fa4eb424e479665236f0180f3fb00a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"ETNglyLUh9-gdGkghDZpgGCOCMQB6f4O\";}'
+    'advanced-backend' => '214eee52d40e4f4b85002460edc415e3'
+    '_csrf-backend' => '38278705730fdc4ef526796d78fcefca2e1fef869ca81f2f03dd59fbfed493a0a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"d6rg7ftdQK1zCQjS4IrG0ficqgfoLrWG\";}'
+]
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG41pFjS@2-ypIJ96Hgi9gAAAAM'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG41pFjS@2-ypIJ96Hgi9gAAAAM'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'zh-CN,zh;q=0.9'
+    'HTTP_COOKIE' => 'PHPSESSID=3e9ecc12e965af91681772f9e7b5e6b8; _csrf=132efc87d50d6e47dc35e9757708a95bc03fa4eb424e479665236f0180f3fb00a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22ETNglyLUh9-gdGkghDZpgGCOCMQB6f4O%22%3B%7D; advanced-backend=214eee52d40e4f4b85002460edc415e3; _csrf-backend=38278705730fdc4ef526796d78fcefca2e1fef869ca81f2f03dd59fbfed493a0a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22d6rg7ftdQK1zCQjS4IrG0ficqgfoLrWG%22%3B%7D'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '53872'
+    'REDIRECT_URL' => '/api/captcha'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/captcha'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550726564.273
+    'REQUEST_TIME' => 1550726564
+]
+2019-02-21 13:25:57 [127.0.0.1][-][-][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request "api/captcha". in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php:537
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/captcha', Array)
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#3 {main}
+
+Next yii\web\NotFoundHttpException: 页面未找到。 in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#2 {main}
+2019-02-21 13:25:57 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'name' => '胡大大'
+    'password' => '123456'
+    'captcha' => 'nnqyhuo'
+]
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG42ZaACdZqIHSGAyLMl4gAAAAE'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG42ZaACdZqIHSGAyLMl4gAAAAE'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => 'c7d1dc07-97d5-4609-b686-ca399e5b4aa8'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '64'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '54741'
+    'REDIRECT_URL' => '/api/captcha'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/captcha'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550726757.443
+    'REQUEST_TIME' => 1550726757
+]
+2019-02-21 13:26:58 [127.0.0.1][-][-][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request: admin/info in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php:128
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('info', Array)
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('admin/info', Array)
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#4 {main}
+
+Next yii\web\NotFoundHttpException: 页面未找到。 in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#2 {main}
+2019-02-21 13:26:58 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG42opzdNw-OxrD-eeB7EgAAAAU'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG42opzdNw-OxrD-eeB7EgAAAAU'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => '9e11e96e-cdf5-4a06-8309-3099e2f939f3'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '64'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '55004'
+    'REDIRECT_URL' => '/api/admin'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'PUT'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550726818.032
+    'REQUEST_TIME' => 1550726818
+]
+2019-02-21 13:27:02 [127.0.0.1][-][-][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request: admin/info in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php:128
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('info', Array)
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('admin/info', Array)
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#4 {main}
+
+Next yii\web\NotFoundHttpException: 页面未找到。 in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#2 {main}
+2019-02-21 13:27:02 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG42ppzdNw-OxrD-eeB7EwAAAAU'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG42ppzdNw-OxrD-eeB7EwAAAAU'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => '4a9963bb-69c2-48df-ad09-c92601aa7d0a'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '64'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '55004'
+    'REDIRECT_URL' => '/api/admin'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'PUT'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550726822.01
+    'REQUEST_TIME' => 1550726822
+]
+2019-02-21 13:27:45 [127.0.0.1][-][-][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request: admin/info in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php:128
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('info', Array)
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('admin/info', Array)
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#4 {main}
+
+Next yii\web\NotFoundHttpException: 页面未找到。 in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#2 {main}
+2019-02-21 13:27:45 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG420VjS@2-ypIJ96Hgi9wAAAAM'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG420VjS@2-ypIJ96Hgi9wAAAAM'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => '7a735ba0-4122-440f-81b0-4f02f6a3379d'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '64'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '55199'
+    'REDIRECT_URL' => '/api/admin'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'PUT'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550726865.628
+    'REQUEST_TIME' => 1550726865
+]
+2019-02-21 13:28:02 [127.0.0.1][-][-][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request: admin/info in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php:128
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('info', Array)
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('admin/info', Array)
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#4 {main}
+
+Next yii\web\NotFoundHttpException: 页面未找到。 in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#2 {main}
+2019-02-21 13:28:02 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG424qACdZqIHSGAyLMl4wAAAAE'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG424qACdZqIHSGAyLMl4wAAAAE'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => 'b196883c-88c3-4913-a2d2-af30ce292b41'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '64'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '55271'
+    'REDIRECT_URL' => '/api/admin'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'PUT'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550726882.867
+    'REQUEST_TIME' => 1550726882
+]
+2019-02-21 13:32:52 [127.0.0.1][-][-][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request: admin/info in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php:128
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('info', Array)
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('admin/info', Array)
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#4 {main}
+
+Next yii\web\NotFoundHttpException: 页面未找到。 in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#2 {main}
+2019-02-21 13:32:52 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG44BL3rBAuCGKcJBHZAmAAAAAA'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG44BL3rBAuCGKcJBHZAmAAAAAA'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => 'a0121663-6420-4fbd-bdb5-a62a93fd38ee'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '64'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '56602'
+    'REDIRECT_URL' => '/api/admin'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'PUT'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550727172.065
+    'REQUEST_TIME' => 1550727172
+]
+2019-02-21 13:32:54 [127.0.0.1][-][-][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request: admin/info in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php:128
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('info', Array)
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('admin/info', Array)
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#4 {main}
+
+Next yii\web\NotFoundHttpException: 页面未找到。 in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#2 {main}
+2019-02-21 13:32:54 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG44Br3rBAuCGKcJBHZAmQAAAAA'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG44Br3rBAuCGKcJBHZAmQAAAAA'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => '57440501-ab86-49d2-b311-b294c370ad10'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '64'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '56602'
+    'REDIRECT_URL' => '/api/admin'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'PUT'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550727174.135
+    'REQUEST_TIME' => 1550727174
+]
+2019-02-21 13:33:13 [127.0.0.1][-][-][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request: admin/info in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php:128
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('info', Array)
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('admin/info', Array)
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#4 {main}
+
+Next yii\web\NotFoundHttpException: 页面未找到。 in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#2 {main}
+2019-02-21 13:33:13 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG44GdO@LGA2OfeGFmPJuAAAAAY'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG44GdO@LGA2OfeGFmPJuAAAAAY'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => '91be3323-4262-4a71-b2ec-c08833f6e29c'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '64'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '56710'
+    'REDIRECT_URL' => '/api/admin'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'PUT'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550727193.892
+    'REQUEST_TIME' => 1550727193
+]
+2019-02-21 13:33:22 [127.0.0.1][-][-][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request: admin/info in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php:128
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('info', Array)
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('admin/info', Array)
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#4 {main}
+
+Next yii\web\NotFoundHttpException: 页面未找到。 in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#2 {main}
+2019-02-21 13:33:22 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG44Is038VCKqcmHyZCytAAAAAI'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG44Is038VCKqcmHyZCytAAAAAI'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => 'd3d44cef-fe2f-411d-a357-b62e7e29686c'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '64'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '56748'
+    'REDIRECT_URL' => '/api/admin'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'PUT'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550727202.157
+    'REQUEST_TIME' => 1550727202
+]
+2019-02-21 13:34:05 [127.0.0.1][-][-][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request: admin/ChangeInfo in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php:128
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('ChangeInfo', Array)
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('admin/ChangeInf...', Array)
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#4 {main}
+
+Next yii\web\NotFoundHttpException: 页面未找到。 in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#2 {main}
+2019-02-21 13:34:05 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG44TZzdNw-OxrD-eeB7FAAAAAU'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG44TZzdNw-OxrD-eeB7FAAAAAU'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => 'c48e6867-0615-4fd2-8c82-3a0230156fb2'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '64'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '56947'
+    'REDIRECT_URL' => '/api/admin'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'PUT'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550727245.9
+    'REQUEST_TIME' => 1550727245
+]
+2019-02-21 13:34:08 [127.0.0.1][-][-][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request: admin/ChangeInfo in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php:128
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('ChangeInfo', Array)
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('admin/ChangeInf...', Array)
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#4 {main}
+
+Next yii\web\NotFoundHttpException: 页面未找到。 in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#2 {main}
+2019-02-21 13:34:08 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG44UJzdNw-OxrD-eeB7FQAAAAU'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG44UJzdNw-OxrD-eeB7FQAAAAU'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => '88d51910-234e-41ab-b218-c83997319e11'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '64'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '56947'
+    'REDIRECT_URL' => '/api/admin'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'PUT'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550727248.044
+    'REQUEST_TIME' => 1550727248
+]
+2019-02-21 13:34:09 [127.0.0.1][-][-][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request: admin/ChangeInfo in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php:128
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('ChangeInfo', Array)
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('admin/ChangeInf...', Array)
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#4 {main}
+
+Next yii\web\NotFoundHttpException: 页面未找到。 in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#2 {main}
+2019-02-21 13:34:09 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG44UZzdNw-OxrD-eeB7FgAAAAU'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG44UZzdNw-OxrD-eeB7FgAAAAU'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => 'e257f2da-9737-4192-a52e-670dc4e94b57'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '64'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '56947'
+    'REDIRECT_URL' => '/api/admin'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'PUT'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550727249.265
+    'REQUEST_TIME' => 1550727249
+]
+2019-02-21 13:34:09 [127.0.0.1][-][-][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request: admin/ChangeInfo in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php:128
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('ChangeInfo', Array)
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('admin/ChangeInf...', Array)
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#4 {main}
+
+Next yii\web\NotFoundHttpException: 页面未找到。 in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#2 {main}
+2019-02-21 13:34:09 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG44UZzdNw-OxrD-eeB7FwAAAAU'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG44UZzdNw-OxrD-eeB7FwAAAAU'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => 'a3f82407-9112-4a4b-a23c-96083999000b'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '64'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '56947'
+    'REDIRECT_URL' => '/api/admin'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'PUT'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550727249.868
+    'REQUEST_TIME' => 1550727249
+]
+2019-02-21 13:34:10 [127.0.0.1][-][-][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request: admin/ChangeInfo in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php:128
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('ChangeInfo', Array)
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('admin/ChangeInf...', Array)
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#4 {main}
+
+Next yii\web\NotFoundHttpException: 页面未找到。 in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#2 {main}
+2019-02-21 13:34:10 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG44UpzdNw-OxrD-eeB7GAAAAAU'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG44UpzdNw-OxrD-eeB7GAAAAAU'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => '276bfea0-c810-477a-9fba-3a2c96544ef6'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '64'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '56947'
+    'REDIRECT_URL' => '/api/admin'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'PUT'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550727250.429
+    'REQUEST_TIME' => 1550727250
+]
+2019-02-21 13:34:10 [127.0.0.1][-][-][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request: admin/ChangeInfo in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php:128
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('ChangeInfo', Array)
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('admin/ChangeInf...', Array)
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#4 {main}
+
+Next yii\web\NotFoundHttpException: 页面未找到。 in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#2 {main}
+2019-02-21 13:34:10 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG44UpzdNw-OxrD-eeB7GQAAAAU'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG44UpzdNw-OxrD-eeB7GQAAAAU'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => '5f57893f-6271-4d96-b31b-5790c053813c'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '64'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '56947'
+    'REDIRECT_URL' => '/api/admin'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'PUT'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550727250.908
+    'REQUEST_TIME' => 1550727250
+]
+2019-02-21 13:34:11 [127.0.0.1][-][-][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request: admin/ChangeInfo in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php:128
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('ChangeInfo', Array)
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('admin/ChangeInf...', Array)
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#4 {main}
+
+Next yii\web\NotFoundHttpException: 页面未找到。 in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#2 {main}
+2019-02-21 13:34:11 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG44U5zdNw-OxrD-eeB7GgAAAAU'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG44U5zdNw-OxrD-eeB7GgAAAAU'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => '1e449ab0-2f82-4550-992a-b1fd6a690b7f'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '64'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '56947'
+    'REDIRECT_URL' => '/api/admin'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'PUT'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550727251.383
+    'REQUEST_TIME' => 1550727251
+]
+2019-02-21 13:34:12 [127.0.0.1][-][-][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request: admin/ChangeInfo in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php:128
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('ChangeInfo', Array)
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('admin/ChangeInf...', Array)
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#4 {main}
+
+Next yii\web\NotFoundHttpException: 页面未找到。 in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#2 {main}
+2019-02-21 13:34:11 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG44U5zdNw-OxrD-eeB7GwAAAAU'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG44U5zdNw-OxrD-eeB7GwAAAAU'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => '559673ca-9a9d-4280-818d-feb6bfb971f5'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '64'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '56947'
+    'REDIRECT_URL' => '/api/admin'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'PUT'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550727251.989
+    'REQUEST_TIME' => 1550727251
+]
+2019-02-21 13:34:21 [127.0.0.1][-][-][error][yii\web\HttpException:400] yii\web\BadRequestHttpException: 缺少参数：admin in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Controller.php:149
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/InlineAction.php(51): yii\web\Controller->bindActionParams(Object(yii\base\InlineAction), Array)
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('change-info', Array)
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('admin/change-in...', Array)
+#4 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#5 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#6 {main}
+2019-02-21 13:34:21 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG44XVjS@2-ypIJ96Hgi@AAAAAM'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG44XVjS@2-ypIJ96Hgi@AAAAAM'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => '347df641-a56b-44eb-84d8-3948cf8cb04d'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '64'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '57014'
+    'REDIRECT_URL' => '/api/admin'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'PUT'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550727261.874
+    'REQUEST_TIME' => 1550727261
+]
+2019-02-21 13:34:43 [127.0.0.1][-][-][error][yii\web\HttpException:400] yii\web\BadRequestHttpException: 缺少参数：admin in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Controller.php:149
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/InlineAction.php(51): yii\web\Controller->bindActionParams(Object(yii\base\InlineAction), Array)
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('change-info', Array)
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('admin/change-in...', Array)
+#4 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#5 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#6 {main}
+2019-02-21 13:34:43 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG44c6n4pcruX46vUOqgvQAAAAQ'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG44c6n4pcruX46vUOqgvQAAAAQ'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => 'bd6148a9-03ec-4751-9b65-e7b19f8b6372'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '39'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '57101'
+    'REDIRECT_URL' => '/api/admin'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'PUT'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550727283.078
+    'REQUEST_TIME' => 1550727283
+]
+2019-02-21 14:18:13 [127.0.0.1][-][-][error][yii\db\Exception] PDOException: SQLSTATE[22001]: String data, right truncated: 1406 Data too long for column 'mobile' at row 1 in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/Command.php:1290
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/Command.php(1290): PDOStatement->execute()
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/Command.php(1091): yii\db\Command->internalExecute('UPDATE `admin` ...')
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/ActiveRecord.php(287): yii\db\Command->execute()
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/BaseActiveRecord.php(810): yii\db\ActiveRecord::updateAll(Array, Array)
+#4 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/ActiveRecord.php(631): yii\db\BaseActiveRecord->updateInternal(NULL)
+#5 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/BaseActiveRecord.php(681): yii\db\ActiveRecord->update(false, NULL)
+#6 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/controllers/AdminController.php(115): yii\db\BaseActiveRecord->save(false)
+#7 [internal function]: backend\controllers\AdminController->actionChangeInfo()
+#8 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#9 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#10 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('change-info', Array)
+#11 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('admin/change-in...', Array)
+#12 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#13 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#14 {main}
+
+Next yii\db\Exception: SQLSTATE[22001]: String data, right truncated: 1406 Data too long for column 'mobile' at row 1
+The SQL being executed was: UPDATE `admin` SET `email`='1944771665@qq.com', `mobile`='+8618180461631' WHERE `id`=1 in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/Schema.php:664
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/Command.php(1295): yii\db\Schema->convertException(Object(PDOException), 'UPDATE `admin` ...')
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/Command.php(1091): yii\db\Command->internalExecute('UPDATE `admin` ...')
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/ActiveRecord.php(287): yii\db\Command->execute()
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/BaseActiveRecord.php(810): yii\db\ActiveRecord::updateAll(Array, Array)
+#4 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/ActiveRecord.php(631): yii\db\BaseActiveRecord->updateInternal(NULL)
+#5 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/BaseActiveRecord.php(681): yii\db\ActiveRecord->update(false, NULL)
+#6 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/controllers/AdminController.php(115): yii\db\BaseActiveRecord->save(false)
+#7 [internal function]: backend\controllers\AdminController->actionChangeInfo()
+#8 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#9 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#10 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('change-info', Array)
+#11 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('admin/change-in...', Array)
+#12 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#13 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#14 {main}
+Additional Information:
+Array
+(
+    [0] => 22001
+    [1] => 1406
+    [2] => Data too long for column 'mobile' at row 1
+)
+
+2019-02-21 14:18:13 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG5CpYd5WJ17UPHCOBD0swAAAAU'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG5CpYd5WJ17UPHCOBD0swAAAAU'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => 'c4c21ffd-fb51-49d3-9652-cb6a9f061082'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '77'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '49866'
+    'REDIRECT_URL' => '/api/admin'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'PUT'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550729893.183
+    'REQUEST_TIME' => 1550729893
+]
+2019-02-21 14:22:13 [127.0.0.1][-][-][error][yii\db\Exception] PDOException: SQLSTATE[22001]: String data, right truncated: 1406 Data too long for column 'mobile' at row 1 in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/Command.php:1290
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/Command.php(1290): PDOStatement->execute()
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/Command.php(1091): yii\db\Command->internalExecute('UPDATE `admin` ...')
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/ActiveRecord.php(287): yii\db\Command->execute()
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/BaseActiveRecord.php(810): yii\db\ActiveRecord::updateAll(Array, Array)
+#4 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/ActiveRecord.php(631): yii\db\BaseActiveRecord->updateInternal(NULL)
+#5 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/BaseActiveRecord.php(681): yii\db\ActiveRecord->update(false, NULL)
+#6 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/controllers/AdminController.php(115): yii\db\BaseActiveRecord->save(false)
+#7 [internal function]: backend\controllers\AdminController->actionChangeInfo()
+#8 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#9 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#10 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('change-info', Array)
+#11 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('admin/change-in...', Array)
+#12 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#13 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#14 {main}
+
+Next yii\db\Exception: SQLSTATE[22001]: String data, right truncated: 1406 Data too long for column 'mobile' at row 1
+The SQL being executed was: UPDATE `admin` SET `email`='1944771665@qq.com', `mobile`='+8618180461631' WHERE `id`=1 in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/Schema.php:664
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/Command.php(1295): yii\db\Schema->convertException(Object(PDOException), 'UPDATE `admin` ...')
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/Command.php(1091): yii\db\Command->internalExecute('UPDATE `admin` ...')
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/ActiveRecord.php(287): yii\db\Command->execute()
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/BaseActiveRecord.php(810): yii\db\ActiveRecord::updateAll(Array, Array)
+#4 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/ActiveRecord.php(631): yii\db\BaseActiveRecord->updateInternal(NULL)
+#5 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/BaseActiveRecord.php(681): yii\db\ActiveRecord->update(false, NULL)
+#6 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/controllers/AdminController.php(115): yii\db\BaseActiveRecord->save(false)
+#7 [internal function]: backend\controllers\AdminController->actionChangeInfo()
+#8 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#9 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#10 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('change-info', Array)
+#11 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('admin/change-in...', Array)
+#12 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#13 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#14 {main}
+Additional Information:
+Array
+(
+    [0] => 22001
+    [1] => 1406
+    [2] => Data too long for column 'mobile' at row 1
+)
+
+2019-02-21 14:22:13 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG5DldgCaFgrOPVmqX3B3AAAAAM'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG5DldgCaFgrOPVmqX3B3AAAAAM'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => 'b92ac09a-bf4a-4e4a-82b5-117505e60caf'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '77'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '49909'
+    'REDIRECT_URL' => '/api/admin'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'PUT'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550730133.739
+    'REQUEST_TIME' => 1550730133
+]
+2019-02-21 14:22:59 [127.0.0.1][-][-][error][yii\db\Exception] PDOException: SQLSTATE[22001]: String data, right truncated: 1406 Data too long for column 'mobile' at row 1 in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/Command.php:1290
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/Command.php(1290): PDOStatement->execute()
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/Command.php(1091): yii\db\Command->internalExecute('UPDATE `admin` ...')
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/ActiveRecord.php(287): yii\db\Command->execute()
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/BaseActiveRecord.php(810): yii\db\ActiveRecord::updateAll(Array, Array)
+#4 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/ActiveRecord.php(631): yii\db\BaseActiveRecord->updateInternal(NULL)
+#5 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/BaseActiveRecord.php(681): yii\db\ActiveRecord->update(false, NULL)
+#6 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/controllers/AdminController.php(115): yii\db\BaseActiveRecord->save(false)
+#7 [internal function]: backend\controllers\AdminController->actionChangeInfo()
+#8 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#9 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#10 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('change-info', Array)
+#11 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('admin/change-in...', Array)
+#12 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#13 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#14 {main}
+
+Next yii\db\Exception: SQLSTATE[22001]: String data, right truncated: 1406 Data too long for column 'mobile' at row 1
+The SQL being executed was: UPDATE `admin` SET `email`='1944771665@qq.com', `mobile`='+8618180461631' WHERE `id`=1 in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/Schema.php:664
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/Command.php(1295): yii\db\Schema->convertException(Object(PDOException), 'UPDATE `admin` ...')
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/Command.php(1091): yii\db\Command->internalExecute('UPDATE `admin` ...')
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/ActiveRecord.php(287): yii\db\Command->execute()
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/BaseActiveRecord.php(810): yii\db\ActiveRecord::updateAll(Array, Array)
+#4 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/ActiveRecord.php(631): yii\db\BaseActiveRecord->updateInternal(NULL)
+#5 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/BaseActiveRecord.php(681): yii\db\ActiveRecord->update(false, NULL)
+#6 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/controllers/AdminController.php(115): yii\db\BaseActiveRecord->save(false)
+#7 [internal function]: backend\controllers\AdminController->actionChangeInfo()
+#8 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#9 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#10 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('change-info', Array)
+#11 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('admin/change-in...', Array)
+#12 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#13 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#14 {main}
+Additional Information:
+Array
+(
+    [0] => 22001
+    [1] => 1406
+    [2] => Data too long for column 'mobile' at row 1
+)
+
+2019-02-21 14:22:59 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG5DwytVHG5DA56-BBIL6gAAAAA'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG5DwytVHG5DA56-BBIL6gAAAAA'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => 'fac8d4ce-972a-45ca-a07f-fba92f0a0cf0'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '77'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '49912'
+    'REDIRECT_URL' => '/api/admin'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'PUT'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550730179.02
+    'REQUEST_TIME' => 1550730179
+]
+2019-02-21 14:25:26 [127.0.0.1][-][-][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request "api/admin". in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php:537
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/admin', Array)
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#3 {main}
+
+Next yii\web\NotFoundHttpException: 页面未找到。 in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#2 {main}
+2019-02-21 14:25:26 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'name' => '胡大大'
+    'email' => '1944771665@qq.com'
+    'mobile' => '1818046163'
+]
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG5EVtgCaFgrOPVmqX3B3QAAAAM'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG5EVtgCaFgrOPVmqX3B3QAAAAM'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => '37bb7255-6707-4012-84c4-3d98cc3888ac'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '76'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '49934'
+    'REDIRECT_URL' => '/api/admin'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550730326.691
+    'REQUEST_TIME' => 1550730326
+]
+2019-02-21 14:25:51 [127.0.0.1][-][-][error][yii\base\UnknownPropertyException] yii\base\UnknownPropertyException: Getting unknown property: app\models\Admin::password_confirmation in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Component.php:154
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/BaseActiveRecord.php(298): yii\base\Component->__get('password_confir...')
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/validators/CompareValidator.php(152): yii\db\BaseActiveRecord->__get('password_confir...')
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/validators/Validator.php(257): yii\validators\CompareValidator->validateAttribute(Object(app\models\Admin), 'password')
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Model.php(367): yii\validators\Validator->validateAttributes(Object(app\models\Admin), Array)
+#4 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/controllers/AdminController.php(92): yii\base\Model->validate()
+#5 [internal function]: backend\controllers\AdminController->actionPassword()
+#6 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#7 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#8 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('password', Array)
+#9 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('admin/password', Array)
+#10 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#11 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#12 {main}
+2019-02-21 14:25:50 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG5EbitVHG5DA56-BBIL6wAAAAA'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG5EbitVHG5DA56-BBIL6wAAAAA'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => '37a6347d-bc83-430d-b8a3-ee3a3ad96b7e'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '76'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '49935'
+    'REDIRECT_URL' => '/api/admin/password'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'PUT'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin/password'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550730350.965
+    'REQUEST_TIME' => 1550730350
+]
+2019-02-21 14:28:25 [127.0.0.1][-][-][error][yii\base\UnknownPropertyException] yii\base\UnknownPropertyException: Getting unknown property: app\models\Admin::password_confirmation in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Component.php:154
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/BaseActiveRecord.php(298): yii\base\Component->__get('password_confir...')
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/validators/CompareValidator.php(152): yii\db\BaseActiveRecord->__get('password_confir...')
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/validators/Validator.php(257): yii\validators\CompareValidator->validateAttribute(Object(app\models\Admin), 'password')
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Model.php(367): yii\validators\Validator->validateAttributes(Object(app\models\Admin), Array)
+#4 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/controllers/AdminController.php(92): yii\base\Model->validate()
+#5 [internal function]: backend\controllers\AdminController->actionPassword()
+#6 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#7 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#8 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('password', Array)
+#9 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('admin/password', Array)
+#10 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#11 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#12 {main}
+2019-02-21 14:28:25 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG5FCYd5WJ17UPHCOBD0tQAAAAU'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG5FCYd5WJ17UPHCOBD0tQAAAAU'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => '9ec11258-653b-4459-812a-46fcf3816e74'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '111'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '49957'
+    'REDIRECT_URL' => '/api/admin/password'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'PUT'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin/password'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550730505.564
+    'REQUEST_TIME' => 1550730505
+]
+2019-02-21 15:09:35 [127.0.0.1][-][-][error][yii\base\UnknownPropertyException] yii\base\UnknownPropertyException: Getting unknown property: app\models\Admin::password_confirmation in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Component.php:154
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/BaseActiveRecord.php(298): yii\base\Component->__get('password_confir...')
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/validators/Validator.php(302): yii\db\BaseActiveRecord->__get('password_confir...')
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/validators/Validator.php(257): yii\validators\Validator->validateAttribute(Object(app\models\Admin), 'password_confir...')
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Model.php(367): yii\validators\Validator->validateAttributes(Object(app\models\Admin), Array)
+#4 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/ActiveRecord.php(625): yii\base\Model->validate(Array)
+#5 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/BaseActiveRecord.php(681): yii\db\ActiveRecord->update(true, NULL)
+#6 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/controllers/AdminController.php(96): yii\db\BaseActiveRecord->save()
+#7 [internal function]: backend\controllers\AdminController->actionPassword()
+#8 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#9 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#10 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('password', Array)
+#11 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('admin/password', Array)
+#12 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#13 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#14 {main}
+2019-02-21 15:09:35 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG5Or9gCaFgrOPVmqX3B4wAAAAM'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG5Or9gCaFgrOPVmqX3B4wAAAAM'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => 'c8bbd9f8-5402-4c4f-b059-0ee04b39c723'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '121'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '50627'
+    'REDIRECT_URL' => '/api/admin/password'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'PUT'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin/password'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550732975.847
+    'REQUEST_TIME' => 1550732975
+]
+2019-02-21 15:10:22 [127.0.0.1][-][-][error][yii\base\ErrorException:2] yii\base\ErrorException: array_flip() expects parameter 1 to be array, string given in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/BaseActiveRecord.php:634
+Stack trace:
+#0 [internal function]: yii\base\ErrorHandler->handleError(2, 'array_flip() ex...', '/Users/huxin/My...', 634, Array)
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/BaseActiveRecord.php(634): array_flip('password')
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/BaseActiveRecord.php(797): yii\db\BaseActiveRecord->getDirtyAttributes('password')
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/ActiveRecord.php(631): yii\db\BaseActiveRecord->updateInternal('password')
+#4 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/BaseActiveRecord.php(681): yii\db\ActiveRecord->update(false, 'password')
+#5 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/controllers/AdminController.php(95): yii\db\BaseActiveRecord->save(false, 'password')
+#6 [internal function]: backend\controllers\AdminController->actionPassword()
+#7 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#8 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#9 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('password', Array)
+#10 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('admin/password', Array)
+#11 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#12 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#13 {main}
+2019-02-21 15:10:21 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG5O3b32CdWc0KyyJYGSvgAAAAQ'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG5O3b32CdWc0KyyJYGSvgAAAAQ'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => 'fa67fb3a-0ef3-4154-ab4d-f4512955aef7'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '121'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '50630'
+    'REDIRECT_URL' => '/api/admin/password'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'PUT'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin/password'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550733021.886
+    'REQUEST_TIME' => 1550733021
+]
+2019-02-21 15:25:43 [127.0.0.1][-][-][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request: dashboard/index in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php:128
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('index', Array)
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('dashboard/index', Array)
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#4 {main}
+
+Next yii\web\NotFoundHttpException: 页面未找到。 in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#2 {main}
+2019-02-21 15:25:43 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'UNIQUE_ID' => 'XG5Sd9gCaFgrOPVmqX3B5AAAAAM'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'zh-CN,zh;q=0.9'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '50751'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550733943.402
+    'REQUEST_TIME' => 1550733943
+]
+2019-02-21 15:29:30 [127.0.0.1][-][-][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request: dashboard/index in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php:128
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('index', Array)
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('dashboard/index', Array)
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#4 {main}
+
+Next yii\web\NotFoundHttpException: 页面未找到。 in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#2 {main}
+2019-02-21 15:29:30 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_csrf-backend' => '9b70519f957d37875dba6fcac51967b451df6e7db277d8e98188cbaa1b6174a9a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"DJVMTeJEw-HkFIVvj3f1FLaIu44BWOoh\";}'
+]
+
+$_SERVER = [
+    'UNIQUE_ID' => 'XG5TWpgYqrY4FZCqZ53HWgAAAAE'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_PURPOSE' => 'prefetch'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'HTTP_ACCEPT_LANGUAGE' => 'zh-CN,zh;q=0.9'
+    'HTTP_COOKIE' => '_csrf-backend=9b70519f957d37875dba6fcac51967b451df6e7db277d8e98188cbaa1b6174a9a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22DJVMTeJEw-HkFIVvj3f1FLaIu44BWOoh%22%3B%7D'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '50824'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550734170.519
+    'REQUEST_TIME' => 1550734170
+]
+2019-02-22 09:35:42 [127.0.0.1][-][-][error][yii\base\ErrorException:8] yii\base\ErrorException: Undefined index: pageNum in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/controllers/TagController.php:23
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/controllers/TagController.php(23): yii\base\ErrorHandler->handleError(8, 'Undefined index...', '/Users/huxin/My...', 23, Array)
+#1 [internal function]: backend\controllers\TagController->actionTagList()
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#4 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('tag-list', Array)
+#5 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('tag/tag-list', Array)
+#6 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#8 {main}
+2019-02-22 09:35:42 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG9R7oRcWiUWsAK9J0NUKwAAAAI'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG9R7oRcWiUWsAK9J0NUKwAAAAI'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => '8a794ec4-1375-42b8-b6c4-3976ed140706'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '121'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '50143'
+    'REDIRECT_URL' => '/api/admin/tag'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin/tag'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550799342.256
+    'REQUEST_TIME' => 1550799342
+]
+2019-02-22 09:36:38 [127.0.0.1][-][-][error][yii\base\InvalidConfigException] yii\base\InvalidConfigException: Invalid validation rule: a rule must specify both attribute names and validator type. in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Model.php:471
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Model.php(420): yii\base\Model->createValidators()
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Model.php(189): yii\base\Model->getValidators()
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Model.php(354): yii\base\Model->scenarios()
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/controllers/TagController.php(22): yii\base\Model->validate()
+#4 [internal function]: backend\controllers\TagController->actionTagList()
+#5 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#6 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#7 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('tag-list', Array)
+#8 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('tag/tag-list', Array)
+#9 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#10 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#11 {main}
+2019-02-22 09:36:37 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG9SJWp1eJS@1vTZED8j3AAAAAA'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG9SJWp1eJS@1vTZED8j3AAAAAA'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => '5a010e86-4816-4112-a592-2690dd6e0c5e'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '121'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '50148'
+    'REDIRECT_URL' => '/api/admin/tag'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin/tag'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550799397.934
+    'REQUEST_TIME' => 1550799397
+]
+2019-02-22 10:23:25 [127.0.0.1][-][-][error][yii\web\HttpException:400] yii\web\BadRequestHttpException: 您提交的数据无法被验证。 in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Controller.php:166
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/controllers/BasicController.php(55): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php(155): backend\controllers\BasicController->beforeAction(Object(yii\base\InlineAction))
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('add-tag', Array)
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('tag/add-tag', Array)
+#4 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#5 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#6 {main}
+2019-02-22 10:23:25 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'name' => '胡大大'
+    'email' => '1944771665@qq.com'
+    'mobile' => '1818046163'
+    'password' => '123456'
+    'password_confirmation' => '123456'
+]
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG9dHYRcWiUWsAK9J0NULgAAAAI'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG9dHYRcWiUWsAK9J0NULgAAAAI'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => '80d3081c-8854-43b4-86fd-3172159a9b25'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '121'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '50638'
+    'REDIRECT_URL' => '/api/admin/tag'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin/tag'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550802205.157
+    'REQUEST_TIME' => 1550802205
+]
+2019-02-22 10:23:44 [127.0.0.1][-][-][error][yii\web\HttpException:400] yii\web\BadRequestHttpException: 您提交的数据无法被验证。 in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Controller.php:166
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/controllers/BasicController.php(55): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php(155): backend\controllers\BasicController->beforeAction(Object(yii\base\InlineAction))
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('add-tag', Array)
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('tag/add-tag', Array)
+#4 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#5 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#6 {main}
+2019-02-22 10:23:44 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'name' => '123'
+]
+
+$_FILES = []
+
+$_COOKIE = [
+    '_csrf-backend' => 'd45ef6e2989161f5484f827b0403807ad64bfe10c6fd25ecfadc91e6e4c7ff02a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"lucP02T-2tqRqlGLFsNpdAvno9d2AMjc\";}'
+]
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG9dMGFBWPIbE-UeqhvPMQAAAAQ'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG9dMGFBWPIbE-UeqhvPMQAAAAQ'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => 'db05b4ba-61c4-4bed-bbe0-7b1ed83309ad'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_COOKIE' => '_csrf-backend=d45ef6e2989161f5484f827b0403807ad64bfe10c6fd25ecfadc91e6e4c7ff02a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22lucP02T-2tqRqlGLFsNpdAvno9d2AMjc%22%3B%7D'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '8'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '50643'
+    'REDIRECT_URL' => '/api/admin/tag'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin/tag'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550802224.162
+    'REQUEST_TIME' => 1550802224
+]
+2019-02-22 10:24:20 [127.0.0.1][-][-][error][yii\web\HttpException:400] yii\web\BadRequestHttpException: 您提交的数据无法被验证。 in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Controller.php:166
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/controllers/BasicController.php(55): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php(155): backend\controllers\BasicController->beforeAction(Object(yii\base\InlineAction))
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('add-tag', Array)
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('tag/add-tag', Array)
+#4 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#5 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#6 {main}
+2019-02-22 10:24:20 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'name' => '123'
+]
+
+$_FILES = []
+
+$_COOKIE = [
+    '_csrf-backend' => 'd45ef6e2989161f5484f827b0403807ad64bfe10c6fd25ecfadc91e6e4c7ff02a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"lucP02T-2tqRqlGLFsNpdAvno9d2AMjc\";}'
+]
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG9dVGp1eJS@1vTZED8j3gAAAAA'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG9dVGp1eJS@1vTZED8j3gAAAAA'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => '552cb2b0-9272-4909-a599-8f2233395327'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_COOKIE' => '_csrf-backend=d45ef6e2989161f5484f827b0403807ad64bfe10c6fd25ecfadc91e6e4c7ff02a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22lucP02T-2tqRqlGLFsNpdAvno9d2AMjc%22%3B%7D'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '8'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '50644'
+    'REDIRECT_URL' => '/api/admin/tag'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin/tag'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550802260.061
+    'REQUEST_TIME' => 1550802260
+]
+2019-02-22 10:42:20 [127.0.0.1][-][-][error][yii\web\HttpException:400] yii\web\BadRequestHttpException: 您提交的数据无法被验证。 in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Controller.php:166
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/controllers/BasicController.php(55): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php(155): backend\controllers\BasicController->beforeAction(Object(yii\base\InlineAction))
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('add-tag', Array)
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('tag/add-tag', Array)
+#4 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#5 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#6 {main}
+2019-02-22 10:42:20 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'name' => '123'
+]
+
+$_FILES = []
+
+$_COOKIE = [
+    '_csrf-backend' => 'd45ef6e2989161f5484f827b0403807ad64bfe10c6fd25ecfadc91e6e4c7ff02a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"lucP02T-2tqRqlGLFsNpdAvno9d2AMjc\";}'
+]
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG9hjAvH3e0GWV5Dbf3OfwAAAAU'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG9hjAvH3e0GWV5Dbf3OfwAAAAU'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => 'c16b0766-91ed-4180-8d4b-d4e368e27eb4'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_COOKIE' => '_csrf-backend=d45ef6e2989161f5484f827b0403807ad64bfe10c6fd25ecfadc91e6e4c7ff02a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22lucP02T-2tqRqlGLFsNpdAvno9d2AMjc%22%3B%7D'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '8'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '50759'
+    'REDIRECT_URL' => '/api/admin/tag'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin/tag'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550803340.624
+    'REQUEST_TIME' => 1550803340
+]
+2019-02-22 10:48:12 [127.0.0.1][-][-][error][yii\base\ErrorException:8] yii\base\ErrorException: Undefined index: id in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/controllers/TagController.php:68
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/controllers/TagController.php(68): yii\base\ErrorHandler->handleError(8, 'Undefined index...', '/Users/huxin/My...', 68, Array)
+#1 [internal function]: backend\controllers\TagController->actionUpdateTag()
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#4 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('update-tag', Array)
+#5 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('tag/update-tag', Array)
+#6 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#8 {main}
+2019-02-22 10:48:12 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_csrf-backend' => 'd45ef6e2989161f5484f827b0403807ad64bfe10c6fd25ecfadc91e6e4c7ff02a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"lucP02T-2tqRqlGLFsNpdAvno9d2AMjc\";}'
+]
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG9i7Gp1eJS@1vTZED8j3wAAAAA'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG9i7Gp1eJS@1vTZED8j3wAAAAA'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => '0bee38ae-dac1-4a53-a0d3-e7e170d0fa96'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_COOKIE' => '_csrf-backend=d45ef6e2989161f5484f827b0403807ad64bfe10c6fd25ecfadc91e6e4c7ff02a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22lucP02T-2tqRqlGLFsNpdAvno9d2AMjc%22%3B%7D'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '9'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '50814'
+    'REDIRECT_URL' => '/api/admin/tag'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'PUT'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin/tag'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550803692.26
+    'REQUEST_TIME' => 1550803692
+]
+2019-02-22 11:17:59 [127.0.0.1][-][-][error][yii\base\UnknownMethodException] yii\base\UnknownMethodException: Calling unknown method: yii\db\ActiveQuery::delete() in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Component.php:300
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/controllers/TagController.php(92): yii\base\Component->__call('delete', Array)
+#1 [internal function]: backend\controllers\TagController->actionDelTag()
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#4 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('del-tag', Array)
+#5 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('tag/del-tag', Array)
+#6 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#8 {main}
+2019-02-22 11:17:59 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_csrf-backend' => 'd45ef6e2989161f5484f827b0403807ad64bfe10c6fd25ecfadc91e6e4c7ff02a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"lucP02T-2tqRqlGLFsNpdAvno9d2AMjc\";}'
+]
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG9p54R8IqFGGyeMDPtrHgAAAAM'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG9p54R8IqFGGyeMDPtrHgAAAAM'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => 'fb0411ce-b1bf-4521-a67e-b1ec57525ceb'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_COOKIE' => '_csrf-backend=d45ef6e2989161f5484f827b0403807ad64bfe10c6fd25ecfadc91e6e4c7ff02a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22lucP02T-2tqRqlGLFsNpdAvno9d2AMjc%22%3B%7D'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '18'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '51131'
+    'REDIRECT_URL' => '/api/admin/tag'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'DELETE'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin/tag'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550805479.18
+    'REQUEST_TIME' => 1550805479
+]
+2019-02-22 11:20:58 [127.0.0.1][-][-][error][Error] Error: Call to a member function delete() on null in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/controllers/TagController.php:93
+Stack trace:
+#0 [internal function]: backend\controllers\TagController->actionDelTag()
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('del-tag', Array)
+#4 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('tag/del-tag', Array)
+#5 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#6 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#7 {main}
+2019-02-22 11:20:57 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_csrf-backend' => 'd45ef6e2989161f5484f827b0403807ad64bfe10c6fd25ecfadc91e6e4c7ff02a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"lucP02T-2tqRqlGLFsNpdAvno9d2AMjc\";}'
+]
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XG9qmYRcWiUWsAK9J0NUNQAAAAI'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XG9qmYRcWiUWsAK9J0NUNQAAAAI'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => '5ce1f0db-5a11-425c-9897-b6c4a69fae91'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_COOKIE' => '_csrf-backend=d45ef6e2989161f5484f827b0403807ad64bfe10c6fd25ecfadc91e6e4c7ff02a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22lucP02T-2tqRqlGLFsNpdAvno9d2AMjc%22%3B%7D'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '18'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '51148'
+    'REDIRECT_URL' => '/api/admin/tag'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'DELETE'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin/tag'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1550805657.97
+    'REQUEST_TIME' => 1550805657
+]
+2019-02-25 10:53:36 [127.0.0.1][-][-][error][yii\base\InvalidArgumentException] yii\base\UnknownMethodException: Calling unknown method: app\models\Category::getchildren() in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Component.php:300
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/BaseActiveRecord.php(1244): yii\base\Component->__call('getchildren', Array)
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/ActiveQueryTrait.php(177): yii\db\BaseActiveRecord->getRelation('children')
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/ActiveQueryTrait.php(144): yii\db\ActiveQuery->normalizeRelations(Object(app\models\Category), Array)
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/ActiveQuery.php(220): yii\db\ActiveQuery->findWith(Array, '[[<span class="...')
+#4 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/Query.php(238): yii\db\ActiveQuery->populate(Array)
+#5 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/ActiveQuery.php(133): yii\db\Query->all(NULL)
+#6 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/controllers/CategoryController.php(21): yii\db\ActiveQuery->all()
+#7 [internal function]: backend\controllers\CategoryController->actionCategoryList()
+#8 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#9 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#10 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('category-list', Array)
+#11 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('category/catego...', Array)
+#12 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#13 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#14 {main}
+
+Next yii\base\InvalidArgumentException: app\models\Category has no relation named "children". in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/BaseActiveRecord.php:1247
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/ActiveQueryTrait.php(177): yii\db\BaseActiveRecord->getRelation('children')
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/ActiveQueryTrait.php(144): yii\db\ActiveQuery->normalizeRelations(Object(app\models\Category), Array)
+#2 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/ActiveQuery.php(220): yii\db\ActiveQuery->findWith(Array, '[[<span class="...')
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/Query.php(238): yii\db\ActiveQuery->populate(Array)
+#4 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/ActiveQuery.php(133): yii\db\Query->all(NULL)
+#5 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/controllers/CategoryController.php(21): yii\db\ActiveQuery->all()
+#6 [internal function]: backend\controllers\CategoryController->actionCategoryList()
+#7 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#8 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#9 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('category-list', Array)
+#10 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('category/catego...', Array)
+#11 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#12 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#13 {main}
+2019-02-25 10:53:36 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_csrf-backend' => 'd45ef6e2989161f5484f827b0403807ad64bfe10c6fd25ecfadc91e6e4c7ff02a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"lucP02T-2tqRqlGLFsNpdAvno9d2AMjc\";}'
+]
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XHNYsNv7Tl7iBD1YkPXkxwAAAAY'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XHNYsNv7Tl7iBD1YkPXkxwAAAAY'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => '0cd42138-0d48-4561-af7d-dcaa15e97e7d'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_COOKIE' => '_csrf-backend=d45ef6e2989161f5484f827b0403807ad64bfe10c6fd25ecfadc91e6e4c7ff02a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22lucP02T-2tqRqlGLFsNpdAvno9d2AMjc%22%3B%7D'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '64'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '60693'
+    'REDIRECT_URL' => '/api/admin/category'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin/category'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1551063216.659
+    'REQUEST_TIME' => 1551063216
+]
+2019-02-25 11:30:02 [127.0.0.1][-][-][error][yii\base\UnknownPropertyException] yii\base\UnknownPropertyException: Getting unknown property: app\models\Category::categoryegory in /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Component.php:154
+Stack trace:
+#0 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/db/BaseActiveRecord.php(298): yii\base\Component->__get('categoryegory')
+#1 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/controllers/CategoryController.php(59): yii\db\BaseActiveRecord->__get('categoryegory')
+#2 [internal function]: backend\controllers\CategoryController->actionCategoryAdd()
+#3 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#4 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Controller.php(157): yii\base\InlineAction->runWithParams(Array)
+#5 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Module.php(528): yii\base\Controller->runAction('category-add', Array)
+#6 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('category/catego...', Array)
+#7 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/vendor/yiisoft/yii2/base/Application.php(386): yii\web\Application->handleRequest(Object(yii\web\Request))
+#8 /Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php(17): yii\base\Application->run()
+#9 {main}
+2019-02-25 11:30:02 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'title' => '测试分类'
+    'pid' => '0'
+]
+
+$_FILES = []
+
+$_COOKIE = [
+    '_csrf-backend' => 'd45ef6e2989161f5484f827b0403807ad64bfe10c6fd25ecfadc91e6e4c7ff02a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"lucP02T-2tqRqlGLFsNpdAvno9d2AMjc\";}'
+]
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'XHNhOtv7Tl7iBD1YkPXkzAAAAAY'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'XHNhOtv7Tl7iBD1YkPXkzAAAAAY'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_POSTMAN_TOKEN' => '93641121-e1b4-40ce-8447-eb950e68e9ce'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.6.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_HOST' => 'api.yii.com'
+    'HTTP_COOKIE' => '_csrf-backend=d45ef6e2989161f5484f827b0403807ad64bfe10c6fd25ecfadc91e6e4c7ff02a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22lucP02T-2tqRqlGLFsNpdAvno9d2AMjc%22%3B%7D'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'CONTENT_LENGTH' => '48'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'DYLD_LIBRARY_PATH' => '/Applications/XAMPP/xamppfiles/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/7.2.14 mod_perl/2.0.8-dev Perl/v5.16.3'
+    'SERVER_NAME' => 'api.yii.com'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web'
+    'SERVER_ADMIN' => 'webmaster@dummy-host.example.com'
+    'SCRIPT_FILENAME' => '/Users/huxin/MyProject/own_project/over-blog/back-end/PHP/yii/backend/web/index.php'
+    'REMOTE_PORT' => '53277'
+    'REDIRECT_URL' => '/api/admin/category'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/api/admin/category'
+    'SCRIPT_NAME' => '/index.php'
+    'PHP_SELF' => '/index.php'
+    'REQUEST_TIME_FLOAT' => 1551065402.05
+    'REQUEST_TIME' => 1551065402
+]
