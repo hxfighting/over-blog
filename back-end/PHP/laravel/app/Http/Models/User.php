@@ -13,6 +13,7 @@ class User extends Authenticatable implements JWTSubject
     use Notifiable,Filterable;
     protected $table = 'user';
     protected $dateFormat = 'U';
+    protected $guarded = [];
     protected $hidden = ['access_token','remember_token','openid'];
 
     public function getJWTIdentifier()
