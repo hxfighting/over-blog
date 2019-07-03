@@ -21,14 +21,15 @@ func GetJWTHandler() *jwtmiddleware.Middleware {
 	})
 }
 
-func GenerateToken() string {
+func GenerateToken(user_id uint) string {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"foo": "bar",
 		"nbf": time.Now().Unix(),
 		"exp": time.Now().Add(time.Second).Unix(),
+		"id":  user_id,
 	})
 	// Sign and get the complete encoded token as a string using the secret
-	tokenString, err := token.SignedString(config.GetConfig("jwt.secret").(string))
+	tokenString, err := token.SignedString([]byte(config.GetConfig("jwt.secret").(string)))
 	if err != nil {
 		panic(err.Error())
 	}

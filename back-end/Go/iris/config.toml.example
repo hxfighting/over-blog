@@ -2,7 +2,7 @@
 username=
 password=
 port=3306
-host="http://127.0.0.1"
+host="127.0.0.1"
 db=""
 
 [jwt]
