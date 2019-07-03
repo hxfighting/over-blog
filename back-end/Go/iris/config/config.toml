@@ -1,9 +1,0 @@
-[database]
-username=123
-password=123
-port=3306
-host="http://127.0.0.1"
-db=""
-
-[jwt]
-secret="94eb5dfdb80721f7e7615c8863690ee5"
