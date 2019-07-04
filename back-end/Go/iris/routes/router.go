@@ -9,6 +9,7 @@ import (
 func RegisterRoutes(app *iris.Application) {
 	adminNeedAuth := app.Party("/api/admin", service.GetJWTHandler().Serve)
 	{
+		adminNeedAuth.Get("/", backend.GetUserInfo)
 		adminNeedAuth.Post("/logout", backend.Logout)
 	}
 

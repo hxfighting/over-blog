@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	"log"
 )
 
 type MyDb struct {
@@ -29,7 +28,6 @@ func getDb() *gorm.DB {
 		config.GetConfig("database.host").(string),
 		config.GetConfig("database.db").(string),
 	}
-	log.Println(my_db)
 	connArgs := fmt.Sprintf("%s:%s@(%s:%d)/%s?charset=utf8&parseTime=True&loc=Local",
 		my_db.User, my_db.Password, my_db.Host, my_db.Port, my_db.Database)
 	db, err := gorm.Open("mysql", connArgs)
