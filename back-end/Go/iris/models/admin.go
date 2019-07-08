@@ -6,6 +6,7 @@ import (
 	"errors"
 	"github.com/kataras/iris"
 	"strings"
+	"time"
 )
 
 type Admin struct {
@@ -17,6 +18,8 @@ type Admin struct {
 	Avatar    string `json:"avatar"`
 	CreatedAt int64  `json:"created_at"`
 	UpdatedAt int64  `json:"updated_at"`
+	Captcha   string `json:"captcha" gorm:"-"`
+	Key       string `json:"key" gorm:"-"`
 }
 
 /**
@@ -61,4 +64,41 @@ func GetUserInfo(ctx iris.Context) (user map[string]interface{}, err error) {
 	user["email"] = admin.Email
 	user["mobile"] = admin.Mobile
 	return
+}
+
+/**
+修改个人信息
+*/
+func UpdateInfo(ctx iris.Context, admin *Admin) error {
+	id := service.GetUserId(ctx)
+	if id == 0 {
+		return errors.New("用户不存在！")
+	}
+	admin.ID = id
+	updates := database.Db.Model(admin).Updates(map[string]interface{}{"name": admin.Name,
+		"avatar": admin.Avatar, "email": admin.Email, "mobile": admin.Mobile, "updated_at": time.Now().Unix()})
+	if updates.Error != nil {
+		return errors.New("修改个人信息失败，请稍后再试！")
+	}
+	return nil
+}
+
+/**
+修改密码
+*/
+func ResetPassword(ctx iris.Context, admin *Admin) error {
+	id := service.GetUserId(ctx)
+	if id == 0 {
+		return errors.New("用户不存在！")
+	}
+	admin.ID = id
+	pass, err := service.PasswordHash(admin.Password)
+	if err != nil {
+		return errors.New("修改密码失败，请稍后再试！")
+	}
+	res := database.Db.Model(admin).Updates(map[string]interface{}{"password": pass, "updated_at": time.Now().Unix()})
+	if res.Error != nil {
+		return errors.New("修改密码失败，请稍后再试！")
+	}
+	return nil
 }

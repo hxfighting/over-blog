@@ -1,3 +1,6 @@
+[app]
+debug="true"
+
 [database]
 username=
 password=
@@ -7,3 +10,9 @@ db=""
 
 [jwt]
 secret=""
+
+[redis]
+password=""
+db=0
+host=""
+port="6379"

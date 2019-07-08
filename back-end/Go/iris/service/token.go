@@ -2,7 +2,9 @@ package service
 
 import (
 	"blog/config"
+	"crypto/md5"
 	"errors"
+	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	jwtmiddleware "github.com/iris-contrib/middleware/jwt"
 	"github.com/kataras/iris"
@@ -11,7 +13,9 @@ import (
 
 var response Response
 
-const JWT_KEY = "Authorization"
+const (
+	JWT_KEY = "Authorization"
+)
 
 /**
 注册中间件
@@ -63,7 +67,34 @@ func GenerateToken(user_id uint, exp_end int64) (string, *jwt.Token, error) {
 		Log.Error(err.Error())
 		return "", nil, errors.New("token生成失败！")
 	}
-	return "Bearer " + tokenString, token, nil
+	tokenString = "Bearer " + tokenString
+	if cacheToken(user_id, tokenString) {
+		return tokenString, token, nil
+	}
+	return "", &jwt.Token{}, errors.New("token缓存失败！")
+}
+
+/**
+缓存token
+*/
+func cacheToken(user_id uint, token string) bool {
+	val := md5.Sum([]byte(token))
+	set := Redis.Set(fmt.Sprintf("%x", val), user_id, time.Second*120)
+	_, e := set.Result()
+	if e != nil {
+		return false
+	}
+	return true
+}
+
+/**
+获取缓存的token
+*/
+func getCacheToken(ctx iris.Context) (string, error) {
+	authHeader := ctx.GetHeader("Authorization")
+	key := md5.Sum([]byte(authHeader))
+	userIdStr := Redis.Get(fmt.Sprintf("%x", key))
+	return userIdStr.Result()
 }
 
 /**
@@ -88,6 +119,10 @@ func getClaims(ctx iris.Context) jwt.MapClaims {
 一周内续签token
 */
 func renewalToken(ctx iris.Context) (string, error) {
+	userIdStr, err := getCacheToken(ctx)
+	if err != nil || userIdStr == "" {
+		return "", errors.New("Token已过期，请重新登录！")
+	}
 	s, e := jwtmiddleware.FromAuthHeader(ctx)
 	if e != nil {
 		Log.Error(e.Error())
@@ -110,6 +145,13 @@ func renewalToken(ctx iris.Context) (string, error) {
 		return "", errors.New("Token已过期，请重新登录！")
 	}
 	new_token, parseToken, e := GenerateToken(uint(my_claims["id"].(float64)), exp_end)
+	if e != nil {
+		return "", errors.New("Token已过期，请重新登录！")
+	}
+	token := "Bearer " + s
+	key := md5.Sum([]byte(token))
+	res := Redis.Del(fmt.Sprintf("%x", key))
+	_, e = res.Result()
 	if e != nil {
 		return "", errors.New("Token已过期，请重新登录！")
 	}
