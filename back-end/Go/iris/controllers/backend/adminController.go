@@ -16,27 +16,18 @@ func Login(ctx iris.Context) {
 	admin := models.Admin{}
 	err := ctx.ReadJSON(&admin)
 	if err != nil {
-		response.RenderError(ctx, "数据错误！", nil)
+		response.RenderError(ctx, "参数错误！", nil)
 		return
 	}
-	err = service.Validate.Var(admin.Name, "required,gte=2,lte=15")
-	if err != nil {
-		response.RenderError(ctx, "请输入合法的用户名！", nil)
-		return
+	validates := []service.BlogValidate{
+		{admin.Name, "required,gte=2,lte=15", "请输入合法的用户名！"},
+		{admin.Password, "required,gte=6,lte=16", "请输入合法的密码！"},
+		{admin.Captcha, "required,len=6", "请输入合法的验证码！"},
+		{admin.Key, "required", "请输入合法的验证码key！"},
 	}
-	err = service.Validate.Var(admin.Password, "required,gte=6,lte=16")
+	err = service.ValidateField(validates)
 	if err != nil {
-		response.RenderError(ctx, "请输入合法的密码！", nil)
-		return
-	}
-	err = service.Validate.Var(admin.Captcha, "required,len=6")
-	if err != nil {
-		response.RenderError(ctx, "请输入合法的验证码！", nil)
-		return
-	}
-	err = service.Validate.Var(admin.Key, "required")
-	if err != nil {
-		response.RenderError(ctx, "请输入合法的验证码key！", nil)
+		response.RenderError(ctx, err.Error(), nil)
 		return
 	}
 	if service.ValidateCaptcha(admin.Key, admin.Captcha) {
@@ -79,7 +70,7 @@ func Logout(ctx iris.Context) {
 func GetUserInfo(ctx iris.Context) {
 	user, err := models.GetUserInfo(ctx)
 	if err != nil {
-		response.RenderError(ctx, err.Error(), nil)
+		response.RenderError(ctx, "暂无该用户数据！", nil)
 		return
 	}
 	response.RenderSuccess(ctx, "获取用户信息成功！", user)
@@ -92,27 +83,22 @@ func UpdateInfo(ctx iris.Context) {
 	admin := models.Admin{}
 	err := ctx.ReadJSON(&admin)
 	if err != nil {
-		response.RenderError(ctx, "数据错误！", nil)
+		response.RenderError(ctx, "参数错误！", nil)
 		return
 	}
-	err = service.Validate.Var(admin.Avatar, "required,url")
+	validates := []service.BlogValidate{
+		{admin.Avatar, "required,url", "请输入正确的头像地址"},
+		{admin.Email, "required,email", "请输入正确的邮箱地址"},
+		{admin.Name, "required,gte=2,lte=30", "请输入正确的姓名"},
+	}
+	err = service.ValidateField(validates)
 	if err != nil {
-		response.RenderError(ctx, "请输入正确的头像地址", nil)
+		response.RenderError(ctx, err.Error(), nil)
 		return
 	}
 	res := helper.VerifyMobileFormat(admin.Mobile)
 	if !res {
 		response.RenderError(ctx, "请输入正确的电话号码", nil)
-		return
-	}
-	err = service.Validate.Var(admin.Email, "required,email")
-	if err != nil {
-		response.RenderError(ctx, "请输入正确的邮箱地址", nil)
-		return
-	}
-	err = service.Validate.Var(admin.Name, "required,required,gte=2,lte=30")
-	if err != nil {
-		response.RenderError(ctx, "请输入正确的邮箱地址", nil)
 		return
 	}
 	err = models.UpdateInfo(ctx, &admin)
@@ -130,12 +116,15 @@ func ResetPassword(ctx iris.Context) {
 	admin := models.Admin{}
 	err := ctx.ReadJSON(&admin)
 	if err != nil {
-		response.RenderError(ctx, "数据错误！", nil)
+		response.RenderError(ctx, "参数错误！", nil)
 		return
 	}
-	err = service.Validate.Var(admin.Password, "required,gte=6,lte=20")
+	validates := []service.BlogValidate{
+		{admin.Password, "required,gte=6,lte=20", "请输入正确的密码，6到20个字符！"},
+	}
+	err = service.ValidateField(validates)
 	if err != nil {
-		response.RenderError(ctx, "请输入正确的密码，6到20个字符！", nil)
+		response.RenderError(ctx, err.Error(), nil)
 		return
 	}
 	err = models.ResetPassword(ctx, &admin)

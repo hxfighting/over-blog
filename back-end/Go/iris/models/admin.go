@@ -11,8 +11,8 @@ import (
 
 type Admin struct {
 	ID        uint   `json:"id"`
-	Name      string `json:"name" validate:"required"`
-	Password  string `gorm:"-" json:"password" validate:"required"`
+	Name      string `json:"name"`
+	Password  string `gorm:"-"`
 	Email     string `json:"email"`
 	Mobile    string `json:"mobile"`
 	Avatar    string `json:"avatar"`

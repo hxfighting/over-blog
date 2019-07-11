@@ -21,6 +21,19 @@ func RegisterRoutes(app *iris.Application) {
 		adminNeedAuth.Put("/password", backend.ResetPassword)
 	}
 
+	//分类组
+	categoryGroup := app.Party("/api/admin/category")
+	{
+		//获取分类列表
+		categoryGroup.Get("/", backend.GetCategoryList)
+		//添加分类
+		categoryGroup.Post("/", backend.AddCategory)
+		//修改分类
+		categoryGroup.Put("/", backend.UpdateCategory)
+		//删除分类
+		categoryGroup.Delete("/", backend.DeleteCategory)
+	}
+
 	adminNoAuth := app.Party("/api/admin")
 	{
 		//登录
