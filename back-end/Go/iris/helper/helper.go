@@ -8,6 +8,12 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
+)
+
+const (
+	YMDHIS = "2006-01-02 15:04:05"
+	YMD    = "2006-01-02"
 )
 
 func GetCurrentDirectory() string {
@@ -41,4 +47,11 @@ func CheckDebug() bool {
 		}
 	}
 	return res
+}
+
+/**
+格式化时间戳
+*/
+func GetDateTime(unix int64, format string) string {
+	return time.Unix(unix, 0).Format(format)
 }
