@@ -37,10 +37,10 @@ func RegisterRoutes(app *iris.Application) {
 		categoryGroup.Delete("/", backend.DeleteCategory)
 	}
 
-	//闲聊组
+	//说说组
 	chatGroup := adminNeedAuth.Party("/chat")
 	{
-		//获取闲聊列表
+		//获取说说列表
 		chatGroup.Get("/", backend.GetChatList)
 		//添加说说
 		chatGroup.Post("/", backend.AddChat)
@@ -48,6 +48,19 @@ func RegisterRoutes(app *iris.Application) {
 		chatGroup.Put("/", backend.UpdateChat)
 		//删除说说
 		chatGroup.Delete("/", backend.DeleteChat)
+	}
+
+	//友联组
+	linkGroup := adminNeedAuth.Party("/link")
+	{
+		//获取友联列表
+		linkGroup.Get("/", backend.GetLinkList)
+		//添加友联
+		linkGroup.Post("/", backend.AddLink)
+		//修改友联
+		linkGroup.Put("/", backend.UpdateLink)
+		//删除友联
+		linkGroup.Delete("/", backend.DeleteLink)
 	}
 
 	adminNoAuth := app.Party("/api/admin")

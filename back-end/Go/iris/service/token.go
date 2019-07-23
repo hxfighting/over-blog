@@ -8,6 +8,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	jwtmiddleware "github.com/iris-contrib/middleware/jwt"
 	"github.com/kataras/iris"
+	"log"
 	"time"
 )
 
@@ -32,6 +33,7 @@ func GetJWTHandler() *jwtmiddleware.Middleware {
 		Expiration:    true,
 		ContextKey:    JWT_KEY,
 		ErrorHandler: func(ctx iris.Context, s string) {
+			log.Println(time.Now().Add(time.Minute*60).Unix(), s)
 			if s == "Token is expired" {
 				token, err := renewalToken(ctx)
 				if err != nil {
@@ -57,7 +59,7 @@ func GenerateToken(user_id uint, exp_end int64) (string, *jwt.Token, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"foo":     "bar",
 		"nbf":     time.Now().Unix(),
-		"exp":     time.Now().Add(time.Second * 60).Unix(),
+		"exp":     time.Now().Add(time.Minute * 60).Unix(),
 		"id":      float64(user_id),
 		"exp_end": time.Now().Unix() + 86400*7,
 	})
@@ -79,7 +81,7 @@ func GenerateToken(user_id uint, exp_end int64) (string, *jwt.Token, error) {
 */
 func cacheToken(user_id uint, token string) bool {
 	val := md5.Sum([]byte(token))
-	set := Redis.Set(fmt.Sprintf("%x", val), user_id, time.Second*120)
+	set := Redis.Set(fmt.Sprintf("%x", val), user_id, time.Minute*65)
 	_, e := set.Result()
 	if e != nil {
 		return false
