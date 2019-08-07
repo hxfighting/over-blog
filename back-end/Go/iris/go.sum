@@ -144,9 +144,9 @@ github.com/k0kubun/colorstring v0.0.0-20150214042306-9440f1994b88 h1:uC1QfSlInpQ
 github.com/k0kubun/colorstring v0.0.0-20150214042306-9440f1994b88/go.mod h1:3w7q1U84EfirKl04SVQ/s7nPm1ZPhiXd34z40TNz36k=
 github.com/kataras/golog v0.0.0-20190624001437-99c81de45f40 h1:Q/QxpyNBtfkhXE68tnEA4yyqm77eh/3YOjOw875VbBY=
 github.com/kataras/golog v0.0.0-20190624001437-99c81de45f40/go.mod h1:PcaEvfvhGsqwXZ6S3CgCbmjcp+4UDUh2MIfF2ZEul8M=
-github.com/kataras/iris v0.0.0-20190724165155-caf42cfef62b h1:kNLGXxPxG+DOBW38K3P0GBftrZ1aAXAyrUY/sVv0Uhc=
-github.com/kataras/iris v0.0.0-20190724165155-caf42cfef62b/go.mod h1:MMg7XvcUQyR9P+7v1yHFLUT5oVC9WD/PNU9HqU4PIss=
-github.com/kataras/neffos v0.0.8/go.mod h1:ZYmJC07hQPW67eKuzlfY7SO3bC0mw83A3j6im82hfqw=
+github.com/kataras/iris v0.0.0-20190803055532-2fc1205920a8 h1:pTWYUF04HdofPgLk6N0dKrI6YpJ+/a01YbVb2owxixs=
+github.com/kataras/iris v0.0.0-20190803055532-2fc1205920a8/go.mod h1:xmSWc+jQZM5YFcRrcJVKGeATRVbuRi68+EYylh5iL3o=
+github.com/kataras/neffos v0.0.9/go.mod h1:ZYmJC07hQPW67eKuzlfY7SO3bC0mw83A3j6im82hfqw=
 github.com/kataras/pio v0.0.0-20190103105442-ea782b38602d h1:V5Rs9ztEWdp58oayPq/ulmlqJJZeJP6pP79uP3qjcao=
 github.com/kataras/pio v0.0.0-20190103105442-ea782b38602d/go.mod h1:NV88laa9UiiDuX9AhMbDPkGYSPugBOV6yTZB1l2K9Z0=
 github.com/kisielk/gotool v1.0.0/go.mod h1:XhKaO+MFFWcvkIS/tQcRk01m1F5IRFswLeQ+oQHNcck=

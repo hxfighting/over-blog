@@ -63,6 +63,19 @@ func RegisterRoutes(app *iris.Application) {
 		linkGroup.Delete("/", backend.DeleteLink)
 	}
 
+	//照片组
+	photoGroup := adminNeedAuth.Party("/photo")
+	{
+		//获取照片列表
+		photoGroup.Get("/", backend.GetPhotoList)
+		//添加照片
+		photoGroup.Post("/", backend.AddPhoto)
+		//修改照片
+		photoGroup.Put("/", backend.UpdatePhoto)
+		//删除照片
+		photoGroup.Delete("/", backend.DeletePhoto)
+	}
+
 	adminNoAuth := app.Party("/api/admin")
 	{
 		//登录

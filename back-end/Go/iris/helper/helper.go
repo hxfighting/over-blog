@@ -2,6 +2,8 @@ package helper
 
 import (
 	"blog/config"
+	"errors"
+	"github.com/kataras/iris"
 	"log"
 	"os"
 	"path/filepath"
@@ -54,4 +56,20 @@ func CheckDebug() bool {
 */
 func GetDateTime(unix int64, format string) string {
 	return time.Unix(unix, 0).Format(format)
+}
+
+/**
+获取post、put的json请求数据
+*/
+func GetRequestData(ctx iris.Context) (map[string]interface{}, error) {
+	var request interface{}
+	err := ctx.ReadJSON(&request)
+	if err != nil {
+		return map[string]interface{}{}, err
+	}
+	request_values, ok := request.(map[string]interface{})
+	if !ok {
+		return map[string]interface{}{}, errors.New("数据格式错误！")
+	}
+	return request_values, nil
 }
