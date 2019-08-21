@@ -24,8 +24,11 @@ class LinkController extends Controller
     {
         $data = $this->validate($request,['id'=>'required|integer']);
         $res = $link->where('id',$data['id'])->delete();
-        return $res?renderSuccess('删除友联成功')
-            :renderError('删除友联失败,请稍后再试！');
+        if($res){
+            $link->flushCache();
+            return renderSuccess('删除友联成功');
+        }
+        return renderError('删除友联失败,请稍后再试！');
     }
 
     //添加友联

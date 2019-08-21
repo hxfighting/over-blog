@@ -76,6 +76,17 @@ func RegisterRoutes(app *iris.Application) {
 		photoGroup.Delete("/", backend.DeletePhoto)
 	}
 
+	//评论组
+	commentGroup := adminNeedAuth.Party("/comment")
+	{
+		//获取评论列表
+		commentGroup.Get("/", backend.GetCommentList)
+		//回复评论
+		commentGroup.Post("/", backend.ReplyComment)
+		//删除评论
+		commentGroup.Delete("/", backend.DeleteComment)
+	}
+
 	adminNoAuth := app.Party("/api/admin")
 	{
 		//登录
