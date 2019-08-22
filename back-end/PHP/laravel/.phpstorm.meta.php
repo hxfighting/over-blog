@@ -5,7 +5,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2019-08-07 15:55:07.
+    * Generated on 2019-08-22 11:53:31.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -143,7 +143,6 @@ namespace PHPSTORM_META {
         'migration.creator' => \Illuminate\Database\Migrations\MigrationCreator::class,
         'migration.repository' => \Illuminate\Database\Migrations\DatabaseMigrationRepository::class,
         'migrator' => \Illuminate\Database\Migrations\Migrator::class,
-        'miniProgram' => \EasyWeChat\MiniProgram\Application::class,
         'queue' => \Illuminate\Queue\QueueManager::class,
         'queue.connection' => \Illuminate\Queue\RedisQueue::class,
         'queue.failer' => \Illuminate\Queue\Failed\DatabaseFailedJobProvider::class,
@@ -314,7 +313,6 @@ namespace PHPSTORM_META {
         'migration.creator' => \Illuminate\Database\Migrations\MigrationCreator::class,
         'migration.repository' => \Illuminate\Database\Migrations\DatabaseMigrationRepository::class,
         'migrator' => \Illuminate\Database\Migrations\Migrator::class,
-        'miniProgram' => \EasyWeChat\MiniProgram\Application::class,
         'queue' => \Illuminate\Queue\QueueManager::class,
         'queue.connection' => \Illuminate\Queue\RedisQueue::class,
         'queue.failer' => \Illuminate\Queue\Failed\DatabaseFailedJobProvider::class,
@@ -485,7 +483,6 @@ namespace PHPSTORM_META {
         'migration.creator' => \Illuminate\Database\Migrations\MigrationCreator::class,
         'migration.repository' => \Illuminate\Database\Migrations\DatabaseMigrationRepository::class,
         'migrator' => \Illuminate\Database\Migrations\Migrator::class,
-        'miniProgram' => \EasyWeChat\MiniProgram\Application::class,
         'queue' => \Illuminate\Queue\QueueManager::class,
         'queue.connection' => \Illuminate\Queue\RedisQueue::class,
         'queue.failer' => \Illuminate\Queue\Failed\DatabaseFailedJobProvider::class,
@@ -656,7 +653,6 @@ namespace PHPSTORM_META {
         'migration.creator' => \Illuminate\Database\Migrations\MigrationCreator::class,
         'migration.repository' => \Illuminate\Database\Migrations\DatabaseMigrationRepository::class,
         'migrator' => \Illuminate\Database\Migrations\Migrator::class,
-        'miniProgram' => \EasyWeChat\MiniProgram\Application::class,
         'queue' => \Illuminate\Queue\QueueManager::class,
         'queue.connection' => \Illuminate\Queue\RedisQueue::class,
         'queue.failer' => \Illuminate\Queue\Failed\DatabaseFailedJobProvider::class,
@@ -827,7 +823,6 @@ namespace PHPSTORM_META {
         'migration.creator' => \Illuminate\Database\Migrations\MigrationCreator::class,
         'migration.repository' => \Illuminate\Database\Migrations\DatabaseMigrationRepository::class,
         'migrator' => \Illuminate\Database\Migrations\Migrator::class,
-        'miniProgram' => \EasyWeChat\MiniProgram\Application::class,
         'queue' => \Illuminate\Queue\QueueManager::class,
         'queue.connection' => \Illuminate\Queue\RedisQueue::class,
         'queue.failer' => \Illuminate\Queue\Failed\DatabaseFailedJobProvider::class,
@@ -998,7 +993,6 @@ namespace PHPSTORM_META {
         'migration.creator' => \Illuminate\Database\Migrations\MigrationCreator::class,
         'migration.repository' => \Illuminate\Database\Migrations\DatabaseMigrationRepository::class,
         'migrator' => \Illuminate\Database\Migrations\Migrator::class,
-        'miniProgram' => \EasyWeChat\MiniProgram\Application::class,
         'queue' => \Illuminate\Queue\QueueManager::class,
         'queue.connection' => \Illuminate\Queue\RedisQueue::class,
         'queue.failer' => \Illuminate\Queue\Failed\DatabaseFailedJobProvider::class,
@@ -1169,7 +1163,6 @@ namespace PHPSTORM_META {
         'migration.creator' => \Illuminate\Database\Migrations\MigrationCreator::class,
         'migration.repository' => \Illuminate\Database\Migrations\DatabaseMigrationRepository::class,
         'migrator' => \Illuminate\Database\Migrations\Migrator::class,
-        'miniProgram' => \EasyWeChat\MiniProgram\Application::class,
         'queue' => \Illuminate\Queue\QueueManager::class,
         'queue.connection' => \Illuminate\Queue\RedisQueue::class,
         'queue.failer' => \Illuminate\Queue\Failed\DatabaseFailedJobProvider::class,

@@ -12,7 +12,7 @@ var (
 func getConfig() *toml.Tree {
 	config, err := toml.LoadFile("./config.toml")
 	if err != nil {
-		fmt.Println("TomlError ", err.Error())
+		fmt.Println("缺少配置文件，", err.Error())
 	}
 	return config
 }

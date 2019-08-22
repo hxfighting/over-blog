@@ -1,5 +1,7 @@
 [app]
 debug="true"
+url=""
+name=""
 
 [database]
 username=
@@ -16,3 +18,11 @@ password=""
 db=0
 host=""
 port="6379"
+
+[email]
+host=""
+port=465
+username=""
+password=""
+from=""
+subject=""
