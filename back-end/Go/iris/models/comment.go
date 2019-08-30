@@ -105,7 +105,7 @@ func GetCommentList(pageNum, pageSize, article_id int64) map[string]interface{} 
 删除评论
 */
 func DeleteComment(comment *Comment) bool {
-	database.Db.Where("id = ?", *comment.ID).First(comment)
+	database.Db.First(comment)
 	if *comment.ID == 0 {
 		return false
 	}

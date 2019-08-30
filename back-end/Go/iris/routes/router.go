@@ -87,6 +87,15 @@ func RegisterRoutes(app *iris.Application) {
 		commentGroup.Delete("/", backend.DeleteComment)
 	}
 
+	//配置组
+	configGroup := adminNeedAuth.Party("/config")
+	{
+		//获取配置列表
+		configGroup.Get("/", backend.GetConfigList)
+		//添加配置
+		configGroup.Post("/", backend.AddConfig)
+	}
+
 	adminNoAuth := app.Party("/api/admin")
 	{
 		//登录
