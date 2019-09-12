@@ -9,6 +9,7 @@ use App\Observers\
 use EasyWeChat\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Overtrue\Socialite\SocialiteManager;
 
@@ -85,6 +86,25 @@ class AppServiceProvider extends ServiceProvider
         view()->share('friendLink', $friendLink);
         view()->share('socialData', $social_data);
         view()->share('footerData', $footerData);
+
+        Validator::extend('captcha', function ($attribute, $value, $parameters, $validator) {
+            if (config('app.debug'))
+            {
+                return true;
+            }
+            $key = app('request')->get('key');
+            $exist_code = app('cache')->get($key);
+            if (!$exist_code)
+            {
+                return false;
+            }
+            if ($exist_code == strtolower($value))
+            {
+                app('cache')->forget($key);
+                return true;
+            }
+            return false;
+        });
     }
 
     /**

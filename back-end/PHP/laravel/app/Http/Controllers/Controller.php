@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Gregwar\Captcha\CaptchaBuilder;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
-use Mews\Captcha\Facades\Captcha;
+use Illuminate\Support\Str;
 
 class Controller extends BaseController
 {
@@ -14,9 +15,23 @@ class Controller extends BaseController
 
 
     //获取验证码
-    public function getCaptcha()
+    public function getCaptcha(CaptchaBuilder $builder)
     {
-        $captcha = Captcha::create('flat',true);
-        return renderSuccess('获取验证码成功',$captcha);
+        $builder->build();
+        $code = $builder->getPhrase();
+        $key = md5(Str::random(32) . uniqid() . session_id() . microtime(true));
+        $this->cacheCaptchaCode($code, $key);
+        $image = $builder->inline();
+        return renderSuccess('获取验证码成功！', compact('image', 'key'));
+    }
+
+    /**
+     * 缓存验证码code
+     * Date: 2019-04-08 14:18
+     * @param string $code
+     */
+    private function cacheCaptchaCode(string $code, string $key)
+    {
+        app('cache')->put($key, $code, 60);
     }
 }

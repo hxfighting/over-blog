@@ -1,7 +1,7 @@
 ## 运行环境要求
 
 - Nginx 1.8+
-- PHP 7.1+
+- PHP 7.2+
 - MySQL 5.7+
 - Redis 3.0+
 - node.js 8.0+
