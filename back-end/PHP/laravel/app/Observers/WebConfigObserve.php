@@ -42,6 +42,7 @@ class WebConfigObserve
         $config_data = array_combine(array_column($config_data,'name'),array_column($config_data,'val'));
         $path = config_path('webConfig.php');
         $str = '<?php return ' . var_export($config_data, true) . ';';    //将得到数组转换成字符串
+        chmod($path,777);
         file_put_contents($path, $str); //写入文件
     }
 }

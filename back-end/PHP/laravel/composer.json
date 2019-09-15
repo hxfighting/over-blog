@@ -25,7 +25,7 @@
         "sentry/sentry-laravel": "^1.2",
         "torann/geoip": "^1.0",
         "tucker-eric/eloquentfilter": "^2.0",
-        "tymon/jwt-auth": "1.0.x-dev",
+        "tymon/jwt-auth": "1.0.0-rc.5",
         "watson/rememberable": "^3.1"
     },
     "require-dev": {
