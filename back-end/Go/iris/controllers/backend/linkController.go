@@ -3,8 +3,26 @@ package backend
 import (
 	"blog/models"
 	"blog/service"
+	"errors"
 	"github.com/kataras/iris"
+	"github.com/mitchellh/mapstructure"
 )
+
+/**
+获取link model
+*/
+func getLinkModel(ctx iris.Context, validates []service.BlogValidate) (models.Link, error) {
+	link := models.Link{}
+	requestData, err := getRequestData(ctx, validates)
+	if err != nil {
+		return link, err
+	}
+	err = mapstructure.Decode(requestData, &link)
+	if err != nil {
+		return link, errors.New("参数错误！")
+	}
+	return link, nil
+}
 
 /**
 获取友联列表
@@ -25,16 +43,10 @@ func GetLinkList(ctx iris.Context) {
 删除友联
 */
 func DeleteLink(ctx iris.Context) {
-	link := models.Link{}
-	err := ctx.ReadJSON(&link)
-	if err != nil {
-		response.RenderError(ctx, "参数错误！", nil)
-		return
-	}
 	validates := []service.BlogValidate{
-		{link.ID, "required,gt=0", "友联ID错误！"},
+		{"id", "required,gt=0", "友联ID错误！"},
 	}
-	err = service.ValidateField(validates)
+	link, err := getLinkModel(ctx, validates)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -51,20 +63,14 @@ func DeleteLink(ctx iris.Context) {
 添加友联
 */
 func AddLink(ctx iris.Context) {
-	link := models.Link{}
-	err := ctx.ReadJSON(&link)
-	if err != nil {
-		response.RenderError(ctx, "参数错误！", nil)
-		return
-	}
 	validates := []service.BlogValidate{
-		{link.Name, "required,gte=2,lte=30", "友联描述在2到30个字符之间！"},
-		{link.Order, "required,gte=0", "友联排序值错误！"},
-		{link.IsShow, "required,oneof=0 1", "友联是否显示值错误！"},
-		{link.Url, "required,url", "友联URL错误！"},
-		{link.Description, "required,gte=2,lte=50", "友联描述在2到50个字符之间！"},
+		{"name", "required,gte=2,lte=30", "友联描述在2到30个字符之间！"},
+		{"order", "required,gte=0", "友联排序值错误！"},
+		{"is_show", "required,oneof=0 1", "友联是否显示值错误！"},
+		{"url", "required,url", "友联URL错误！"},
+		{"description", "required,gte=2,lte=50", "友联描述在2到50个字符之间！"},
 	}
-	err = service.ValidateField(validates)
+	link, err := getLinkModel(ctx, validates)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -81,21 +87,15 @@ func AddLink(ctx iris.Context) {
 修改友联
 */
 func UpdateLink(ctx iris.Context) {
-	link := models.Link{}
-	err := ctx.ReadJSON(&link)
-	if err != nil {
-		response.RenderError(ctx, "参数错误！", nil)
-		return
-	}
 	validates := []service.BlogValidate{
-		{link.ID, "required,gt=0", "友联ID错误！"},
-		{link.Name, "required,gte=2,lte=30", "友联描述在2到30个字符之间！"},
-		{link.Order, "required,gte=0", "友联排序值错误！"},
-		{link.IsShow, "required,oneof=0 1", "友联是否显示值错误！"},
-		{link.Url, "required,url", "友联URL错误！"},
-		{link.Description, "required,gte=2,lte=50", "友联描述在2到50个字符之间！"},
+		{"id", "required,gt=0", "友联ID错误！"},
+		{"name", "required,gte=2,lte=30", "友联描述在2到30个字符之间！"},
+		{"order", "required,gte=0", "友联排序值错误！"},
+		{"is_show", "required,oneof=0 1", "友联是否显示值错误！"},
+		{"url", "required,url", "友联URL错误！"},
+		{"description", "required,gte=2,lte=50", "友联描述在2到50个字符之间！"},
 	}
-	err = service.ValidateField(validates)
+	link, err := getLinkModel(ctx, validates)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return

@@ -12,6 +12,7 @@ type Photo struct {
 	UpdatedUnix int64  `json:"updated_unix" gorm:"column:updated_at"`
 	CreatedAt   string `json:"created_at" gorm:"-"`
 	UpdatedAt   string `json:"updated_at" gorm:"-"`
+	ImageUrl    string `json:"image_url" gorm:"-"`
 }
 
 const PHOTO_TYPE = "App\\Http\\Models\\Photo"
@@ -51,7 +52,7 @@ func (this *Photo) GetPhotoList() []Image {
 /**
 添加照片
 */
-func (this *Photo) AddPhoto(image_url string) bool {
+func (this *Photo) AddPhoto() bool {
 	uninx_time := time.Now().Unix()
 	tx := database.Db.Begin()
 	this.CreatedUnix = uninx_time
@@ -65,7 +66,7 @@ func (this *Photo) AddPhoto(image_url string) bool {
 	image_type := PHOTO_TYPE
 	image.Image_type = &image_type
 	image.Image_id = this.ID
-	image.Image_url = &image_url
+	image.Image_url = &this.ImageUrl
 	image.CreatedUnix = uninx_time
 	image.UpdatedUnix = uninx_time
 	result := tx.Create(&image)
@@ -98,14 +99,13 @@ func (this *Photo) UpdatePhoto(image Image) bool {
 /**
 删除照片
 */
-func (this *Photo) DeletePhoto(id int64) bool {
-	tx := database.Db.Begin();
-	res := tx.Table("image").Where("image_id = ? and image_type = ?", id, PHOTO_TYPE).Delete(&Image{})
+func (this *Photo) DeletePhoto() bool {
+	tx := database.Db.Begin()
+	res := tx.Table("image").Where("image_id = ? and image_type = ?", this.ID, PHOTO_TYPE).Delete(&Image{})
 	if res.Error != nil {
 		tx.Rollback()
 		return false
 	}
-	this.ID = &id
 	res = tx.Delete(this)
 	if res.Error != nil {
 		tx.Rollback()

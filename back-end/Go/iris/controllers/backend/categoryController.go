@@ -4,8 +4,26 @@ import (
 	"blog/database"
 	"blog/models"
 	"blog/service"
+	"errors"
 	"github.com/kataras/iris"
+	"github.com/mitchellh/mapstructure"
 )
+
+/**
+获取category model
+*/
+func getCategory(ctx iris.Context, validates []service.BlogValidate) (models.Category, error) {
+	category := models.Category{}
+	requestData, err := getRequestData(ctx, validates)
+	if err != nil {
+		return category, err
+	}
+	err = mapstructure.Decode(requestData, &category)
+	if err != nil {
+		return category, errors.New("参数错误！")
+	}
+	return category, nil
+}
 
 /**
 获取分类列表
@@ -22,17 +40,11 @@ func GetCategoryList(ctx iris.Context) {
 添加分类
 */
 func AddCategory(ctx iris.Context) {
-	category := models.Category{}
-	err := ctx.ReadJSON(&category)
-	if err != nil {
-		response.RenderError(ctx, "参数错误！", nil)
-		return
-	}
 	validates := []service.BlogValidate{
-		{category.Pid, "required,gte=0", "分类pid错误！"},
-		{category.Title, "required,gte=2,lte=20", "分类名称在2到20个字符之间！"},
+		{"pid", "required,gte=0", "分类pid错误！"},
+		{"title", "required,gte=2,lte=20", "分类名称在2到20个字符之间！"},
 	}
-	err = service.ValidateField(validates)
+	category, err := getCategory(ctx, validates)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -69,17 +81,11 @@ func checkExistTitle(cate models.Category, flag bool) bool {
 修改分类
 */
 func UpdateCategory(ctx iris.Context) {
-	category := models.Category{}
-	err := ctx.ReadJSON(&category)
-	if err != nil {
-		response.RenderError(ctx, "参数错误！", nil)
-		return
-	}
 	validates := []service.BlogValidate{
-		{category.ID, "required,gt=0", "分类id错误！"},
-		{category.Title, "required,gte=2,lte=20", "分类名称在2到20个字符之间！"},
+		{"id", "required,gt=0", "分类id错误！"},
+		{"title", "required,gte=2,lte=20", "分类名称在2到20个字符之间！"},
 	}
-	err = service.ValidateField(validates)
+	category, err := getCategory(ctx, validates)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -100,16 +106,10 @@ func UpdateCategory(ctx iris.Context) {
 删除分类
 */
 func DeleteCategory(ctx iris.Context) {
-	category := models.Category{}
-	err := ctx.ReadJSON(&category)
-	if err != nil {
-		response.RenderError(ctx, "参数错误！", nil)
-		return
-	}
 	validates := []service.BlogValidate{
-		{category.ID, "required,gt=0", "分类id错误！"},
+		{"id", "required,gt=0", "分类id错误！"},
 	}
-	err = service.ValidateField(validates)
+	category, err := getCategory(ctx, validates)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return

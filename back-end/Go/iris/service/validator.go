@@ -10,7 +10,7 @@ var (
 )
 
 type BlogValidate struct {
-	Value      interface{}
+	Key        string
 	Validation string
 	Err        string
 }
@@ -25,7 +25,7 @@ func newInstance() *validator.Validate {
 func ValidateField(validates []BlogValidate) error {
 	if len(validates) > 0 {
 		for _, value := range validates {
-			e := Validate.Var(value.Value, value.Validation)
+			e := Validate.Var(value.Key, value.Validation)
 			if e != nil {
 				return errors.New(value.Err)
 			}

@@ -3,8 +3,26 @@ package backend
 import (
 	"blog/models"
 	"blog/service"
+	"errors"
 	"github.com/kataras/iris"
+	"github.com/mitchellh/mapstructure"
 )
+
+/**
+获取chat model
+*/
+func getChatModel(ctx iris.Context, validates []service.BlogValidate) (models.Chat, error) {
+	chat := models.Chat{}
+	requestData, err := getRequestData(ctx, validates)
+	if err != nil {
+		return chat, err
+	}
+	err = mapstructure.Decode(requestData, &chat)
+	if err != nil {
+		return chat, errors.New("参数错误！")
+	}
+	return chat, nil
+}
 
 /**
 获取说说列表
@@ -24,17 +42,11 @@ func GetChatList(ctx iris.Context) {
 添加说说
 */
 func AddChat(ctx iris.Context) {
-	chat := models.Chat{}
-	err := ctx.ReadJSON(&chat)
-	if err != nil {
-		response.RenderError(ctx, "参数错误！", nil)
-		return
-	}
 	validates := []service.BlogValidate{
-		{chat.IsShow, "required,oneof=0 1", "说说是否显示值错误！"},
-		{chat.Content, "required,gte=2,lte=255", "说说内容在2到255个字符之间！"},
+		{"is_show", "required,oneof=0 1", "说说是否显示值错误！"},
+		{"content", "required,gte=2,lte=255", "说说内容在2到255个字符之间！"},
 	}
-	err = service.ValidateField(validates)
+	chat, err := getChatModel(ctx, validates)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -51,18 +63,12 @@ func AddChat(ctx iris.Context) {
 修改说说
 */
 func UpdateChat(ctx iris.Context) {
-	chat := models.Chat{}
-	err := ctx.ReadJSON(&chat)
-	if err != nil {
-		response.RenderError(ctx, "参数错误！", nil)
-		return
-	}
 	validates := []service.BlogValidate{
-		{chat.ID, "required,gt=0", "说说ID错误！"},
-		{chat.IsShow, "required,oneof=0 1", "说说是否显示值错误！"},
-		{chat.Content, "required,gte=2,lte=255", "说说内容在2到255个字符之间！"},
+		{"id", "required,gt=0", "说说ID错误！"},
+		{"is_show", "required,oneof=0 1", "说说是否显示值错误！"},
+		{"content", "required,gte=2,lte=255", "说说内容在2到255个字符之间！"},
 	}
-	err = service.ValidateField(validates)
+	chat, err := getChatModel(ctx, validates)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -79,16 +85,10 @@ func UpdateChat(ctx iris.Context) {
 删除说说
 */
 func DeleteChat(ctx iris.Context) {
-	chat := models.Chat{}
-	err := ctx.ReadJSON(&chat)
-	if err != nil {
-		response.RenderError(ctx, "参数错误！", nil)
-		return
-	}
 	validates := []service.BlogValidate{
-		{chat.ID, "required,gt=0", "说说ID错误！"},
+		{"id", "required,gt=0", "说说ID错误！"},
 	}
-	err = service.ValidateField(validates)
+	chat, err := getChatModel(ctx, validates)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return

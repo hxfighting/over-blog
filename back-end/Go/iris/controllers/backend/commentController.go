@@ -3,17 +3,35 @@ package backend
 import (
 	"blog/models"
 	"blog/service"
+	"errors"
 	"github.com/kataras/iris"
+	"github.com/mitchellh/mapstructure"
 )
 
 /**
+获取comment model
+*/
+func getCommentModel(ctx iris.Context, validates []service.BlogValidate) (models.Comment, error) {
+	comment := models.Comment{}
+	requestData, err := getRequestData(ctx, validates)
+	if err != nil {
+		return comment, err
+	}
+	err = mapstructure.Decode(requestData, &comment)
+	if err != nil {
+		return comment, errors.New("参数错误！")
+	}
+	return comment, nil
+}
+
+/**
 获取评论列表
- */
-func GetCommentList(ctx iris.Context)  {
+*/
+func GetCommentList(ctx iris.Context) {
 	pageNum := ctx.URLParamInt64Default("pageNum", 1)
 	pageSize := ctx.URLParamInt64Default("pageSize", 10)
 	article_id := ctx.URLParamInt64Default("article_id", 0)
-	list := models.GetCommentList(pageNum, pageSize,article_id)
+	list := models.GetCommentList(pageNum, pageSize, article_id)
 	if len(list) > 0 {
 		response.RenderSuccess(ctx, "获取评论列表成功", list)
 		return
@@ -23,18 +41,12 @@ func GetCommentList(ctx iris.Context)  {
 
 /**
 删除评论
- */
-func DeleteComment(ctx iris.Context)  {
-	comment := models.Comment{}
-	err := ctx.ReadJSON(&comment)
-	if err != nil {
-		response.RenderError(ctx, "参数错误！", nil)
-		return
-	}
+*/
+func DeleteComment(ctx iris.Context) {
 	validates := []service.BlogValidate{
-		{comment.ID, "required,gt=0", "评论ID错误！"},
+		{"id", "required,gt=0", "评论ID错误！"},
 	}
-	err = service.ValidateField(validates)
+	comment, err := getCommentModel(ctx, validates)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -49,19 +61,13 @@ func DeleteComment(ctx iris.Context)  {
 
 /**
 回复评论
- */
-func ReplyComment(ctx iris.Context)  {
-	comment := models.Comment{}
-	err := ctx.ReadJSON(&comment)
-	if err != nil {
-		response.RenderError(ctx, "参数错误！", nil)
-		return
-	}
+*/
+func ReplyComment(ctx iris.Context) {
 	validates := []service.BlogValidate{
-		{comment.ID, "required,gt=0", "评论ID错误！"},
-		{comment.ReplyContent, "required,gte=2,lte=255", "回复内容在2到255个字符之间错误！"},
+		{"id", "required,gt=0", "评论ID错误！"},
+		{"reply_content", "required,gte=2,lte=255", "回复内容在2到255个字符之间错误！"},
 	}
-	err = service.ValidateField(validates)
+	comment, err := getCommentModel(ctx, validates)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return

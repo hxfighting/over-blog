@@ -1,11 +1,28 @@
 package backend
 
 import (
-	"blog/helper"
 	"blog/models"
 	"blog/service"
+	"errors"
 	"github.com/kataras/iris"
+	"github.com/mitchellh/mapstructure"
 )
+
+/**
+获取photo model
+*/
+func getPhotoModel(ctx iris.Context, validates []service.BlogValidate) (models.Photo, error) {
+	photo := models.Photo{}
+	requestData, err := getRequestData(ctx, validates)
+	if err != nil {
+		return photo, err
+	}
+	err = mapstructure.Decode(requestData, &photo)
+	if err != nil {
+		return photo, errors.New("参数错误！")
+	}
+	return photo, nil
+}
 
 /**
 获取照片列表数据
@@ -24,25 +41,15 @@ func GetPhotoList(ctx iris.Context) {
 添加照片
 */
 func AddPhoto(ctx iris.Context) {
-	photo := models.Photo{}
-	data, e := helper.GetRequestData(ctx)
-	if e != nil {
-		response.RenderError(ctx, "参数错误！", nil)
-		return
-	}
-	if _, ok := data["image_url"]; !ok {
-		response.RenderError(ctx, "参数错误！", nil)
-		return
-	}
 	validates := []service.BlogValidate{
-		{data["image_url"], "required,url", "照片连接错误！"},
+		{"image_url", "required,url", "照片连接错误！"},
 	}
-	err := service.ValidateField(validates)
+	photo, err := getPhotoModel(ctx, validates)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
 	}
-	res := photo.AddPhoto(data["image_url"].(string))
+	res := photo.AddPhoto()
 	if !res {
 		response.RenderError(ctx, "添加照片失败，请稍后再试！", nil)
 		return
@@ -55,21 +62,16 @@ func AddPhoto(ctx iris.Context) {
 */
 func UpdatePhoto(ctx iris.Context) {
 	image := models.Image{}
-	err := ctx.ReadJSON(&image)
-	if err != nil {
-		response.RenderError(ctx, "参数错误！", nil)
-		return
-	}
 	validates := []service.BlogValidate{
-		{image.ID, "required,gt=0", "照片ID错误！"},
-		{image.Image_url, "required,url", "照片连接错误！"},
+		{"id", "required,gt=0", "照片ID错误！"},
+		{"image_url", "required,url", "照片连接错误！"},
 	}
-	err = service.ValidateField(validates)
+	photo, err := getPhotoModel(ctx, validates)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
 	}
-	photo := models.Photo{}
+	image.ID = photo.ID
 	res := photo.UpdatePhoto(image)
 	if !res {
 		response.RenderError(ctx, "修改照片失败，请稍后再试！", nil)
@@ -82,25 +84,15 @@ func UpdatePhoto(ctx iris.Context) {
 删除照片
 */
 func DeletePhoto(ctx iris.Context) {
-	photo := models.Photo{}
-	data, e := helper.GetRequestData(ctx)
-	if e != nil {
-		response.RenderError(ctx, "参数错误！", nil)
-		return
-	}
-	if _, ok := data["id"]; !ok {
-		response.RenderError(ctx, "参数错误！", nil)
-		return
-	}
 	validates := []service.BlogValidate{
-		{data["id"], "required,gt=0", "照片ID错误！"},
+		{"id", "required,gt=0", "照片ID错误！"},
 	}
-	err := service.ValidateField(validates)
+	photo, err := getPhotoModel(ctx, validates)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
 	}
-	res := photo.DeletePhoto(int64(data["id"].(float64)))
+	res := photo.DeletePhoto()
 	if !res {
 		response.RenderError(ctx, "删除照片失败，请稍后再试！", nil)
 		return

@@ -5,27 +5,39 @@ import (
 	"blog/models"
 	"blog/service"
 	"crypto/md5"
+	"errors"
 	"fmt"
 	"github.com/kataras/iris"
+	"github.com/mitchellh/mapstructure"
 )
+
+/**
+获取admin model
+*/
+func getModel(ctx iris.Context, validates []service.BlogValidate) (models.Admin, error) {
+	admin := models.Admin{}
+	requestData, err := getRequestData(ctx, validates)
+	if err != nil {
+		return admin, err
+	}
+	err = mapstructure.Decode(requestData, &admin)
+	if err != nil {
+		return admin, errors.New("参数错误！")
+	}
+	return admin, nil
+}
 
 /**
 登录
 */
 func Login(ctx iris.Context) {
-	admin := models.Admin{}
-	err := ctx.ReadJSON(&admin)
-	if err != nil {
-		response.RenderError(ctx, "参数错误！", nil)
-		return
-	}
 	validates := []service.BlogValidate{
-		{admin.Name, "required,gte=2,lte=15", "请输入合法的用户名！"},
-		{admin.Password, "required,gte=6,lte=16", "请输入合法的密码！"},
-		{admin.Captcha, "required,len=6", "请输入合法的验证码！"},
-		{admin.Key, "required", "请输入合法的验证码key！"},
+		{"name", "required,gte=2,lte=15", "请输入合法的用户名！"},
+		{"password", "required,gte=6,lte=16", "请输入合法的密码！"},
+		{"captcha", "required,len=6", "请输入合法的验证码！"},
+		{"key", "required", "请输入合法的验证码key！"},
 	}
-	err = service.ValidateField(validates)
+	admin, err := getModel(ctx, validates)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -80,18 +92,12 @@ func GetUserInfo(ctx iris.Context) {
 修改个人信息
 */
 func UpdateInfo(ctx iris.Context) {
-	admin := models.Admin{}
-	err := ctx.ReadJSON(&admin)
-	if err != nil {
-		response.RenderError(ctx, "参数错误！", nil)
-		return
-	}
 	validates := []service.BlogValidate{
-		{admin.Avatar, "required,url", "请输入正确的头像地址"},
-		{admin.Email, "required,email", "请输入正确的邮箱地址"},
-		{admin.Name, "required,gte=2,lte=30", "请输入正确的姓名"},
+		{"avatar", "required,url", "请输入正确的头像地址"},
+		{"email", "required,email", "请输入正确的邮箱地址"},
+		{"name", "required,gte=2,lte=30", "请输入正确的姓名"},
 	}
-	err = service.ValidateField(validates)
+	admin, err := getModel(ctx, validates)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -113,16 +119,10 @@ func UpdateInfo(ctx iris.Context) {
 修改密码
 */
 func ResetPassword(ctx iris.Context) {
-	admin := models.Admin{}
-	err := ctx.ReadJSON(&admin)
-	if err != nil {
-		response.RenderError(ctx, "参数错误！", nil)
-		return
-	}
 	validates := []service.BlogValidate{
-		{admin.Password, "required,gte=6,lte=20", "请输入正确的密码，6到20个字符！"},
+		{"password", "required,gte=6,lte=20", "请输入正确的密码，6到20个字符！"},
 	}
-	err = service.ValidateField(validates)
+	admin, err := getModel(ctx, validates)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return

@@ -50,7 +50,7 @@ func GetConfigList(pageNum, pageSize, type_id int64) map[string]interface{} {
 
 /**
 添加配置
- */
+*/
 func AddConfig(config *Config) map[string]interface{} {
 	data := make(map[string]interface{})
 	data["flag"] = false
@@ -59,7 +59,7 @@ func AddConfig(config *Config) map[string]interface{} {
 		data["msg"] = checkRes["msg"]
 		return data
 	}
-	database.Db.Where("name = ? and type = ?",*config.Name,*config.Type).FirstOrCreate(&config)
+	database.Db.Where("name = ? and type = ?", *config.Name, *config.Type).FirstOrCreate(&config)
 	if config.ID != nil {
 		data["flag"] = true
 		data["msg"] = "添加配置成功！"

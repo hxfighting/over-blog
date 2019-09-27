@@ -3,8 +3,26 @@ package backend
 import (
 	"blog/models"
 	"blog/service"
+	"errors"
 	"github.com/kataras/iris"
+	"github.com/mitchellh/mapstructure"
 )
+
+/**
+获取config model
+*/
+func getConfigModel(ctx iris.Context, validates []service.BlogValidate) (models.Config, error) {
+	config := models.Config{}
+	requestData, err := getRequestData(ctx, validates)
+	if err != nil {
+		return config, err
+	}
+	err = mapstructure.Decode(requestData, &config)
+	if err != nil {
+		return config, errors.New("参数错误！")
+	}
+	return config, nil
+}
 
 /**
 获取配置列表
@@ -25,27 +43,21 @@ func GetConfigList(ctx iris.Context) {
 添加配置
 */
 func AddConfig(ctx iris.Context) {
-	config := models.Config{}
-	err := ctx.ReadJSON(&config)
-	if err != nil {
-		response.RenderError(ctx, "参数错误！", nil)
-		return
-	}
 	validates := []service.BlogValidate{
-		{config.Type, "required,oneof=1 2 3", "配置类型值错误！"},
-		{config.Name, "required,gte=2,lte=200", "配置key在2到200个字符之间！"},
-		{config.Title, "required,gte=2,lte=200", "配置名称在2到200个字符之间！"},
-		{config.Val, "required,gte=2,lte=65535", "配置值在2到65535个字符之间！"},
+		{"type", "required,oneof=1 2 3", "配置类型值错误！"},
+		{"name", "required,gte=2,lte=200", "配置key在2到200个字符之间！"},
+		{"title", "required,gte=2,lte=200", "配置名称在2到200个字符之间！"},
+		{"val", "required,gte=2,lte=65535", "配置值在2到65535个字符之间！"},
 	}
-	err = service.ValidateField(validates)
+	config, err := getConfigModel(ctx, validates)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
 	}
-	//res := models.AddConfig(&config)
-	//if !res["flag"].(bool) {
-	//	response.RenderError(ctx, res["msg"].(string), nil)
-	//	return
-	//}
-	//response.RenderSuccess(ctx, res["msg"].(string), nil)
+	res := models.AddConfig(&config)
+	if !res["flag"].(bool) {
+		response.RenderError(ctx, res["msg"].(string), nil)
+		return
+	}
+	response.RenderSuccess(ctx, res["msg"].(string), nil)
 }
