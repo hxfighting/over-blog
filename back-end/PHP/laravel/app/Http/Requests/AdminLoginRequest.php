@@ -26,7 +26,7 @@ class AdminLoginRequest extends FormRequest
         return [
             'name'      =>'required|min:2|max:20',
             'password'  =>'required|min:6|max:20',
-            'captcha'   =>'required|string|max:10',
+            'captcha'   =>'required|captcha',
             'key'       =>'required'
         ];
     }

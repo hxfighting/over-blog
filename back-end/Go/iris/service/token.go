@@ -8,7 +8,6 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	jwtmiddleware "github.com/iris-contrib/middleware/jwt"
 	"github.com/kataras/iris"
-	"log"
 	"time"
 )
 
@@ -32,9 +31,8 @@ func GetJWTHandler() *jwtmiddleware.Middleware {
 		SigningMethod: jwt.SigningMethodHS256,
 		Expiration:    true,
 		ContextKey:    JWT_KEY,
-		ErrorHandler: func(ctx iris.Context, s string) {
-			log.Println(time.Now().Add(time.Minute*60).Unix(), s)
-			if s == "Token is expired" {
+		ErrorHandler: func(ctx iris.Context, s error) {
+			if s.Error() == "Token is expired" {
 				token, err := renewalToken(ctx)
 				if err != nil {
 					response.RenderError(ctx, err.Error(), nil)
@@ -43,7 +41,7 @@ func GetJWTHandler() *jwtmiddleware.Middleware {
 				ctx.Header(JWT_KEY, token)
 				ctx.Next()
 			} else {
-				response.RenderError(ctx, s, nil)
+				response.RenderError(ctx, s.Error(), nil)
 			}
 		},
 	})

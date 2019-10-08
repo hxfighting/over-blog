@@ -11,24 +11,29 @@ require (
 	github.com/go-check/check v1.0.0-20180628173108-788fd7840127 // indirect
 	github.com/go-playground/locales v0.12.1 // indirect
 	github.com/go-playground/universal-translator v0.16.0 // indirect
-	github.com/go-redis/redis v6.15.2+incompatible
+	github.com/go-redis/redis v6.15.5+incompatible
 	github.com/google/go-querystring v1.0.0 // indirect
 	github.com/imkira/go-interpol v1.1.0 // indirect
-	github.com/iris-contrib/middleware v0.0.0-20190607180642-00dac7c43ee7
-	github.com/jinzhu/gorm v1.9.10
+	github.com/iris-contrib/middleware v0.0.0-20190816193017-7838277651e8
+	github.com/jinzhu/gorm v1.9.11
+	github.com/json-iterator/go v1.1.7 // indirect
+	github.com/juju/errors v0.0.0-20190930114154-d42613fe1ab9 // indirect
 	github.com/k0kubun/colorstring v0.0.0-20150214042306-9440f1994b88 // indirect
 	github.com/kataras/iris v0.0.0-20190916050704-df882273e219
-	github.com/klauspost/compress v1.6.2 // indirect
+	github.com/klauspost/compress v1.8.5 // indirect
 	github.com/klauspost/cpuid v1.2.1 // indirect
 	github.com/leodido/go-urn v1.1.0 // indirect
-	github.com/mailru/easyjson v0.0.0-20190403194419-1ea4449da983 // indirect
-	github.com/mattn/go-colorable v0.1.2 // indirect
+	github.com/mailru/easyjson v0.7.0 // indirect
+	github.com/mattn/go-colorable v0.1.4 // indirect
+	github.com/mattn/go-isatty v0.0.9 // indirect
 	github.com/mitchellh/mapstructure v1.1.2
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.1 // indirect
-	github.com/mojocn/base64Captcha v0.0.0-20190509095025-87c9c59224d8
+	github.com/mojocn/base64Captcha v0.0.0-20190801020520-752b1cd608b2
 	github.com/moul/http2curl v1.0.0 // indirect
-	github.com/pelletier/go-toml v1.4.0
+	github.com/onsi/ginkgo v1.8.0 // indirect
+	github.com/onsi/gomega v1.5.0 // indirect
+	github.com/pelletier/go-toml v1.5.0
 	github.com/phachon/go-logger v0.0.0-20180912060440-89ff8a2898f6
 	github.com/sergi/go-diff v1.0.0 // indirect
 	github.com/shurcooL/sanitized_anchor_name v1.0.0 // indirect
@@ -42,9 +47,13 @@ require (
 	github.com/yudai/gojsondiff v1.0.0 // indirect
 	github.com/yudai/golcs v0.0.0-20170316035057-ecda9a501e82 // indirect
 	github.com/yudai/pp v2.0.1+incompatible // indirect
-	golang.org/x/crypto v0.0.0-20190605123033-f99c8df09eb5
+	golang.org/x/crypto v0.0.0-20191002192127-34f69633bfdc
+	golang.org/x/image v0.0.0-20190910094157-69e4b8554b2a // indirect
+	golang.org/x/net v0.0.0-20191007182048-72f939374954 // indirect
+	golang.org/x/sys v0.0.0-20191007154456-ef33b2fb2c41 // indirect
+	google.golang.org/appengine v1.6.5 // indirect
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
 	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
-	gopkg.in/go-playground/validator.v9 v9.29.0
+	gopkg.in/go-playground/validator.v9 v9.30.0
 	gopkg.in/gomail.v2 v2.0.0-20160411212932-81ebce5c23df
 )

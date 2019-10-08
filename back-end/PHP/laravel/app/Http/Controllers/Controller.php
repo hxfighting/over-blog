@@ -21,8 +21,8 @@ class Controller extends BaseController
         $code = $builder->getPhrase();
         $key = md5(Str::random(32) . uniqid() . session_id() . microtime(true));
         $this->cacheCaptchaCode($code, $key);
-        $image = $builder->inline();
-        return renderSuccess('获取验证码成功！', compact('image', 'key'));
+        $img = $builder->inline();
+        return renderSuccess('获取验证码成功！', compact('img', 'key'));
     }
 
     /**
