@@ -44,7 +44,7 @@ func GetLinkList(ctx iris.Context) {
 */
 func DeleteLink(ctx iris.Context) {
 	validates := []service.BlogValidate{
-		{"id", "required,gt=0", "友联ID错误！"},
+		{"id", "int64", "required,myString,gt=0", "友联ID错误！"},
 	}
 	link, err := getLinkModel(ctx, validates)
 	if err != nil {
@@ -64,11 +64,11 @@ func DeleteLink(ctx iris.Context) {
 */
 func AddLink(ctx iris.Context) {
 	validates := []service.BlogValidate{
-		{"name", "required,gte=2,lte=30", "友联描述在2到30个字符之间！"},
-		{"order", "required,gte=0", "友联排序值错误！"},
-		{"is_show", "required,oneof=0 1", "友联是否显示值错误！"},
-		{"url", "required,url", "友联URL错误！"},
-		{"description", "required,gte=2,lte=50", "友联描述在2到50个字符之间！"},
+		{"name", "string", "required,myString,gte=2,lte=30", "友联描述在2到30个字符之间！"},
+		{"order", "int", "required,myString,gte=0", "友联排序值错误！"},
+		{"is_show", "int", "required,myString,oneof=0 1", "友联是否显示值错误！"},
+		{"url", "string", "required,myString,url", "友联URL错误！"},
+		{"description", "string", "required,myString,gte=2,lte=50", "友联描述在2到50个字符之间！"},
 	}
 	link, err := getLinkModel(ctx, validates)
 	if err != nil {
@@ -88,12 +88,12 @@ func AddLink(ctx iris.Context) {
 */
 func UpdateLink(ctx iris.Context) {
 	validates := []service.BlogValidate{
-		{"id", "required,gt=0", "友联ID错误！"},
-		{"name", "required,gte=2,lte=30", "友联描述在2到30个字符之间！"},
-		{"order", "required,gte=0", "友联排序值错误！"},
-		{"is_show", "required,oneof=0 1", "友联是否显示值错误！"},
-		{"url", "required,url", "友联URL错误！"},
-		{"description", "required,gte=2,lte=50", "友联描述在2到50个字符之间！"},
+		{"id", "int64", "required,myString,gt=0", "友联ID错误！"},
+		{"name", "string", "required,myString,gte=2,lte=30", "友联描述在2到30个字符之间！"},
+		{"order", "int", "required,myString,gte=0", "友联排序值错误！"},
+		{"is_show", "int", "required,myString,oneof=0 1", "友联是否显示值错误！"},
+		{"url", "string", "required,myString,url", "友联URL错误！"},
+		{"description", "string", "required,myString,gte=2,lte=50", "友联描述在2到50个字符之间！"},
 	}
 	link, err := getLinkModel(ctx, validates)
 	if err != nil {

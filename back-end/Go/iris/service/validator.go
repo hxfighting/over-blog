@@ -11,12 +11,15 @@ var (
 
 type BlogValidate struct {
 	Key        string
+	Type       string
 	Validation string
 	Err        string
 }
 
 func newInstance() *validator.Validate {
-	return validator.New()
+	validate := validator.New()
+	validate.RegisterValidation("myString", validateString)
+	return validate
 }
 
 /**
@@ -32,4 +35,14 @@ func ValidateField(validates []BlogValidate) error {
 		}
 	}
 	return nil
+}
+
+/**
+验证是否是字符串
+*/
+func validateString(val validator.FieldLevel) bool {
+	if val.Field().Type().String() != "string" {
+		return false
+	}
+	return true
 }

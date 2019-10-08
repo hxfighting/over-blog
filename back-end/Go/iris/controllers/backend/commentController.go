@@ -44,7 +44,7 @@ func GetCommentList(ctx iris.Context) {
 */
 func DeleteComment(ctx iris.Context) {
 	validates := []service.BlogValidate{
-		{"id", "required,gt=0", "评论ID错误！"},
+		{"id", "int64", "required,myString,gt=0", "评论ID错误！"},
 	}
 	comment, err := getCommentModel(ctx, validates)
 	if err != nil {
@@ -64,8 +64,8 @@ func DeleteComment(ctx iris.Context) {
 */
 func ReplyComment(ctx iris.Context) {
 	validates := []service.BlogValidate{
-		{"id", "required,gt=0", "评论ID错误！"},
-		{"reply_content", "required,gte=2,lte=255", "回复内容在2到255个字符之间错误！"},
+		{"id", "int64", "required,myString,gt=0", "评论ID错误！"},
+		{"reply_content", "string", "required,myString,gte=2,lte=255", "回复内容在2到255个字符之间错误！"},
 	}
 	comment, err := getCommentModel(ctx, validates)
 	if err != nil {

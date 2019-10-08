@@ -32,10 +32,10 @@ func getModel(ctx iris.Context, validates []service.BlogValidate) (models.Admin,
 */
 func Login(ctx iris.Context) {
 	validates := []service.BlogValidate{
-		{"name", "required,gte=2,lte=15", "请输入合法的用户名！"},
-		{"password", "required,gte=6,lte=16", "请输入合法的密码！"},
-		{"captcha", "required,len=6", "请输入合法的验证码！"},
-		{"key", "required", "请输入合法的验证码key！"},
+		{"name", "string", "required,myString,gte=2,lte=15", "请输入合法的用户名！"},
+		{"password", "string", "required,myString,gte=6,lte=16", "请输入合法的密码！"},
+		{"captcha", "string", "required,myString,len=6", "请输入合法的验证码！"},
+		{"key", "string", "required,myString", "请输入合法的验证码key！"},
 	}
 	admin, err := getModel(ctx, validates)
 	if err != nil {
@@ -93,9 +93,9 @@ func GetUserInfo(ctx iris.Context) {
 */
 func UpdateInfo(ctx iris.Context) {
 	validates := []service.BlogValidate{
-		{"avatar", "required,url", "请输入正确的头像地址"},
-		{"email", "required,email", "请输入正确的邮箱地址"},
-		{"name", "required,gte=2,lte=30", "请输入正确的姓名"},
+		{"avatar", "string", "required,myString,url", "请输入正确的头像地址"},
+		{"email", "string", "required,myString,email", "请输入正确的邮箱地址"},
+		{"name", "string", "required,myString,gte=2,lte=30", "请输入正确的姓名"},
 	}
 	admin, err := getModel(ctx, validates)
 	if err != nil {
@@ -120,7 +120,7 @@ func UpdateInfo(ctx iris.Context) {
 */
 func ResetPassword(ctx iris.Context) {
 	validates := []service.BlogValidate{
-		{"password", "required,gte=6,lte=20", "请输入正确的密码，6到20个字符！"},
+		{"password", "string", "required,myString,gte=6,lte=20", "请输入正确的密码，6到20个字符！"},
 	}
 	admin, err := getModel(ctx, validates)
 	if err != nil {

@@ -94,6 +94,10 @@ func RegisterRoutes(app *iris.Application) {
 		configGroup.Get("/", backend.GetConfigList)
 		//添加配置
 		configGroup.Post("/", backend.AddConfig)
+		//修改配置
+		configGroup.Put("/", backend.UpdateConfig)
+		//删除配置
+		configGroup.Delete("/", backend.DeleteConfig)
 	}
 
 	adminNoAuth := app.Party("/api/admin")

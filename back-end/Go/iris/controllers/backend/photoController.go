@@ -42,7 +42,7 @@ func GetPhotoList(ctx iris.Context) {
 */
 func AddPhoto(ctx iris.Context) {
 	validates := []service.BlogValidate{
-		{"image_url", "required,url", "照片连接错误！"},
+		{"image_url", "string", "required,url", "照片连接错误！"},
 	}
 	photo, err := getPhotoModel(ctx, validates)
 	if err != nil {
@@ -63,8 +63,8 @@ func AddPhoto(ctx iris.Context) {
 func UpdatePhoto(ctx iris.Context) {
 	image := models.Image{}
 	validates := []service.BlogValidate{
-		{"id", "required,gt=0", "照片ID错误！"},
-		{"image_url", "required,url", "照片连接错误！"},
+		{"id", "int64", "required,myString,gt=0", "照片ID错误！"},
+		{"image_url", "string", "required,myString,url", "照片连接错误！"},
 	}
 	photo, err := getPhotoModel(ctx, validates)
 	if err != nil {
@@ -85,7 +85,7 @@ func UpdatePhoto(ctx iris.Context) {
 */
 func DeletePhoto(ctx iris.Context) {
 	validates := []service.BlogValidate{
-		{"id", "required,gt=0", "照片ID错误！"},
+		{"id", "int64", "required,myString,gt=0", "照片ID错误！"},
 	}
 	photo, err := getPhotoModel(ctx, validates)
 	if err != nil {

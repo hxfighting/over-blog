@@ -43,8 +43,8 @@ func GetChatList(ctx iris.Context) {
 */
 func AddChat(ctx iris.Context) {
 	validates := []service.BlogValidate{
-		{"is_show", "required,oneof=0 1", "说说是否显示值错误！"},
-		{"content", "required,gte=2,lte=255", "说说内容在2到255个字符之间！"},
+		{"is_show", "uint", "required,myString,oneof=0 1", "说说是否显示值错误！"},
+		{"content", "string", "required,myString,gte=2,lte=255", "说说内容在2到255个字符之间！"},
 	}
 	chat, err := getChatModel(ctx, validates)
 	if err != nil {
@@ -64,9 +64,9 @@ func AddChat(ctx iris.Context) {
 */
 func UpdateChat(ctx iris.Context) {
 	validates := []service.BlogValidate{
-		{"id", "required,gt=0", "说说ID错误！"},
-		{"is_show", "required,oneof=0 1", "说说是否显示值错误！"},
-		{"content", "required,gte=2,lte=255", "说说内容在2到255个字符之间！"},
+		{"id", "int64", "required,myString,gt=0", "说说ID错误！"},
+		{"is_show", "uint", "required,myString,oneof=0 1", "说说是否显示值错误！"},
+		{"content", "string", "required,myString,gte=2,lte=255", "说说内容在2到255个字符之间！"},
 	}
 	chat, err := getChatModel(ctx, validates)
 	if err != nil {
@@ -86,7 +86,7 @@ func UpdateChat(ctx iris.Context) {
 */
 func DeleteChat(ctx iris.Context) {
 	validates := []service.BlogValidate{
-		{"id", "required,gt=0", "说说ID错误！"},
+		{"id", "int64", "required,myString,gt=0", "说说ID错误！"},
 	}
 	chat, err := getChatModel(ctx, validates)
 	if err != nil {

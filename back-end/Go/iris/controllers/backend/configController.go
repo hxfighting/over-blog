@@ -44,10 +44,10 @@ func GetConfigList(ctx iris.Context) {
 */
 func AddConfig(ctx iris.Context) {
 	validates := []service.BlogValidate{
-		{"type", "required,oneof=1 2 3", "配置类型值错误！"},
-		{"name", "required,gte=2,lte=200", "配置key在2到200个字符之间！"},
-		{"title", "required,gte=2,lte=200", "配置名称在2到200个字符之间！"},
-		{"val", "required,gte=2,lte=65535", "配置值在2到65535个字符之间！"},
+		{"type", "int64", "required,myString,oneof=1 2 3", "配置类型值错误！"},
+		{"name", "string", "required,myString,gte=2,lte=200", "配置key在2到200个字符之间！"},
+		{"title", "string", "required,myString,gte=2,lte=200", "配置名称在2到200个字符之间！"},
+		{"val", "string", "required,myString,gte=2,lte=65535", "配置值在2到65535个字符之间！"},
 	}
 	config, err := getConfigModel(ctx, validates)
 	if err != nil {
@@ -60,4 +60,48 @@ func AddConfig(ctx iris.Context) {
 		return
 	}
 	response.RenderSuccess(ctx, res["msg"].(string), nil)
+}
+
+/**
+修改配置
+*/
+func UpdateConfig(ctx iris.Context) {
+	validates := []service.BlogValidate{
+		{"id", "int64", "required,myString,gt=0", "配置ID错误！"},
+		{"type", "int64", "required,myString,oneof=1 2 3", "配置类型值错误！"},
+		{"name", "string", "required,myString,gte=2,lte=200", "配置key在2到200个字符之间！"},
+		{"title", "string", "required,myString,gte=2,lte=200", "配置名称在2到200个字符之间！"},
+		{"val", "string", "required,myString,gte=2,lte=65535", "配置值在2到65535个字符之间！"},
+	}
+	config, err := getConfigModel(ctx, validates)
+	if err != nil {
+		response.RenderError(ctx, err.Error(), nil)
+		return
+	}
+	res := config.UpdateConfig()
+	if !res["flag"].(bool) {
+		response.RenderError(ctx, res["msg"].(string), nil)
+		return
+	}
+	response.RenderSuccess(ctx, res["msg"].(string), nil)
+}
+
+/**
+删除配置
+*/
+func DeleteConfig(ctx iris.Context) {
+	validates := []service.BlogValidate{
+		{"id", "int64", "required,myString,gt=0", "配置ID错误！"},
+	}
+	config, err := getConfigModel(ctx, validates)
+	if err != nil {
+		response.RenderError(ctx, err.Error(), nil)
+		return
+	}
+	res := config.DeleteConfig()
+	if !res {
+		response.RenderError(ctx, "删除配置失败，请稍后再试", nil)
+		return
+	}
+	response.RenderSuccess(ctx, "删除配置成功！", nil)
 }

@@ -91,3 +91,45 @@ func checkConfig(name string, type_id int64) map[string]interface{} {
 	res["flag"] = true
 	return res
 }
+
+/**
+修改配置
+*/
+func (this Config) UpdateConfig() map[string]interface{} {
+	data := make(map[string]interface{})
+	data["flag"] = false
+	checkRes := checkConfig(*this.Name, *this.Type)
+	if !checkRes["flag"].(bool) {
+		data["msg"] = checkRes["msg"]
+		return data
+	}
+	exits_config := Config{}
+	database.Db.Table("web_config").Where(Config{Name: this.Name, Type: this.Type}).First(&exits_config)
+	if exits_config.ID != nil && *exits_config.ID != *this.ID {
+		data["msg"] = "已添加该配置,请勿重复添加!"
+		return data
+	}
+	da := map[string]interface{}{
+		"title": *this.Title,
+		"val":   *this.Val,
+	}
+	result := database.Db.Model(&this).Updates(da)
+	if result.Error != nil {
+		data["msg"] = "修改配置项失败,请稍后再试!"
+		return data
+	}
+	data["flag"] = true
+	data["msg"] = "修改配置项成功!"
+	return data
+}
+
+/**
+删除配置
+*/
+func (this Config) DeleteConfig() bool {
+	res := database.Db.Table("web_config").Delete(&this)
+	if res.Error != nil {
+		return false
+	}
+	return true
+}

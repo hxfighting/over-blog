@@ -41,8 +41,8 @@ func GetCategoryList(ctx iris.Context) {
 */
 func AddCategory(ctx iris.Context) {
 	validates := []service.BlogValidate{
-		{"pid", "required,gte=0", "分类pid错误！"},
-		{"title", "required,gte=2,lte=20", "分类名称在2到20个字符之间！"},
+		{"pid", "int64", "required,myString,gte=0", "分类pid错误！"},
+		{"title", "string", "required,myString,gte=2,lte=20", "分类名称在2到20个字符之间！"},
 	}
 	category, err := getCategory(ctx, validates)
 	if err != nil {
@@ -82,8 +82,8 @@ func checkExistTitle(cate models.Category, flag bool) bool {
 */
 func UpdateCategory(ctx iris.Context) {
 	validates := []service.BlogValidate{
-		{"id", "required,gt=0", "分类id错误！"},
-		{"title", "required,gte=2,lte=20", "分类名称在2到20个字符之间！"},
+		{"id", "int64", "required,myString,gt=0", "分类id错误！"},
+		{"title", "string", "required,myString,gte=2,lte=20", "分类名称在2到20个字符之间！"},
 	}
 	category, err := getCategory(ctx, validates)
 	if err != nil {
@@ -107,7 +107,7 @@ func UpdateCategory(ctx iris.Context) {
 */
 func DeleteCategory(ctx iris.Context) {
 	validates := []service.BlogValidate{
-		{"id", "required,gt=0", "分类id错误！"},
+		{"id", "int64", "required,myString,gt=0", "分类id错误！"},
 	}
 	category, err := getCategory(ctx, validates)
 	if err != nil {
