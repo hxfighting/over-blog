@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Home;
 
 use App\Events\NotifyUserEvent;
 use App\Http\Controllers\Controller;
+use App\Http\Models\ArticleComment;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,32 +14,33 @@ class CommentController extends Controller
     /**
      * 评论
      * Date: 2019-01-29 11:46
-     * @param Request        $request
+     * @param Request $request
      * @return JsonResponse
      * @throws \Illuminate\Validation\ValidationException
      * @throws \Throwable
      */
-    public function store(Request $request): JsonResponse
+    public function store(Request $request, ArticleComment $articleComment): JsonResponse
     {
         $data = $this->validate($request, [
-            'email' => 'required|email',
-            'content' => 'required|min:2',
-            'user_id' => 'required|integer|min:1',
-            'reply_id' => 'nullable|integer|min:0',
+            'email'      => 'required|email',
+            'content'    => 'required|min:2',
+            'user_id'    => 'required|integer|min:1',
+            'reply_id'   => 'nullable|integer|min:0',
             'article_id' => 'required|integer|min:1',
-            'pid' => 'nullable|integer|min:0'
+            'pid'        => 'nullable|integer|min:0'
         ]);
         try
         {
-            DB::transaction(function () use ($data) {
+            DB::transaction(function () use ($data, $articleComment) {
                 $email = $data['email'];
                 $data['created_at'] = time();
                 $data['updated_at'] = time();
                 unset($data['email']);
                 \db('article_comment')->insert($data);
                 \db('user')->where('id', $data['user_id'])->update(['email' => $email]);
-                session(['user.email'=>$email]);
-                $this->sendCommentEmail($data,$email);
+                session(['user.email' => $email]);
+                $this->sendCommentEmail($data, $email);
+                $articleComment->flushCache();
             });
             return renderSuccess('评论成功！');
         } catch (\Exception $e)
@@ -53,8 +55,8 @@ class CommentController extends Controller
      * @param array  $data
      * @param string $email
      */
-    private function sendCommentEmail(array $data,string $email): void
+    private function sendCommentEmail(array $data, string $email): void
     {
-        event(new NotifyUserEvent($data,$email));
+        event(new NotifyUserEvent($data, $email));
     }
 }
