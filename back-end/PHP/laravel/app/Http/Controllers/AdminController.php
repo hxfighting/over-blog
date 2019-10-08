@@ -19,7 +19,7 @@ class AdminController extends Controller
     //管理员登录
     public function login(AdminLoginRequest $request)
     {
-        $data = $request->only(['name','password','captcha','key']);
+        $data = $request->only(['name','password']);
         return $this->admin->login($data);
     }
 
@@ -28,7 +28,7 @@ class AdminController extends Controller
     {
         return $this->admin->getInfo();
     }
-    
+
     //修改个人信息
     public function updateInfo(AdminInfoRequest $request)
     {
