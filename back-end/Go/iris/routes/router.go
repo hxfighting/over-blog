@@ -100,6 +100,17 @@ func RegisterRoutes(app *iris.Application) {
 		configGroup.Delete("/", backend.DeleteConfig)
 	}
 
+	//留言组
+	contactGroup := adminNeedAuth.Party("/contact")
+	{
+		//获取留言列表
+		contactGroup.Get("/", backend.GetContactList)
+		//删除留言
+		contactGroup.Delete("/", backend.DeleteContact)
+		//回复留言
+		contactGroup.Post("/reply", backend.ReplyContact)
+	}
+
 	adminNoAuth := app.Party("/api/admin")
 	{
 		//登录

@@ -12,8 +12,9 @@ type Email struct {
 }
 
 var (
-	EmailService = newEmail()
-	EmailChan    = make(chan int64, 10)
+	EmailService   = newEmail()
+	EmailChan      = make(chan int64, 10)
+	ReplyEmailChan = make(chan int64, 10)
 )
 
 func newEmail() *gomail.Dialer {

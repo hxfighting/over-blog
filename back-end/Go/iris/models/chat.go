@@ -9,7 +9,7 @@ import (
 type Chat struct {
 	ID          int64  `json:"id"`
 	Content     string `json:"content"`
-	IsShow      *uint  `json:"is_show"`
+	IsShow      *uint  `json:"is_show" mapstructure:"is_show"`
 	CreatedUnix int64  `json:"created_unix" gorm:"column:created_at"`
 	UpdatedUnix int64  `json:"updated_unix" gorm:"column:updated_at"`
 	CreatedAt   string `json:"created_at" gorm:"-"`

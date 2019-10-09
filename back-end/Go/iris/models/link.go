@@ -27,14 +27,19 @@ func (this *Link) AfterFind() {
 /**
 获取友联列表
 */
-func GetLinkList(pageNum, pageSize int64, name string) []Link {
+func GetLinkList(pageNum, pageSize int64, name string) map[string]interface{} {
 	link := []Link{}
-	var db = database.Db
+	var db = database.Db.Table("link")
 	if name != "" {
 		db = db.Where("name like ?", "%"+name+"%")
 	}
+	var total int64 = 0
+	db.Count(&total)
 	db.Order("`order` desc").Order("created_at desc").Offset((pageNum - 1) * pageSize).Limit(pageSize).Find(&link)
-	return link
+	data := make(map[string]interface{})
+	data["total"] = total
+	data["list"] = link
+	return data
 }
 
 /**

@@ -12,7 +12,7 @@ type Photo struct {
 	UpdatedUnix int64  `json:"updated_unix" gorm:"column:updated_at"`
 	CreatedAt   string `json:"created_at" gorm:"-"`
 	UpdatedAt   string `json:"updated_at" gorm:"-"`
-	ImageUrl    string `json:"image_url" gorm:"-"`
+	ImageUrl    string `json:"image_url" gorm:"-" mapstructure:"image_url"`
 }
 
 const PHOTO_TYPE = "App\\Http\\Models\\Photo"

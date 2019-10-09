@@ -32,7 +32,7 @@ func GetLinkList(ctx iris.Context) {
 	pageSize := ctx.URLParamInt64Default("pageSize", 10)
 	name := ctx.URLParamTrim("name")
 	list := models.GetLinkList(pageNum, pageSize, name)
-	if len(list) > 0 {
+	if list["total"].(int64) > 0 {
 		response.RenderSuccess(ctx, "获取友联列表成功", list)
 		return
 	}
