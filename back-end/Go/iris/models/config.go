@@ -6,11 +6,11 @@ import (
 )
 
 type Config struct {
-	ID          *int64  `json:"id"`
-	Title       *string `json:"title"`
-	Name        *string `json:"name"`
-	Val         *string `json:"val"`
-	Type        *int64  `json:"type"`
+	ID          *int64  `json:"id" validate:"gt=0"`
+	Title       *string `json:"title" validate:"gte=2,lte=200"`
+	Name        *string `json:"name" validate:"gte=2,lte=200"`
+	Val         *string `json:"val" validate:"gte=2,lte=65535"`
+	Type        *int64  `json:"type" validate:"oneof=1 2 3"`
 	CreatedUnix int64   `json:"created_unix" gorm:"column:created_at"`
 	UpdatedUnix int64   `json:"updated_unix" gorm:"column:updated_at"`
 	CreatedAt   string  `json:"created_at" gorm:"-"`

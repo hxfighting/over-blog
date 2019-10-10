@@ -2,27 +2,8 @@ package backend
 
 import (
 	"blog/models"
-	"blog/service"
-	"errors"
 	"github.com/kataras/iris"
-	"github.com/mitchellh/mapstructure"
 )
-
-/**
-获取comment model
-*/
-func getCommentModel(ctx iris.Context, validates []service.BlogValidate) (models.Comment, error) {
-	comment := models.Comment{}
-	requestData, err := getRequestData(ctx, validates)
-	if err != nil {
-		return comment, err
-	}
-	err = mapstructure.Decode(requestData, &comment)
-	if err != nil {
-		return comment, errors.New("参数错误！")
-	}
-	return comment, nil
-}
 
 /**
 获取评论列表
@@ -43,10 +24,10 @@ func GetCommentList(ctx iris.Context) {
 删除评论
 */
 func DeleteComment(ctx iris.Context) {
-	validates := []service.BlogValidate{
-		{"id", "int64", "required,myString,gt=0", "评论ID错误！"},
-	}
-	comment, err := getCommentModel(ctx, validates)
+	comment := models.Comment{}
+	fields := []string{"id"}
+	validateFields := []string{"ID"}
+	err := getRightModel(ctx, &comment, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -63,11 +44,10 @@ func DeleteComment(ctx iris.Context) {
 回复评论
 */
 func ReplyComment(ctx iris.Context) {
-	validates := []service.BlogValidate{
-		{"id", "int64", "required,myString,gt=0", "评论ID错误！"},
-		{"reply_content", "string", "required,myString,gte=2,lte=255", "回复内容在2到255个字符之间错误！"},
-	}
-	comment, err := getCommentModel(ctx, validates)
+	comment := models.Comment{}
+	fields := []string{"id", "reply_content"}
+	validateFields := []string{"ID", "ReplyContent"}
+	err := getRightModel(ctx, &comment, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return

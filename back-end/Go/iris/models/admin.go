@@ -11,14 +11,14 @@ import (
 
 type Admin struct {
 	ID        uint   `json:"id"`
-	Name      string `json:"name"`
-	Password  string `gorm:"-"`
-	Email     string `json:"email"`
+	Name      string `json:"name" validate:"gte=2,lte=15"`
+	Password  string `gorm:"-" validate:"gte=6,lte=16"`
+	Email     string `json:"email" validate:"email"`
 	Mobile    string `json:"mobile"`
-	Avatar    string `json:"avatar"`
+	Avatar    string `json:"avatar" validate:"url"`
 	CreatedAt int64  `json:"created_at"`
 	UpdatedAt int64  `json:"updated_at"`
-	Captcha   string `json:"captcha" gorm:"-"`
+	Captcha   string `json:"captcha" gorm:"-" validate:"len=6"`
 	Key       string `json:"key" gorm:"-"`
 }
 

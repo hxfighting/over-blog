@@ -11,7 +11,7 @@ import (
 )
 
 type Comment struct {
-	ID           *int64      `json:"id"`
+	ID           *int64      `json:"id" validate:"gt=0"`
 	Pid          *int64      `json:"pid" gorm:"column:pid"`
 	ReplyID      *int64      `json:"reply_id"`
 	UserID       *int64      `json:"user_id"`
@@ -23,7 +23,7 @@ type Comment struct {
 	UpdatedAt    string      `json:"updated_at" gorm:"-"`
 	User         *simpleUser `json:"user"`
 	Replier      *simpleUser `json:"replier"`
-	ReplyContent *string     `gorm:"-" json:"reply_content"`
+	ReplyContent *string     `gorm:"-" json:"reply_content" validate:"gte=2,lte=255"`
 }
 
 type simpleArticle struct {

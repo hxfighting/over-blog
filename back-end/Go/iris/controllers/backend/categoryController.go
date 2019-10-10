@@ -3,27 +3,8 @@ package backend
 import (
 	"blog/database"
 	"blog/models"
-	"blog/service"
-	"errors"
 	"github.com/kataras/iris"
-	"github.com/mitchellh/mapstructure"
 )
-
-/**
-获取category model
-*/
-func getCategory(ctx iris.Context, validates []service.BlogValidate) (models.Category, error) {
-	category := models.Category{}
-	requestData, err := getRequestData(ctx, validates)
-	if err != nil {
-		return category, err
-	}
-	err = mapstructure.Decode(requestData, &category)
-	if err != nil {
-		return category, errors.New("参数错误！")
-	}
-	return category, nil
-}
 
 /**
 获取分类列表
@@ -40,11 +21,10 @@ func GetCategoryList(ctx iris.Context) {
 添加分类
 */
 func AddCategory(ctx iris.Context) {
-	validates := []service.BlogValidate{
-		{"pid", "int64", "required,myString,gte=0", "分类pid错误！"},
-		{"title", "string", "required,myString,gte=2,lte=20", "分类名称在2到20个字符之间！"},
-	}
-	category, err := getCategory(ctx, validates)
+	category := models.Category{}
+	fields := []string{"pid", "title"}
+	validateFields := []string{"Pid", "Title"}
+	err := getRightModel(ctx, &category, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -81,11 +61,10 @@ func checkExistTitle(cate models.Category, flag bool) bool {
 修改分类
 */
 func UpdateCategory(ctx iris.Context) {
-	validates := []service.BlogValidate{
-		{"id", "int64", "required,myString,gt=0", "分类id错误！"},
-		{"title", "string", "required,myString,gte=2,lte=20", "分类名称在2到20个字符之间！"},
-	}
-	category, err := getCategory(ctx, validates)
+	category := models.Category{}
+	fields := []string{"id", "title"}
+	validateFields := []string{"ID", "Title"}
+	err := getRightModel(ctx, &category, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -106,10 +85,10 @@ func UpdateCategory(ctx iris.Context) {
 删除分类
 */
 func DeleteCategory(ctx iris.Context) {
-	validates := []service.BlogValidate{
-		{"id", "int64", "required,myString,gt=0", "分类id错误！"},
-	}
-	category, err := getCategory(ctx, validates)
+	category := models.Category{}
+	fields := []string{"id"}
+	validateFields := []string{"ID"}
+	err := getRightModel(ctx, &category, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return

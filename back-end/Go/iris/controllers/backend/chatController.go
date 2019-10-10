@@ -2,27 +2,8 @@ package backend
 
 import (
 	"blog/models"
-	"blog/service"
-	"errors"
 	"github.com/kataras/iris"
-	"github.com/mitchellh/mapstructure"
 )
-
-/**
-获取chat model
-*/
-func getChatModel(ctx iris.Context, validates []service.BlogValidate) (models.Chat, error) {
-	chat := models.Chat{}
-	requestData, err := getRequestData(ctx, validates)
-	if err != nil {
-		return chat, err
-	}
-	err = mapstructure.Decode(requestData, &chat)
-	if err != nil {
-		return chat, errors.New("参数错误！")
-	}
-	return chat, nil
-}
 
 /**
 获取说说列表
@@ -42,11 +23,10 @@ func GetChatList(ctx iris.Context) {
 添加说说
 */
 func AddChat(ctx iris.Context) {
-	validates := []service.BlogValidate{
-		{"is_show", "uint", "required,myString,oneof=0 1", "说说是否显示值错误！"},
-		{"content", "string", "required,myString,gte=2,lte=255", "说说内容在2到255个字符之间！"},
-	}
-	chat, err := getChatModel(ctx, validates)
+	chat := models.Chat{}
+	fields := []string{"is_show", "content"}
+	validateFields := []string{"IsShow", "Content"}
+	err := getRightModel(ctx, &chat, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -63,12 +43,10 @@ func AddChat(ctx iris.Context) {
 修改说说
 */
 func UpdateChat(ctx iris.Context) {
-	validates := []service.BlogValidate{
-		{"id", "int64", "required,myString,gt=0", "说说ID错误！"},
-		{"is_show", "uint", "required,myString,oneof=0 1", "说说是否显示值错误！"},
-		{"content", "string", "required,myString,gte=2,lte=255", "说说内容在2到255个字符之间！"},
-	}
-	chat, err := getChatModel(ctx, validates)
+	chat := models.Chat{}
+	fields := []string{"id", "is_show", "content"}
+	validateFields := []string{"ID", "IsShow", "Content"}
+	err := getRightModel(ctx, &chat, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -85,10 +63,10 @@ func UpdateChat(ctx iris.Context) {
 删除说说
 */
 func DeleteChat(ctx iris.Context) {
-	validates := []service.BlogValidate{
-		{"id", "int64", "required,myString,gt=0", "说说ID错误！"},
-	}
-	chat, err := getChatModel(ctx, validates)
+	chat := models.Chat{}
+	fields := []string{"id"}
+	validateFields := []string{"ID"}
+	err := getRightModel(ctx, &chat, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return

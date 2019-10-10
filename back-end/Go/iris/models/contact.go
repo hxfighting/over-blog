@@ -10,7 +10,7 @@ import (
 )
 
 type Contact struct {
-	ID           *int64  `json:"id"`
+	ID           *int64  `json:"id" validate:"gt=0"`
 	Content      *string `json:"content"`
 	Name         *string `json:"name"`
 	Email        *string `json:"email"`
@@ -19,7 +19,7 @@ type Contact struct {
 	UpdatedUnix  int64   `json:"updated_unix" gorm:"column:updated_at"`
 	CreatedAt    string  `json:"created_at" gorm:"-"`
 	UpdatedAt    string  `json:"updated_at" gorm:"-"`
-	ReplyContent *string `json:"reply_content" mapstructure:"reply_content"`
+	ReplyContent *string `json:"reply_content" mapstructure:"reply_content" validate:"gte=2,lte=255"`
 }
 
 func (Contact) TableName() string {

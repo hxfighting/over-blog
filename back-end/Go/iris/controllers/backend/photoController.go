@@ -2,27 +2,8 @@ package backend
 
 import (
 	"blog/models"
-	"blog/service"
-	"errors"
 	"github.com/kataras/iris"
-	"github.com/mitchellh/mapstructure"
 )
-
-/**
-获取photo model
-*/
-func getPhotoModel(ctx iris.Context, validates []service.BlogValidate) (models.Photo, error) {
-	photo := models.Photo{}
-	requestData, err := getRequestData(ctx, validates)
-	if err != nil {
-		return photo, err
-	}
-	err = mapstructure.Decode(requestData, &photo)
-	if err != nil {
-		return photo, errors.New("参数错误！")
-	}
-	return photo, nil
-}
 
 /**
 获取照片列表数据
@@ -41,10 +22,10 @@ func GetPhotoList(ctx iris.Context) {
 添加照片
 */
 func AddPhoto(ctx iris.Context) {
-	validates := []service.BlogValidate{
-		{"image_url", "string", "required,url", "照片连接错误！"},
-	}
-	photo, err := getPhotoModel(ctx, validates)
+	photo := models.Photo{}
+	fields := []string{"image_url"}
+	validateFields := []string{"ImageUrl"}
+	err := getRightModel(ctx, &photo, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -62,11 +43,10 @@ func AddPhoto(ctx iris.Context) {
 */
 func UpdatePhoto(ctx iris.Context) {
 	image := models.Image{}
-	validates := []service.BlogValidate{
-		{"id", "int64", "required,myString,gt=0", "照片ID错误！"},
-		{"image_url", "string", "required,myString,url", "照片连接错误！"},
-	}
-	photo, err := getPhotoModel(ctx, validates)
+	photo := models.Photo{}
+	fields := []string{"id", "image_url"}
+	validateFields := []string{"ID", "ImageUrl"}
+	err := getRightModel(ctx, &photo, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -84,10 +64,10 @@ func UpdatePhoto(ctx iris.Context) {
 删除照片
 */
 func DeletePhoto(ctx iris.Context) {
-	validates := []service.BlogValidate{
-		{"id", "int64", "required,myString,gt=0", "照片ID错误！"},
-	}
-	photo, err := getPhotoModel(ctx, validates)
+	photo := models.Photo{}
+	fields := []string{"id"}
+	validateFields := []string{"ID"}
+	err := getRightModel(ctx, &photo, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return

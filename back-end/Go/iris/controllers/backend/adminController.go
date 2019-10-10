@@ -5,39 +5,18 @@ import (
 	"blog/models"
 	"blog/service"
 	"crypto/md5"
-	"errors"
 	"fmt"
 	"github.com/kataras/iris"
-	"github.com/mitchellh/mapstructure"
 )
-
-/**
-获取admin model
-*/
-func getModel(ctx iris.Context, validates []service.BlogValidate) (models.Admin, error) {
-	admin := models.Admin{}
-	requestData, err := getRequestData(ctx, validates)
-	if err != nil {
-		return admin, err
-	}
-	err = mapstructure.Decode(requestData, &admin)
-	if err != nil {
-		return admin, errors.New("参数错误！")
-	}
-	return admin, nil
-}
 
 /**
 登录
 */
 func Login(ctx iris.Context) {
-	validates := []service.BlogValidate{
-		{"name", "string", "required,myString,gte=2,lte=15", "请输入合法的用户名！"},
-		{"password", "string", "required,myString,gte=6,lte=16", "请输入合法的密码！"},
-		{"captcha", "string", "required,myString,len=6", "请输入合法的验证码！"},
-		{"key", "string", "required,myString", "请输入合法的验证码key！"},
-	}
-	admin, err := getModel(ctx, validates)
+	admin := models.Admin{}
+	fields := []string{"password", "name", "captcha", "key"}
+	validateFields := []string{"Password", "Name", "Captcha"}
+	err := getRightModel(ctx, &admin, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -92,12 +71,10 @@ func GetUserInfo(ctx iris.Context) {
 修改个人信息
 */
 func UpdateInfo(ctx iris.Context) {
-	validates := []service.BlogValidate{
-		{"avatar", "string", "required,myString,url", "请输入正确的头像地址"},
-		{"email", "string", "required,myString,email", "请输入正确的邮箱地址"},
-		{"name", "string", "required,myString,gte=2,lte=30", "请输入正确的姓名"},
-	}
-	admin, err := getModel(ctx, validates)
+	admin := models.Admin{}
+	fields := []string{"avatar", "name", "email"}
+	validateFields := []string{"Avatar", "Name", "Email"}
+	err := getRightModel(ctx, &admin, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -119,10 +96,10 @@ func UpdateInfo(ctx iris.Context) {
 修改密码
 */
 func ResetPassword(ctx iris.Context) {
-	validates := []service.BlogValidate{
-		{"password", "string", "required,myString,gte=6,lte=20", "请输入正确的密码，6到20个字符！"},
-	}
-	admin, err := getModel(ctx, validates)
+	admin := models.Admin{}
+	fields := []string{"password"}
+	validateFields := []string{"Password"}
+	err := getRightModel(ctx, &admin, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return

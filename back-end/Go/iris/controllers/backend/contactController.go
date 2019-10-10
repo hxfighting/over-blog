@@ -2,24 +2,8 @@ package backend
 
 import (
 	"blog/models"
-	"blog/service"
-	"errors"
 	"github.com/kataras/iris"
-	"github.com/mitchellh/mapstructure"
 )
-
-func getContactModel(ctx iris.Context, validates []service.BlogValidate) (models.Contact, error) {
-	contact := models.Contact{}
-	requestData, err := getRequestData(ctx, validates)
-	if err != nil {
-		return contact, err
-	}
-	err = mapstructure.Decode(requestData, &contact)
-	if err != nil {
-		return contact, errors.New("参数错误！")
-	}
-	return contact, nil
-}
 
 /**
 获取留言列表
@@ -40,10 +24,10 @@ func GetContactList(ctx iris.Context) {
 删除留言
 */
 func DeleteContact(ctx iris.Context) {
-	validates := []service.BlogValidate{
-		{"id", "int64", "required,myString,gt=0", "留言ID错误！"},
-	}
-	contact, err := getContactModel(ctx, validates)
+	contact := models.Contact{}
+	fields := []string{"id"}
+	validateFields := []string{"ID"}
+	err := getRightModel(ctx, &contact, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -60,11 +44,10 @@ func DeleteContact(ctx iris.Context) {
 回复留言
 */
 func ReplyContact(ctx iris.Context) {
-	validates := []service.BlogValidate{
-		{"id", "int64", "required,myString,gt=0", "留言ID错误！"},
-		{"reply_content", "string", "required,myString,gte=2,lte=255", "留言内容在2到255个字符之间！"},
-	}
-	contact, err := getContactModel(ctx, validates)
+	contact := models.Contact{}
+	fields := []string{"id", "reply_content"}
+	validateFields := []string{"ID", "ReplyContent"}
+	err := getRightModel(ctx, &contact, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
