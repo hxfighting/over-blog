@@ -63,6 +63,8 @@ class User extends Authenticatable implements JWTSubject
                 return '中国-台湾';
             case 'MO':
                 return '中国-澳门';
+            case 'HK':
+                return '中国-香港';
             default:
                 return $address['country'].'-'.$address['state_name'].'-'.$address['city'];
         }
