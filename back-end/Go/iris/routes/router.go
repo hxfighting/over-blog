@@ -111,6 +111,30 @@ func RegisterRoutes(app *iris.Application) {
 		contactGroup.Post("/reply", backend.ReplyContact)
 	}
 
+	//标签组
+	tagGroup := adminNeedAuth.Party("/tag")
+	{
+		//获取标签列表
+		tagGroup.Get("/", backend.GetTagList)
+		//添加标签
+		tagGroup.Post("/", backend.AddTag)
+		//修改标签
+		tagGroup.Put("/", backend.UpdateTag)
+		//删除标签
+		tagGroup.Delete("/", backend.DeleteTag)
+	}
+
+	//用户组
+	userGroup := adminNeedAuth.Party("/user")
+	{
+		//获取用户列表
+		userGroup.Get("/", backend.GetUserList)
+		//修改会员信息
+		userGroup.Put("/", backend.UpdateUser)
+		//删除会员
+		userGroup.Delete("/", backend.DeleteUser)
+	}
+
 	adminNoAuth := app.Party("/api/admin")
 	{
 		//登录

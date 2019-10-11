@@ -20,7 +20,7 @@ require (
 	github.com/juju/errors v0.0.0-20190930114154-d42613fe1ab9 // indirect
 	github.com/k0kubun/colorstring v0.0.0-20150214042306-9440f1994b88 // indirect
 	github.com/kataras/iris v0.0.0-20190916050704-df882273e219
-	github.com/klauspost/compress v1.8.5 // indirect
+	github.com/klauspost/compress v1.8.6 // indirect
 	github.com/klauspost/cpuid v1.2.1 // indirect
 	github.com/leodido/go-urn v1.1.0 // indirect
 	github.com/mailru/easyjson v0.7.0 // indirect
@@ -33,6 +33,8 @@ require (
 	github.com/moul/http2curl v1.0.0 // indirect
 	github.com/onsi/ginkgo v1.8.0 // indirect
 	github.com/onsi/gomega v1.5.0 // indirect
+	github.com/oschwald/geoip2-golang v1.3.0
+	github.com/oschwald/maxminddb-golang v1.5.0 // indirect
 	github.com/pelletier/go-toml v1.5.0
 	github.com/phachon/go-logger v0.0.0-20180912060440-89ff8a2898f6
 	github.com/sergi/go-diff v1.0.0 // indirect
@@ -47,10 +49,10 @@ require (
 	github.com/yudai/gojsondiff v1.0.0 // indirect
 	github.com/yudai/golcs v0.0.0-20170316035057-ecda9a501e82 // indirect
 	github.com/yudai/pp v2.0.1+incompatible // indirect
-	golang.org/x/crypto v0.0.0-20191002192127-34f69633bfdc
+	golang.org/x/crypto v0.0.0-20191010185427-af544f31c8ac
 	golang.org/x/image v0.0.0-20191009234506-e7c1f5e7dbb8 // indirect
 	golang.org/x/net v0.0.0-20191009170851-d66e71096ffb // indirect
-	golang.org/x/sys v0.0.0-20191009170203-06d7bd2c5f4f // indirect
+	golang.org/x/sys v0.0.0-20191010194322-b09406accb47 // indirect
 	google.golang.org/appengine v1.6.5 // indirect
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
 	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
