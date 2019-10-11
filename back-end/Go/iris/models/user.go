@@ -37,18 +37,26 @@ func (this *User) AfterFind() {
 	this.LastLoginIp = getAddress(this.LastLoginIp)
 }
 
+var geoDb = getGeoDb()
+
+func getGeoDb() *geoip2.Reader {
+	db, err := geoip2.Open("./geo.mmdb")
+	if err != nil {
+		service.Log.Error(err.Error())
+		return nil
+	}
+	return db
+}
+
 /**
 获取IP对应的地址
 */
 func getAddress(ip string) string {
-	db, err := geoip2.Open("./geo.mmdb")
-	if err != nil {
-		service.Log.Error(err.Error())
+	if geoDb == nil {
 		return "未知地方"
 	}
-	defer db.Close()
 	right_ip := net.ParseIP(ip)
-	record, err := db.City(right_ip)
+	record, err := geoDb.City(right_ip)
 	if err != nil {
 		service.Log.Error(err.Error())
 		return "未知地方"
