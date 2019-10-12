@@ -11,6 +11,8 @@ func RegisterRoutes(app *iris.Application) {
 
 	adminNeedAuth := app.Party("/api/admin", service.GetJWTHandler().Serve)
 
+	adminNeedAuth.Post("/upload", backend.Upload)
+
 	//管理员组
 	adminGroup := adminNeedAuth.Party("/")
 	{
@@ -133,6 +135,19 @@ func RegisterRoutes(app *iris.Application) {
 		userGroup.Put("/", backend.UpdateUser)
 		//删除会员
 		userGroup.Delete("/", backend.DeleteUser)
+	}
+
+	//轮播图组
+	rotationGroup := adminNeedAuth.Party("/rotation")
+	{
+		//获取轮播图列表
+		rotationGroup.Get("/", backend.GetRotationList)
+		//添加轮播图
+		rotationGroup.Post("/", backend.AddRotation)
+		//修改轮播图
+		rotationGroup.Put("/", backend.UpdateRotation)
+		//删除轮播图
+		rotationGroup.Delete("/", backend.DeleteRotation)
 	}
 
 	adminNoAuth := app.Party("/api/admin")

@@ -26,3 +26,9 @@ username=""
 password=""
 from=""
 subject=""
+
+[qiniu]
+accessKey=""
+secretKey=""
+bucket=""
+url=""

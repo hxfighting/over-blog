@@ -6,8 +6,9 @@ import (
 	"time"
 )
 
-type Photo struct {
+type Rotation struct {
 	ID          *int64 `json:"id" validate:"gt=0"`
+	Words       string `json:"words" validate:"gte=2,lte=60"`
 	CreatedUnix int64  `json:"created_unix" gorm:"column:created_at"`
 	UpdatedUnix int64  `json:"updated_unix" gorm:"column:updated_at"`
 	CreatedAt   string `json:"created_at" gorm:"-"`
@@ -15,29 +16,33 @@ type Photo struct {
 	ImageUrl    string `json:"image_url" gorm:"-" mapstructure:"image_url" validate:"url"`
 }
 
-const PHOTO_TYPE = "App\\Http\\Models\\Photo"
+const ROTATION_TYPE = "App\\Http\\Models\\RotationImage"
 
-func (this *Photo) AfterFind() {
+func (this *Rotation) AfterFind() {
 	this.CreatedAt = helper.GetDateTime(this.CreatedUnix, helper.YMDHIS)
 	this.UpdatedAt = helper.GetDateTime(this.UpdatedUnix, helper.YMDHIS)
 }
 
+func (Rotation) TableName() string {
+	return "rotation_image"
+}
+
 /**
-获取照片列表
+获取轮播图列表
 */
-func (this *Photo) GetPhotoList() []Image {
+func (this *Rotation) GetRotationList() []Image {
 	image := []Image{}
-	photos := []Photo{}
-	database.Db.Where("image_type = ?", PHOTO_TYPE).Find(&image)
+	rotations := []Rotation{}
+	database.Db.Where("image_type = ?", ROTATION_TYPE).Find(&image)
 	if len(image) > 0 {
 		ids := []int64{}
 		for _, value := range image {
 			ids = append(ids, *value.Image_id)
 		}
-		database.Db.Where("id in (?)", ids).Find(&photos)
-		if len(photos) > 0 {
+		database.Db.Where("id in (?)", ids).Find(&rotations)
+		if len(rotations) > 0 {
 			for k, value := range image {
-				for _, val := range photos {
+				for _, val := range rotations {
 					if *value.Image_id == *val.ID {
 						value.Image = val
 						image[k] = value
@@ -50,9 +55,28 @@ func (this *Photo) GetPhotoList() []Image {
 }
 
 /**
-添加照片
+删除轮播图
 */
-func (this *Photo) AddPhoto() bool {
+func (this *Rotation) DeleteRotation() bool {
+	tx := database.Db.Begin()
+	res := tx.Table("image").Where("image_id = ? and image_type = ?", this.ID, ROTATION_TYPE).Delete(&Image{})
+	if res.Error != nil {
+		tx.Rollback()
+		return false
+	}
+	res = tx.Delete(this)
+	if res.Error != nil {
+		tx.Rollback()
+		return false
+	}
+	tx.Commit()
+	return true
+}
+
+/**
+添加轮播图
+*/
+func (this *Rotation) AddRotation() bool {
 	uninx_time := time.Now().Unix()
 	tx := database.Db.Begin()
 	this.CreatedUnix = uninx_time
@@ -63,7 +87,7 @@ func (this *Photo) AddPhoto() bool {
 		return false
 	}
 	image := Image{}
-	image_type := PHOTO_TYPE
+	image_type := ROTATION_TYPE
 	image.Image_type = &image_type
 	image.Image_id = this.ID
 	image.Image_url = &this.ImageUrl
@@ -79,34 +103,26 @@ func (this *Photo) AddPhoto() bool {
 }
 
 /**
-修改照片
+修改轮播图
 */
-func (this *Photo) UpdatePhoto() bool {
+func (this *Rotation) UpdateRotation() bool {
+	tx := database.Db.Begin()
 	now := time.Now().Unix()
 	data := map[string]interface{}{
 		"image_url":  this.ImageUrl,
 		"updated_at": now,
 	}
-	result := database.Db.Table("image").
-		Where("image_id = ? and image_type = ?", this.ID, PHOTO_TYPE).
+	result := tx.Table("image").
+		Where("image_id = ? and image_type = ?", this.ID, ROTATION_TYPE).
 		Updates(data)
 	if result.Error != nil {
-		return false
-	}
-	return true
-}
-
-/**
-删除照片
-*/
-func (this *Photo) DeletePhoto() bool {
-	tx := database.Db.Begin()
-	res := tx.Table("image").Where("image_id = ? and image_type = ?", this.ID, PHOTO_TYPE).Delete(&Image{})
-	if res.Error != nil {
 		tx.Rollback()
 		return false
 	}
-	res = tx.Delete(this)
+	res := tx.Model(this).Updates(map[string]interface{}{
+		"words":      this.Words,
+		"updated_at": now,
+	})
 	if res.Error != nil {
 		tx.Rollback()
 		return false

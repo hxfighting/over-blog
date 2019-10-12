@@ -37,6 +37,7 @@ require (
 	github.com/oschwald/maxminddb-golang v1.5.0 // indirect
 	github.com/pelletier/go-toml v1.5.0
 	github.com/phachon/go-logger v0.0.0-20180912060440-89ff8a2898f6
+	github.com/qiniu/api.v7 v0.0.0-20190520053455-bea02cd22bf4
 	github.com/sergi/go-diff v1.0.0 // indirect
 	github.com/shurcooL/sanitized_anchor_name v1.0.0 // indirect
 	github.com/smartystreets/goconvey v0.0.0-20190330032615-68dc04aab96a // indirect
@@ -49,9 +50,9 @@ require (
 	github.com/yudai/gojsondiff v1.0.0 // indirect
 	github.com/yudai/golcs v0.0.0-20170316035057-ecda9a501e82 // indirect
 	github.com/yudai/pp v2.0.1+incompatible // indirect
-	golang.org/x/crypto v0.0.0-20191010185427-af544f31c8ac
+	golang.org/x/crypto v0.0.0-20191011191535-87dc89f01550
 	golang.org/x/image v0.0.0-20191009234506-e7c1f5e7dbb8 // indirect
-	golang.org/x/net v0.0.0-20191009170851-d66e71096ffb // indirect
+	golang.org/x/net v0.0.0-20191011234655-491137f69257 // indirect
 	golang.org/x/sys v0.0.0-20191010194322-b09406accb47 // indirect
 	google.golang.org/appengine v1.6.5 // indirect
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect

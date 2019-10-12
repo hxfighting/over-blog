@@ -42,7 +42,6 @@ func AddPhoto(ctx iris.Context) {
 修改照片
 */
 func UpdatePhoto(ctx iris.Context) {
-	image := models.Image{}
 	photo := models.Photo{}
 	fields := []string{"id", "image_url"}
 	validateFields := []string{"ID", "ImageUrl"}
@@ -51,8 +50,7 @@ func UpdatePhoto(ctx iris.Context) {
 		response.RenderError(ctx, err.Error(), nil)
 		return
 	}
-	image.ID = photo.ID
-	res := photo.UpdatePhoto(image)
+	res := photo.UpdatePhoto()
 	if !res {
 		response.RenderError(ctx, "修改照片失败，请稍后再试！", nil)
 		return
