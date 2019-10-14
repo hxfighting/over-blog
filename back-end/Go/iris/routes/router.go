@@ -150,9 +150,20 @@ func RegisterRoutes(app *iris.Application) {
 		rotationGroup.Delete("/", backend.DeleteRotation)
 	}
 
+	//错误日志组
+	webErrorGroup := adminNeedAuth.Party("/error")
+	{
+		//获取错误日志列表
+		webErrorGroup.Get("/", backend.GetWebErrorList)
+		//删除错误日志
+		webErrorGroup.Delete("/", backend.DeleteWebError)
+	}
+
 	adminNoAuth := app.Party("/api/admin")
 	{
 		//登录
 		adminNoAuth.Post("/login", backend.Login)
+		//添加错误日志
+		adminNoAuth.Post("/error", backend.AddWebError)
 	}
 }

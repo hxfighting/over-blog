@@ -60,10 +60,12 @@ func getRightModel(ctx iris.Context, model interface{}, fields, validateField []
 	}
 	decoder, err := mapstructure.NewDecoder(decode)
 	if err != nil {
+		service.Log.Error(err.Error())
 		return errors.New("参数错误！")
 	}
 	err = decoder.Decode(requestData)
 	if err != nil {
+		service.Log.Error(err.Error())
 		return errors.New("参数错误！")
 	}
 	err = service.Validate.StructPartial(model, validateField...)

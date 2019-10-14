@@ -28,7 +28,7 @@ func (this *Tag) AfterFind() {
 获取标签列表
 */
 func (this Tag) GetTagList(pageNum, pageSize int64) map[string]interface{} {
-	tag := Tag{}
+	tag := []Tag{}
 	db := database.Db.Table("tag")
 	var total int64 = 0
 	db.Count(&total)

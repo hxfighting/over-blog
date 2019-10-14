@@ -49,7 +49,7 @@ func Upload(ctx iris.Context) {
 		return
 	}
 	h := md5.New()
-	h.Write([]byte(info.Filename))
+	h.Write(bytes)
 	key := hex.EncodeToString(h.Sum(nil))
 	putPolicy := storage.PutPolicy{
 		Scope: bucket,
