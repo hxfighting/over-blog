@@ -25,7 +25,7 @@ func AddRotation(ctx iris.Context) {
 	rotation := models.Rotation{}
 	fields := []string{"image_url", "words"}
 	validateFields := []string{"ImageUrl", "Words"}
-	err := getRightModel(ctx, &rotation, fields, validateFields)
+	_, err := getRightModel(ctx, &rotation, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -45,7 +45,7 @@ func UpdateRotation(ctx iris.Context) {
 	rotation := models.Rotation{}
 	fields := []string{"id", "image_url", "words"}
 	validateFields := []string{"ID", "ImageUrl", "Words"}
-	err := getRightModel(ctx, &rotation, fields, validateFields)
+	_, err := getRightModel(ctx, &rotation, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -65,7 +65,7 @@ func DeleteRotation(ctx iris.Context) {
 	rotation := models.Rotation{}
 	fields := []string{"id"}
 	validateFields := []string{"ID"}
-	err := getRightModel(ctx, &rotation, fields, validateFields)
+	_, err := getRightModel(ctx, &rotation, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return

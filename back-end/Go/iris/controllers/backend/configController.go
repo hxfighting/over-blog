@@ -27,7 +27,7 @@ func AddConfig(ctx iris.Context) {
 	config := models.Config{}
 	fields := []string{"type", "name", "title", "val"}
 	validateFields := []string{"Type", "Name", "Title", "Val"}
-	err := getRightModel(ctx, &config, fields, validateFields)
+	_, err := getRightModel(ctx, &config, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -47,7 +47,7 @@ func UpdateConfig(ctx iris.Context) {
 	config := models.Config{}
 	fields := []string{"id", "type", "name", "title", "val"}
 	validateFields := []string{"ID", "Type", "Name", "Title", "Val"}
-	err := getRightModel(ctx, &config, fields, validateFields)
+	_, err := getRightModel(ctx, &config, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -67,7 +67,7 @@ func DeleteConfig(ctx iris.Context) {
 	config := models.Config{}
 	fields := []string{"id"}
 	validateFields := []string{"ID"}
-	err := getRightModel(ctx, &config, fields, validateFields)
+	_, err := getRightModel(ctx, &config, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return

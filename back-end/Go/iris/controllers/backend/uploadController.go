@@ -2,6 +2,7 @@ package backend
 
 import (
 	"blog/config"
+	"bytes"
 	"context"
 	"crypto/md5"
 	"encoding/hex"
@@ -22,8 +23,7 @@ func Upload(ctx iris.Context) {
 	accessKey := config.GetConfig("qiniu.accessKey").(string)
 	secretKey := config.GetConfig("qiniu.secretKey").(string)
 	bucket := config.GetConfig("qiniu.bucket").(string)
-	url := config.GetConfig("qiniu.url").(string)
-	if accessKey == "" || secretKey == "" || bucket == "" || url == "" {
+	if accessKey == "" || secretKey == "" || bucket == "" {
 		response.RenderError(ctx, "请完善七牛配置参数！", nil)
 		return
 	}
@@ -33,12 +33,12 @@ func Upload(ctx iris.Context) {
 		return
 	}
 	defer file.Close()
-	bytes, e := ioutil.ReadAll(file)
+	file_byte, e := ioutil.ReadAll(file)
 	if e != nil {
 		response.RenderError(ctx, "上传失败：文件读取失败", nil)
 		return
 	}
-	contentType := http.DetectContentType(bytes)
+	contentType := http.DetectContentType(file_byte)
 	if info.Size > maxSize {
 		response.RenderError(ctx, "上传失败：文件最大5MB", nil)
 		return
@@ -49,11 +49,12 @@ func Upload(ctx iris.Context) {
 		return
 	}
 	h := md5.New()
-	h.Write(bytes)
+	h.Write(file_byte)
 	key := hex.EncodeToString(h.Sum(nil))
 	putPolicy := storage.PutPolicy{
 		Scope: bucket,
 	}
+	new_file := ioutil.NopCloser(bytes.NewReader(file_byte))
 	mac := qbox.NewMac(accessKey, secretKey)
 	upToken := putPolicy.UploadToken(mac)
 	cfg := storage.Config{}
@@ -67,10 +68,10 @@ func Upload(ctx iris.Context) {
 	formUploader := storage.NewFormUploader(&cfg)
 	ret := storage.PutRet{}
 	putExtra := storage.PutExtra{}
-	e = formUploader.Put(context.Background(), &ret, upToken, key, file, info.Size, &putExtra)
+	e = formUploader.Put(context.Background(), &ret, upToken, key, new_file, info.Size, &putExtra)
 	if e != nil {
 		response.RenderError(ctx, "上传失败："+e.Error(), nil)
 		return
 	}
-	response.RenderSuccess(ctx, "上传成功！", url+ret.Key)
+	response.RenderSuccess(ctx, "上传成功！", ret.Key)
 }

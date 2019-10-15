@@ -27,7 +27,7 @@ func DeleteLink(ctx iris.Context) {
 	link := models.Link{}
 	fields := []string{"id"}
 	validateFields := []string{"ID"}
-	err := getRightModel(ctx, &link, fields, validateFields)
+	_, err := getRightModel(ctx, &link, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -47,7 +47,7 @@ func AddLink(ctx iris.Context) {
 	link := models.Link{}
 	fields := []string{"name", "order", "is_show", "url", "description"}
 	validateFields := []string{"Name", "Order", "IsShow", "Description", "Url"}
-	err := getRightModel(ctx, &link, fields, validateFields)
+	_, err := getRightModel(ctx, &link, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -67,7 +67,7 @@ func UpdateLink(ctx iris.Context) {
 	link := models.Link{}
 	fields := []string{"id", "name", "order", "is_show", "url", "description"}
 	validateFields := []string{"ID", "Name", "Order", "IsShow", "Description", "Url"}
-	err := getRightModel(ctx, &link, fields, validateFields)
+	_, err := getRightModel(ctx, &link, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return

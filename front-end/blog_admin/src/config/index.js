@@ -17,7 +17,7 @@ export default {
    * @description api请求基础路径
    */
   baseUrl: {
-    dev: 'http://127.0.0.1:8000/api/',
+    dev: 'http://127.0.0.1:8080/api/',
     pro: 'http://www.ohdata.top/api/'
   },
   /**
@@ -42,6 +42,6 @@ export default {
   /**
    * 上传图片地址
    */
-  uploadUrl:'https://www.ohdata.top/api/admin/upload'
+  uploadUrl:'http://127.0.0.1:8080/api/admin/upload'
 
 }

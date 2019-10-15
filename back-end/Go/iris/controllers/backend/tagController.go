@@ -27,7 +27,7 @@ func DeleteTag(ctx iris.Context) {
 	tag := models.Tag{}
 	fields := []string{"id"}
 	validateFields := []string{"ID"}
-	err := getRightModel(ctx, &tag, fields, validateFields)
+	_, err := getRightModel(ctx, &tag, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -47,7 +47,7 @@ func AddTag(ctx iris.Context) {
 	tag := models.Tag{}
 	fields := []string{"name"}
 	validateFields := []string{"Name"}
-	err := getRightModel(ctx, &tag, fields, validateFields)
+	_, err := getRightModel(ctx, &tag, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -67,7 +67,7 @@ func UpdateTag(ctx iris.Context) {
 	tag := models.Tag{}
 	fields := []string{"id", "name"}
 	validateFields := []string{"ID", "Name"}
-	err := getRightModel(ctx, &tag, fields, validateFields)
+	_, err := getRightModel(ctx, &tag, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return

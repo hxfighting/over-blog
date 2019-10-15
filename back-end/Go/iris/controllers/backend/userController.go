@@ -28,7 +28,7 @@ func DeleteUser(ctx iris.Context) {
 	user := models.User{}
 	fields := []string{"id"}
 	validateFields := []string{"ID"}
-	err := getRightModel(ctx, &user, fields, validateFields)
+	_, err := getRightModel(ctx, &user, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -48,7 +48,7 @@ func UpdateUser(ctx iris.Context) {
 	user := models.User{}
 	fields := []string{"id", "is_admin"}
 	validateFields := []string{"ID", "IsAdmin"}
-	err := getRightModel(ctx, &user, fields, validateFields)
+	_, err := getRightModel(ctx, &user, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return

@@ -13,6 +13,7 @@ func GetCategoryList(ctx iris.Context) {
 	categories := models.GetCategoryList()
 	if len(categories) > 0 {
 		response.RenderSuccess(ctx, "获取分类列表成功", categories)
+		return
 	}
 	response.RenderError(ctx, "暂无分类列表数据", nil)
 }
@@ -24,7 +25,7 @@ func AddCategory(ctx iris.Context) {
 	category := models.Category{}
 	fields := []string{"pid", "title"}
 	validateFields := []string{"Pid", "Title"}
-	err := getRightModel(ctx, &category, fields, validateFields)
+	_, err := getRightModel(ctx, &category, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -64,7 +65,7 @@ func UpdateCategory(ctx iris.Context) {
 	category := models.Category{}
 	fields := []string{"id", "title"}
 	validateFields := []string{"ID", "Title"}
-	err := getRightModel(ctx, &category, fields, validateFields)
+	_, err := getRightModel(ctx, &category, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -88,7 +89,7 @@ func DeleteCategory(ctx iris.Context) {
 	category := models.Category{}
 	fields := []string{"id"}
 	validateFields := []string{"ID"}
-	err := getRightModel(ctx, &category, fields, validateFields)
+	_, err := getRightModel(ctx, &category, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return

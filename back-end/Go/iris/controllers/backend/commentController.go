@@ -27,7 +27,7 @@ func DeleteComment(ctx iris.Context) {
 	comment := models.Comment{}
 	fields := []string{"id"}
 	validateFields := []string{"ID"}
-	err := getRightModel(ctx, &comment, fields, validateFields)
+	_, err := getRightModel(ctx, &comment, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -47,7 +47,7 @@ func ReplyComment(ctx iris.Context) {
 	comment := models.Comment{}
 	fields := []string{"id", "reply_content"}
 	validateFields := []string{"ID", "ReplyContent"}
-	err := getRightModel(ctx, &comment, fields, validateFields)
+	_, err := getRightModel(ctx, &comment, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return

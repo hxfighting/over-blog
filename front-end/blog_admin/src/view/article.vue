@@ -1,119 +1,119 @@
 <template>
-    <div>
-        <card>
-            <div class="search-con search-con-top">
-                <Select v-model="listData.category_id" style="width:150px" clearable filterable placeholder="请选择文章分类">
-                    <Option v-for="item in category" :value="item.id" :key="item.id">{{ item.title }}</Option>
-                </Select>
-                <Input clearable placeholder="输入文章名称搜索" class="hx_input"
-                       v-model="listData.search"/>
-                <Button @click="handleSearch" class="search-btn" type="primary">
-                    <Icon type="search"/>&nbsp;&nbsp;搜索
-                </Button>
-                <Button @click="modalOpen" class="link_add_button" type="primary">
-                    <Icon type="search"/>&nbsp;&nbsp;新增文章
-                </Button>
-            </div>
-            <Table :data="tableData" :columns="tableColumns" :loading="loading" stripe></Table>
-            <div style="margin: 10px;overflow: hidden">
-                <div style="float: right;">
-                    <Page :total="total" show-total :page-size="listData.pageSize" @on-change="changePage"></Page>
+  <div>
+    <card>
+      <div class="search-con search-con-top">
+        <Select v-model="listData.category_id" style="width:150px" clearable filterable placeholder="请选择文章分类">
+          <Option v-for="item in category" :value="item.id" :key="item.id">{{ item.title }}</Option>
+        </Select>
+        <Input clearable placeholder="输入文章名称搜索" class="hx_input"
+               v-model="listData.search"/>
+        <Button @click="handleSearch" class="search-btn" type="primary">
+          <Icon type="search"/>&nbsp;&nbsp;搜索
+        </Button>
+        <Button @click="modalOpen" class="link_add_button" type="primary">
+          <Icon type="search"/>&nbsp;&nbsp;新增文章
+        </Button>
+      </div>
+      <Table :data="tableData" :columns="tableColumns" :loading="loading" stripe></Table>
+      <div style="margin: 10px;overflow: hidden">
+        <div style="float: right;">
+          <Page :total="total" show-total :page-size="listData.pageSize" @on-change="changePage"></Page>
+        </div>
+      </div>
+      <Modal v-model="articleModal"
+             :mask-closable="false"
+             :closable="false"
+             fullscreen
+             title="新增文章"
+             @on-ok="handleArticle('articleAdd')"
+             :loading="button_loading"
+             @on-cancel="modalCancel('articleAdd')"
+      >
+        <Form ref="articleAdd" :model="formData" :rules="ruleValidate" :label-width="80" inline>
+          <FormItem label="文章分类" style="width: 33%" prop="category_id">
+            <Select v-model="formData.category_id" :style="inputStyle" clearable filterable
+                    placeholder="请选择文章分类">
+              <Option v-for="item in category" :value="item.id" :key="item.id">{{ item.title }}</Option>
+            </Select>
+          </FormItem>
+          <FormItem label="文章作者" style="width: 33%" prop="author">
+            <Input v-model="formData.author" placeholder="请输入文章作者" :style="inputStyle"></Input>
+          </FormItem>
+          <FormItem label="文章标题" style="width: 30%" prop="title">
+            <Input v-model="formData.title" placeholder="请输入文章标题" :style="inputStyle"></Input>
+          </FormItem>
+          <FormItem label="缩略图" style="width: 33%" prop="thumb">
+            <div class="demo-upload-list" v-for="item in uploadList">
+              <template v-if="item.status === 'finished'">
+                <img :src="item.url">
+                <div class="demo-upload-list-cover">
+                  <Icon type="ios-eye-outline" @click.native="handleView(item.name)"></Icon>
+                  <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
                 </div>
+              </template>
+              <template v-else>
+                <Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
+              </template>
             </div>
-            <Modal v-model="articleModal"
-                   :mask-closable="false"
-                   :closable="false"
-                   fullscreen
-                   title="新增文章"
-                   @on-ok="handleArticle('articleAdd')"
-                   :loading="button_loading"
-                   @on-cancel="modalCancel('articleAdd')"
-            >
-                <Form ref="articleAdd" :model="formData" :rules="ruleValidate" :label-width="80" inline>
-                    <FormItem label="文章分类" style="width: 33%" prop="category_id">
-                        <Select v-model="formData.category_id" :style="inputStyle" clearable filterable
-                                placeholder="请选择文章分类">
-                            <Option v-for="item in category" :value="item.id" :key="item.id">{{ item.title }}</Option>
-                        </Select>
-                    </FormItem>
-                    <FormItem label="文章作者" style="width: 33%" prop="author">
-                        <Input v-model="formData.author" placeholder="请输入文章作者" :style="inputStyle"></Input>
-                    </FormItem>
-                    <FormItem label="文章标题" style="width: 30%" prop="title">
-                        <Input v-model="formData.title" placeholder="请输入文章标题" :style="inputStyle"></Input>
-                    </FormItem>
-                    <FormItem label="缩略图" style="width: 33%" prop="thumb">
-                        <div class="demo-upload-list" v-for="item in uploadList">
-                            <template v-if="item.status === 'finished'">
-                                <img :src="item.url">
-                                <div class="demo-upload-list-cover">
-                                    <Icon type="ios-eye-outline" @click.native="handleView(item.name)"></Icon>
-                                    <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
-                                </div>
-                            </template>
-                            <template v-else>
-                                <Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
-                            </template>
-                        </div>
-                        <Upload
-                                ref="upload"
-                                :show-upload-list="false"
-                                :default-file-list="defaultImageList"
-                                :on-success="handleSuccess"
-                                :format="['jpg','jpeg','png','gif']"
-                                :max-size="2048"
-                                :on-format-error="handleFormatError"
-                                :on-exceeded-size="handleMaxSize"
-                                :before-upload="handleBeforeUpload"
-                                :multiple="false"
-                                type="drag"
-                                :action="upload_url"
-                                :headers="uploadHeader"
-                                style="display: inline-block;width:58px;">
-                            <div style="width: 58px;height:58px;line-height: 58px;">
-                                <Icon type="ios-camera" size="20"></Icon>
-                            </div>
-                        </Upload>
-                        <Modal title="缩略图" v-model="visible">
-                            <img :src="imgName" v-if="visible" style="width: 100%">
-                        </Modal>
-                    </FormItem>
-                    <FormItem label="文章标签" style="width: 33%" prop="tags">
-                        <Select v-model="formData.tags" multiple clearable filterable :style="inputStyle" ref="tags_select">
-                            <Option v-for="item in tags" :value="item.id" :key="item.id">{{ item.name }}</Option>
-                        </Select>
-                    </FormItem>
-                    <FormItem label="关键词" style="width: 30%" prop="keywords">
-                        <Input v-model="formData.keywords" value="admin" placeholder="请输入文章关键词"
-                               :style="inputStyle"></Input>
-                    </FormItem>
-                    <FormItem label="是否原创" style="width: 33%">
-                        <i-switch v-model="switchData.is_original" @on-change="switchOriginal"></i-switch>
-                    </FormItem>
-                    <FormItem label="是否置顶" style="width: 33%">
-                        <i-switch v-model="switchData.is_top" @on-change="switchTop"></i-switch>
-                    </FormItem>
-                    <FormItem label="是否显示" style="width: 30%">
-                        <i-switch v-model="switchData.is_show" @on-change="switchShow"></i-switch>
-                    </FormItem>
-                    <FormItem label="文章描述" style="width: 100%" prop="description">
-                        <Input v-model="formData.description" type="textarea" :rows="6"
-                               placeholder="请输入文章关键词,不输入默认文章前200个字" :style="inputStyle"></Input>
-                    </FormItem>
-                    <FormItem label="文章内容" style="width: 100%" prop="content_html">
-                        <mavon-editor
-                                v-model="formData.content_md"
-                                style="min-height: 400px"
-                                codeStyle="monokai-sublime"
-                                ref=md
-                                @imgAdd="imgAdd"
-                                @change="contentChange"
-                        />
-                    </FormItem>
-                </Form>
+            <Upload
+              ref="upload"
+              :show-upload-list="false"
+              :default-file-list="defaultImageList"
+              :on-success="handleSuccess"
+              :format="['jpg','jpeg','png','gif']"
+              :max-size="2048"
+              :on-format-error="handleFormatError"
+              :on-exceeded-size="handleMaxSize"
+              :before-upload="handleBeforeUpload"
+              :multiple="false"
+              type="drag"
+              :action="upload_url"
+              :headers="uploadHeader"
+              style="display: inline-block;width:58px;">
+              <div style="width: 58px;height:58px;line-height: 58px;">
+                <Icon type="ios-camera" size="20"></Icon>
+              </div>
+            </Upload>
+            <Modal title="缩略图" v-model="visible">
+              <img :src="imgName" v-if="visible" style="width: 100%">
             </Modal>
-        </card>
-    </div>
+          </FormItem>
+          <FormItem label="文章标签" style="width: 33%" prop="tags">
+            <Select v-model="formData.tags" multiple clearable filterable :style="inputStyle" ref="tags_select">
+              <Option v-for="item in tags" :value="item.id" :key="item.id">{{ item.name }}</Option>
+            </Select>
+          </FormItem>
+          <FormItem label="关键词" style="width: 30%" prop="keywords">
+            <Input v-model="formData.keywords" value="admin" placeholder="请输入文章关键词"
+                   :style="inputStyle"></Input>
+          </FormItem>
+          <FormItem label="是否原创" style="width: 33%">
+            <i-switch v-model="switchData.is_original" @on-change="switchOriginal"></i-switch>
+          </FormItem>
+          <FormItem label="是否置顶" style="width: 33%">
+            <i-switch v-model="switchData.is_top" @on-change="switchTop"></i-switch>
+          </FormItem>
+          <FormItem label="是否显示" style="width: 30%">
+            <i-switch v-model="switchData.is_show" @on-change="switchShow"></i-switch>
+          </FormItem>
+          <FormItem label="文章描述" style="width: 100%" prop="description">
+            <Input v-model="formData.description" type="textarea" :rows="6"
+                   placeholder="请输入文章关键词,不输入默认文章前200个字" :style="inputStyle"></Input>
+          </FormItem>
+          <FormItem label="文章内容" style="width: 100%" prop="content_html">
+            <mavon-editor
+              v-model="formData.content_md"
+              style="min-height: 400px"
+              codeStyle="monokai-sublime"
+              ref=md
+              @imgAdd="imgAdd"
+              @change="contentChange"
+            />
+          </FormItem>
+        </Form>
+      </Modal>
+    </card>
+  </div>
 </template>
 
 <script>
@@ -124,7 +124,7 @@
     import {getToken} from "../libs/util";
 
 
-    const {baseUrl, imageUrl,uploadUrl} = config
+    const {baseUrl, imageUrl, uploadUrl} = config
     export default {
         name: 'articlePage',
         components: {
@@ -146,7 +146,7 @@
                 }
             }
             return {
-                uploadHeader:{Authorization:getToken()},
+                uploadHeader: {Authorization: getToken()},
                 tableData: [],
                 loading: false,
                 category: [],
@@ -157,10 +157,10 @@
                 inputStyle: {
                     width: '500px'
                 },
-                switchData:{
-                    is_show:true,
-                    is_top:false,
-                    is_original:true
+                switchData: {
+                    is_show: true,
+                    is_top: false,
+                    is_original: true
                 },
                 listData: {
                     category_id: '',
@@ -179,9 +179,9 @@
                     description: '',
                     content_html: '',
                     content_md: '',
-                    is_show:1,
-                    is_original:1,
-                    is_top:0
+                    is_show: 1,
+                    is_original: 1,
+                    is_top: 0
                 },
                 defaultImageList: [],
                 imgName: '',
@@ -229,10 +229,11 @@
                             return h('Tooltip', {
                                 props: {
                                     placement: 'top',
-                                    theme:'light'
+                                    theme: 'light',
+                                    transfer: true,
                                 },
-                                style:{
-                                    cursor:'pointer'
+                                style: {
+                                    cursor: 'pointer'
                                 }
                             }, [
                                 h('img', {
@@ -249,7 +250,7 @@
                                         width: "200px",
                                         verticalAlign: "middle"
                                     },
-                                    slot:'content',
+                                    slot: 'content',
                                     attrs: {
                                         src: row.thumb
                                     }
@@ -296,7 +297,8 @@
                                 props: {
                                     trigger: 'hover',
                                     title: data.tags.length + '个标签',
-                                    placement: 'top'
+                                    placement: 'top',
+                                    transfer: true,
                                 }
                             }, [
                                 h('Tag', data.tags.length),
@@ -401,7 +403,8 @@
                                 h('Poptip', {
                                     props: {
                                         confirm: true,
-                                        title: '你确定要删除吗?'
+                                        title: '你确定要删除吗?',
+                                        transfer:true,
                                     },
                                     on: {
                                         'on-ok': () => {
@@ -423,14 +426,14 @@
             }
         },
         methods: {
-            switchShow(value){
-                this.formData.is_show = value?1:0
+            switchShow(value) {
+                this.formData.is_show = value ? 1 : 0
             },
-            switchTop(value){
-                this.formData.is_top = value?1:0
+            switchTop(value) {
+                this.formData.is_top = value ? 1 : 0
             },
-            switchOriginal(value){
-                this.formData.is_original = value?1:0
+            switchOriginal(value) {
+                this.formData.is_original = value ? 1 : 0
             },
             modalCancel(name) {
                 this.$refs.tags_select.clearSingleSelect();
@@ -441,7 +444,7 @@
                 this.handleIviewUploadDefaultListBug();
                 this.$refs[name].resetFields();
             },
-            modalOpen(){
+            modalOpen() {
                 this.$refs.tags_select.clearSingleSelect();
                 this.formData.is_original = 1;
                 this.formData.is_top = 0;
@@ -476,7 +479,7 @@
                 let formdata = new FormData();
                 formdata.append('file', $file);
                 let token = getToken();
-                uploadImage({formdata,token}).then(res => {
+                uploadImage({formdata, token}).then(res => {
                     let data = res.data;
                     if (data.code == 200) {
                         this.$refs.md.$img2Url(pos, imageUrl + data.data);
@@ -510,16 +513,16 @@
                 return check;
             },
             //处理iview的默认defaultlist bug
-            handleIviewUploadDefaultListBug(data=null){
-                if(data==null){
+            handleIviewUploadDefaultListBug(data = null) {
+                if (data == null) {
                     data = [];
                 }
-                setTimeout(()=> {
+                setTimeout(() => {
                     this.defaultImageList = data; //将获取到的值赋值到 defaultList 中
-                    this.$nextTick(()=> { //赋值后马上更新
+                    this.$nextTick(() => { //赋值后马上更新
                         this.uploadList = this.$refs.upload.fileList;
                     });
-                },500);
+                }, 500);
             },
             //处理编辑文章的数据
             handleUpdateArticleData(data) {
@@ -541,9 +544,9 @@
                 this.formData.is_original = data.is_original;
                 this.formData.is_top = data.is_top;
                 this.formData.is_show = data.is_show;
-                this.switchData.is_original = data.is_original==1?true:false;
-                this.switchData.is_top = data.is_top==1?true:false;
-                this.switchData.is_show = data.is_show==1?true:false;
+                this.switchData.is_original = data.is_original == 1 ? true : false;
+                this.switchData.is_top = data.is_top == 1 ? true : false;
+                this.switchData.is_show = data.is_show == 1 ? true : false;
                 for (let val of data.tags) {
                     this.formData.tags.push(val.id)
                 }
@@ -565,7 +568,7 @@
                         this.total = 0;
                         this.$Message.error(data.msg);
                     }
-                }).catch(err=>{
+                }).catch(err => {
                     this.loading = false;
                     this.tableData = [];
                     this.total = 0;
@@ -586,9 +589,9 @@
                 this.$refs[name].validate((valid) => {
                     if (valid) {
                         let pro = '';
-                        if(this.formData.id!='' && !isNaN(this.formData.id)){
+                        if (this.formData.id != '' && !isNaN(this.formData.id)) {
                             pro = updateArticle(this.formData);
-                        }else {
+                        } else {
                             delete this.formData.id;
                             pro = addArticle(this.formData);
                         }
@@ -634,59 +637,59 @@
 </script>
 
 <style scoped>
-    .hx_input {
-        display: inline-block;
-        width: 200px !important;
-        margin-left: 2px;
-        margin-right: 3px;
-    }
+  .hx_input {
+    display: inline-block;
+    width: 200px !important;
+    margin-left: 2px;
+    margin-right: 3px;
+  }
 
-    .search-con {
-        padding: 10px 0;
-    }
+  .search-con {
+    padding: 10px 0;
+  }
 
-    .link_add_button {
-        float: right;
-    }
+  .link_add_button {
+    float: right;
+  }
 
-    .demo-upload-list {
-        display: inline-block;
-        width: 60px;
-        height: 60px;
-        text-align: center;
-        line-height: 60px;
-        border: 1px solid transparent;
-        border-radius: 4px;
-        overflow: hidden;
-        background: #fff;
-        position: relative;
-        box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
-        margin-right: 4px;
-    }
+  .demo-upload-list {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #fff;
+    position: relative;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+    margin-right: 4px;
+  }
 
-    .demo-upload-list img {
-        width: 100%;
-        height: 100%;
-    }
+  .demo-upload-list img {
+    width: 100%;
+    height: 100%;
+  }
 
-    .demo-upload-list-cover {
-        display: none;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: rgba(0, 0, 0, .6);
-    }
+  .demo-upload-list-cover {
+    display: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, .6);
+  }
 
-    .demo-upload-list:hover .demo-upload-list-cover {
-        display: block;
-    }
+  .demo-upload-list:hover .demo-upload-list-cover {
+    display: block;
+  }
 
-    .demo-upload-list-cover i {
-        color: #fff;
-        font-size: 20px;
-        cursor: pointer;
-        margin: 0 2px;
-    }
+  .demo-upload-list-cover i {
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    margin: 0 2px;
+  }
 </style>

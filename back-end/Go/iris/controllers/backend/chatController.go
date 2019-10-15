@@ -26,7 +26,7 @@ func AddChat(ctx iris.Context) {
 	chat := models.Chat{}
 	fields := []string{"is_show", "content"}
 	validateFields := []string{"IsShow", "Content"}
-	err := getRightModel(ctx, &chat, fields, validateFields)
+	_, err := getRightModel(ctx, &chat, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -46,7 +46,7 @@ func UpdateChat(ctx iris.Context) {
 	chat := models.Chat{}
 	fields := []string{"id", "is_show", "content"}
 	validateFields := []string{"ID", "IsShow", "Content"}
-	err := getRightModel(ctx, &chat, fields, validateFields)
+	_, err := getRightModel(ctx, &chat, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -66,7 +66,7 @@ func DeleteChat(ctx iris.Context) {
 	chat := models.Chat{}
 	fields := []string{"id"}
 	validateFields := []string{"ID"}
-	err := getRightModel(ctx, &chat, fields, validateFields)
+	_, err := getRightModel(ctx, &chat, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return

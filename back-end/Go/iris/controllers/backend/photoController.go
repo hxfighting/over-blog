@@ -25,7 +25,7 @@ func AddPhoto(ctx iris.Context) {
 	photo := models.Photo{}
 	fields := []string{"image_url"}
 	validateFields := []string{"ImageUrl"}
-	err := getRightModel(ctx, &photo, fields, validateFields)
+	_, err := getRightModel(ctx, &photo, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -45,7 +45,7 @@ func UpdatePhoto(ctx iris.Context) {
 	photo := models.Photo{}
 	fields := []string{"id", "image_url"}
 	validateFields := []string{"ID", "ImageUrl"}
-	err := getRightModel(ctx, &photo, fields, validateFields)
+	_, err := getRightModel(ctx, &photo, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -65,7 +65,7 @@ func DeletePhoto(ctx iris.Context) {
 	photo := models.Photo{}
 	fields := []string{"id"}
 	validateFields := []string{"ID"}
-	err := getRightModel(ctx, &photo, fields, validateFields)
+	_, err := getRightModel(ctx, &photo, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return

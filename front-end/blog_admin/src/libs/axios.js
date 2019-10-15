@@ -80,7 +80,7 @@ class HttpRequest {
           request: {responseURL: config.url}
         }
       }
-      addErrorLog(errorInfo)
+      // addErrorLog(errorInfo)
       return Promise.reject(error)
     })
   }

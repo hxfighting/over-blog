@@ -16,7 +16,7 @@ func Login(ctx iris.Context) {
 	admin := models.Admin{}
 	fields := []string{"password", "name", "captcha", "key"}
 	validateFields := []string{"Password", "Name", "Captcha"}
-	err := getRightModel(ctx, &admin, fields, validateFields)
+	_, err := getRightModel(ctx, &admin, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -74,7 +74,7 @@ func UpdateInfo(ctx iris.Context) {
 	admin := models.Admin{}
 	fields := []string{"avatar", "name", "email"}
 	validateFields := []string{"Avatar", "Name", "Email"}
-	err := getRightModel(ctx, &admin, fields, validateFields)
+	_, err := getRightModel(ctx, &admin, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -99,7 +99,7 @@ func ResetPassword(ctx iris.Context) {
 	admin := models.Admin{}
 	fields := []string{"password"}
 	validateFields := []string{"Password"}
-	err := getRightModel(ctx, &admin, fields, validateFields)
+	_, err := getRightModel(ctx, &admin, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
