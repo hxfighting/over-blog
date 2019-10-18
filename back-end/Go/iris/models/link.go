@@ -12,7 +12,7 @@ type Link struct {
 	Name        *string `json:"name" validate:"gte=2,lte=30"`
 	Description *string `json:"description" validate:"gte=2,lte=50"`
 	Order       *int    `json:"order" validate:"gte=0,lte=9999999"`
-	IsShow      *int    `json:"is_show" validate:"oneof=0 1"`
+	IsShow      *int    `json:"is_show" validate:"oneof=0 1" mapstructure:"is_show"`
 	CreatedUnix int64   `json:"created_unix" gorm:"column:created_at"`
 	UpdatedUnix int64   `json:"updated_unix" gorm:"column:updated_at"`
 	CreatedAt   string  `json:"created_at" gorm:"-"`

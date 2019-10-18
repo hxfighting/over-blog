@@ -85,3 +85,15 @@ func getRightModel(ctx iris.Context, model interface{}, fields, validateField []
 	}
 	return jsonData, nil
 }
+
+/**
+刷新token
+ */
+func RefreshToken(ctx iris.Context)  {
+	token, e := service.RefreshToken(ctx)
+	if e!=nil{
+		response.RenderError(ctx, e.Error(), nil)
+		return
+	}
+	response.RenderSuccess(ctx, "获取token成功", token)
+}

@@ -11,8 +11,12 @@ func RegisterRoutes(app *iris.Application) {
 
 	adminNeedAuth := app.Party("/api/admin", service.GetJWTHandler().Serve)
 
+	//图片上传
 	adminNeedAuth.Post("/upload", backend.Upload)
+	//后台首页统计
 	adminNeedAuth.Get("/count", backend.GetTotalCount)
+	//刷新token
+	adminNeedAuth.Get("/token", backend.RefreshToken)
 
 	//管理员组
 	adminGroup := adminNeedAuth.Party("/")

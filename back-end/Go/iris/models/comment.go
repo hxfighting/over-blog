@@ -23,7 +23,7 @@ type Comment struct {
 	UpdatedAt    string      `json:"updated_at" gorm:"-"`
 	User         *simpleUser `json:"user"`
 	Replier      *simpleUser `json:"replier"`
-	ReplyContent *string     `gorm:"-" json:"reply_content" validate:"gte=2,lte=255"`
+	ReplyContent *string     `gorm:"-" json:"reply_content" mapstructure:"reply_content" validate:"gte=2,lte=255"`
 }
 
 type simpleArticle struct {
@@ -134,12 +134,10 @@ func ReplyComment(comment *Comment) bool {
 		return false
 	}
 	var user_id int64
-	if *comment.ReplyID == 0 {
-		user := User{}
-		database.Db.Where("is_admin = ?", 1).First(&user)
-		if *user.ID != 0 {
-			user_id = *user.ID
-		}
+	user := User{}
+	database.Db.Where("is_admin = ?", 1).First(&user)
+	if *user.ID != 0 {
+		user_id = *user.ID
 	}
 	if user_id == 0 {
 		return false
@@ -154,6 +152,8 @@ func ReplyComment(comment *Comment) bool {
 	new_comment.UserID = &user_id
 	new_comment.ReplyID = comment.UserID
 	new_comment.ArticleID = comment.ArticleID
+	new_comment.CreatedUnix = time.Now().Unix()
+	new_comment.UpdatedUnix = time.Now().Unix()
 	res := database.Db.Create(&new_comment)
 	if res.Error != nil {
 		return false

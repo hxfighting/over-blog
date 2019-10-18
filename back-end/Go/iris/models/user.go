@@ -18,7 +18,7 @@ type User struct {
 	LastLoginIp   string `json:"last_login_ip"`
 	RememberToken string `json:"remember_token"`
 	LoginTimes    *int64 `json:"login_times"`
-	IsAdmin       *int8  `json:"is_admin" validate:"oneof=0 1"`
+	IsAdmin       *int8  `json:"is_admin" validate:"oneof=0 1" mapstructure:"is_admin"`
 	Email         string `json:"email"`
 	Avatar        string `json:"avatar"`
 	CreatedUnix   int64  `json:"created_unix" gorm:"column:created_at"`

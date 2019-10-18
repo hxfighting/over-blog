@@ -1,19 +1,41 @@
 import Cookies from 'js-cookie'
 // cookie保存的天数
 import config from '@/config'
-import { forEach, hasOneOf, objEqual } from '@/libs/tools'
-const { title, cookieExpires, useI18n } = config
+import {forEach, hasOneOf, objEqual} from '@/libs/tools'
+
+const {title, cookieExpires, useI18n} = config
 
 export const TOKEN_KEY = 'token'
+export const TOKEN_EXPIRE = 'token_expire'
 
 export const setToken = (token) => {
   Cookies.set(TOKEN_KEY, token, {expires: cookieExpires || 1})
+}
+
+export const setExpire = (expire) => {
+  Cookies.set(TOKEN_EXPIRE, expire, {expires: cookieExpires || 1})
+}
+
+export const getTokenExpire = () => {
+  const expire = Cookies.get(TOKEN_EXPIRE)
+  if (expire) return expire
+  else return false
 }
 
 export const getToken = () => {
   const token = Cookies.get(TOKEN_KEY)
   if (token) return token
   else return false
+}
+
+export const isTokenExpired = () => {
+  let expiredTime = Cookies.get(TOKEN_EXPIRE);
+  let nowTime = new Date().getTime();
+  if ((expiredTime - nowTime / 1000) < 10) {
+    return true
+  } else {
+    return false;
+  }
 }
 
 export const hasChild = (item) => {
@@ -54,7 +76,7 @@ export const getMenuByRouter = (list, access) => {
  * @returns {Array}
  */
 export const getBreadCrumbList = (route, homeRoute) => {
-  let homeItem = { ...homeRoute, icon: homeRoute.meta.icon }
+  let homeItem = {...homeRoute, icon: homeRoute.meta.icon}
   let routeMetched = route.matched
   if (routeMetched.some(item => item.name === homeRoute.name)) return [homeItem]
   let res = routeMetched.filter(item => {
@@ -94,7 +116,7 @@ export const getRouteTitleHandled = (route) => {
 }
 
 export const showTitle = (item, vm) => {
-  let { title, __titleIsFunction__ } = item.meta
+  let {title, __titleIsFunction__} = item.meta
   if (!title) return
   if (useI18n) {
     if (title.includes('{{') && title.includes('}}') && useI18n) title = title.replace(/({{[\s\S]+?}})/, (m, str) => str.replace(/{{([\s\S]*)}}/, (m, _) => vm.$t(_.trim())))
@@ -144,10 +166,10 @@ export const getHomeRoute = (routers, homeName = 'home') => {
  * @description 如果该newRoute已经存在则不再添加
  */
 export const getNewTagList = (list, newRoute) => {
-  const { name, path, meta } = newRoute
+  const {name, path, meta} = newRoute
   let newList = [...list]
   if (newList.findIndex(item => item.name === name) >= 0) return newList
-  else newList.push({ name, path, meta })
+  else newList.push({name, path, meta})
   return newList
 }
 

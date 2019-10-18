@@ -1,35 +1,35 @@
 <template>
-    <div>
-        <card>
-            <div class="search-con search-con-top">
-                <Select v-model="listData.article_id" style="width:300px" clearable filterable placeholder="请选择文章">
-                    <Option v-for="item in article" :value="item.id" :key="item.id">{{ item.title }}</Option>
-                </Select>
-                <Button @click="handleSearch" class="search-btn" type="primary">
-                    <Icon type="search"/>&nbsp;&nbsp;搜索
-                </Button>
-            </div>
-            <Table :data="tableData" :columns="tableColumns" :loading="loading" stripe></Table>
-            <div style="margin: 10px;overflow: hidden">
-                <div style="float: right;">
-                    <Page :total="total" show-total :page-size="listData.pageSize" @on-change="changePage"></Page>
-                </div>
-            </div>
-            <Modal
-                    v-model="replyCommentModal"
-                    title="回复评论"
-                    :loading="button_loading"
-                    @on-ok="replyComment"
-                    @on-cancel="formData.reply_content=''">
-                <Input v-model="formData.reply_content" type="textarea" :rows="6" placeholder="请输入回复内容"></Input>
-            </Modal>
-        </card>
+  <div>
+    <card>
+      <div class="search-con search-con-top">
+        <Select v-model="listData.article_id" style="width:300px" clearable filterable placeholder="请选择文章">
+          <Option v-for="item in article" :value="item.id" :key="item.id">{{ item.title }}</Option>
+        </Select>
+        <Button @click="handleSearch" class="search-btn" type="primary">
+          <Icon type="search"/>&nbsp;&nbsp;搜索
+        </Button>
+      </div>
+      <Table :data="tableData" :columns="tableColumns" :loading="loading" stripe></Table>
+      <div style="margin: 10px;overflow: hidden">
+        <div style="float: right;">
+          <Page :total="total" show-total :page-size="listData.pageSize" @on-change="changePage"></Page>
+        </div>
+      </div>
+      <Modal
+        v-model="replyCommentModal"
+        title="回复评论"
+        :loading="button_loading"
+        @on-ok="replyComment"
+        @on-cancel="formData.reply_content=''">
+        <Input v-model="formData.reply_content" type="textarea" :rows="6" placeholder="请输入回复内容"></Input>
+      </Modal>
+    </card>
 
-    </div>
+  </div>
 </template>
 
 <script>
-    import {getCommentList, deleteComment,replyComment} from '../api/comment'
+    import {getCommentList, deleteComment, replyComment} from '../api/comment'
 
     export default {
         name: 'commentPage',
@@ -38,17 +38,17 @@
                 tableData: [],
                 loading: false,
                 article: [],
-                replyCommentModal:false,
-                button_loading:true,
+                replyCommentModal: false,
+                button_loading: true,
                 total: 0,
                 listData: {
                     article_id: '',
                     pageSize: 10,
                     pageNum: 1,
                 },
-                formData:{
-                  id:'',
-                  reply_content:''
+                formData: {
+                    id: '',
+                    reply_content: ''
                 },
                 tableColumns: [
                     {
@@ -112,7 +112,8 @@
                                 h('Poptip', {
                                     props: {
                                         confirm: true,
-                                        title: '你确定要删除吗?'
+                                        title: '你确定要删除吗?',
+                                        transfer: true,
                                     },
                                     on: {
                                         'on-ok': () => {
@@ -169,7 +170,7 @@
                 }, 500);
             },
             //删除评论
-            deleteComment(id){
+            deleteComment(id) {
                 this.loading = true;
                 deleteComment({id}).then(res => {
                     let data = res.data;
@@ -183,13 +184,13 @@
                 })
             },
             //回复评论
-            replyComment(){
-                if(this.formData.reply_content==''){
+            replyComment() {
+                if (this.formData.reply_content == '') {
                     this.$Message.error('请输入回复内容!');
                     this.dealButtonLoading();
                     return;
                 }
-                replyComment(this.formData).then(res=>{
+                replyComment(this.formData).then(res => {
                     let data = res.data;
                     if (data.code == 200) {
                         this.replyCommentModal = false;
@@ -211,11 +212,11 @@
 
 <style scoped>
 
-    .search-con {
-        padding: 10px 0;
-    }
+  .search-con {
+    padding: 10px 0;
+  }
 
-    .search-con button {
-        margin-left: 5px;
-    }
+  .search-con button {
+    margin-left: 5px;
+  }
 </style>

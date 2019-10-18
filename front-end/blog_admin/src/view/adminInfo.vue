@@ -28,6 +28,7 @@
                             :multiple="false"
                             type="drag"
                             :action="upload_url"
+                            :headers="uploadHeader"
                             style="display: inline-block;width:58px;">
                         <div style="width: 58px;height:58px;line-height: 58px;">
                             <Icon type="ios-camera" size="20"></Icon>
@@ -55,6 +56,7 @@
 </template>
 
 <script>
+    import {getToken} from "../libs/util";
     import config from '@/config'
     import {updateInfo} from '../api/user'
     const { baseUrl,imageUrl,uploadUrl } = config
@@ -84,6 +86,7 @@
             }
 
             return {
+                uploadHeader:{Authorization:getToken()},
                 formCustom: {
                     name: '',
                     mobile: '',

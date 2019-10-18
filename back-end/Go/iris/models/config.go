@@ -3,6 +3,7 @@ package models
 import (
 	"blog/database"
 	"blog/helper"
+	"time"
 )
 
 type Config struct {
@@ -59,7 +60,9 @@ func AddConfig(config *Config) map[string]interface{} {
 		data["msg"] = checkRes["msg"]
 		return data
 	}
-	database.Db.Where("name = ? and type = ?", *config.Name, *config.Type).FirstOrCreate(&config)
+	config.CreatedUnix = time.Now().Unix()
+	config.UpdatedUnix = time.Now().Unix()
+	database.Db.Where("title = ? and type = ?", *config.Title, *config.Type).FirstOrCreate(&config)
 	if config.ID != nil {
 		data["flag"] = true
 		data["msg"] = "添加配置成功！"
@@ -104,14 +107,15 @@ func (this Config) UpdateConfig() map[string]interface{} {
 		return data
 	}
 	exits_config := Config{}
-	database.Db.Table("web_config").Where(Config{Name: this.Name, Type: this.Type}).First(&exits_config)
+	database.Db.Table("web_config").Where(Config{Title: this.Title, Type: this.Type}).First(&exits_config)
 	if exits_config.ID != nil && *exits_config.ID != *this.ID {
 		data["msg"] = "已添加该配置,请勿重复添加!"
 		return data
 	}
 	da := map[string]interface{}{
-		"title": *this.Title,
-		"val":   *this.Val,
+		"title":      *this.Title,
+		"val":        *this.Val,
+		"updated_at": time.Now().Unix(),
 	}
 	result := database.Db.Model(&this).Updates(da)
 	if result.Error != nil {

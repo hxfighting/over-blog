@@ -15,6 +15,7 @@ func main() {
 		MaxAge:           600,
 		AllowedMethods:   []string{iris.MethodGet, iris.MethodPost, iris.MethodOptions, iris.MethodHead, iris.MethodDelete, iris.MethodPut},
 		AllowedHeaders:   []string{"*"},
+		ExposedHeaders:   []string{"Authorization"},
 	}))
 	app.AllowMethods(iris.MethodOptions)
 	app.RegisterView(iris.HTML("./views", ".html"))

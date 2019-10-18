@@ -25,6 +25,8 @@ Route::group(['prefix'=>'admin'],function (){
         Route::post('/upload','UploadController@upload');
         //获取dashboard的统计数据
         Route::get('/count','DashboardController@index');
+        //刷新token
+        Route::get('/token','Controller@refreshToken');
 
         //错误日志组
         Route::group(['prefix'=>'error'],function (){

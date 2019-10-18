@@ -12,7 +12,7 @@ import (
 type Admin struct {
 	ID        uint   `json:"id"`
 	Name      string `json:"name" validate:"gte=2,lte=15"`
-	Password  string `gorm:"-" validate:"gte=6,lte=16"`
+	Password  string `json:"-" validate:"gte=6,lte=16"`
 	Email     string `json:"email" validate:"email"`
 	Mobile    string `json:"mobile"`
 	Avatar    string `json:"avatar" validate:"url"`
@@ -25,18 +25,18 @@ type Admin struct {
 /**
 登录
 */
-func (this *Admin) Login() (token string, err error) {
+func (this *Admin) Login() (token map[string]interface{}, err error) {
 	existAdmin := Admin{}
 	database.Db.Where("name = ?", this.Name).First(&existAdmin)
 	if existAdmin.ID == 0 {
-		return "", errors.New("登录失败,用户名或密码错误")
+		return nil, errors.New("登录失败,用户名或密码错误")
 	}
 	if !service.PasswordVerify(this.Password, existAdmin.Password) {
-		return "", errors.New("登录失败,用户名或密码错误")
+		return nil, errors.New("登录失败,用户名或密码错误")
 	}
-	token, _, err = service.GenerateToken(existAdmin.ID, 0)
+	token, err = service.GenerateToken(existAdmin.ID, 0)
 	if err != nil {
-		return "", errors.New("登录失败,用户名或密码错误")
+		return nil, errors.New("登录失败,用户名或密码错误")
 	}
 	return token, nil
 }

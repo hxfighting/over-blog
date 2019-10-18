@@ -14,7 +14,7 @@ type Category struct {
 	Type      uint       `json:"type"`
 	CreatedAt int64      `json:"created_at"`
 	UpdatedAt int64      `json:"updated_at"`
-	Children  []Category `json:"children" gorm:"foreignkey:pid;PRELOAD:false;-"`
+	Children  []Category `json:"children" gorm:"foreignkey:pid;PRELOAD:false"`
 }
 
 /**

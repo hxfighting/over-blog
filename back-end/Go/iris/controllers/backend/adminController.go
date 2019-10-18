@@ -7,6 +7,7 @@ import (
 	"crypto/md5"
 	"fmt"
 	"github.com/kataras/iris"
+	"github.com/tidwall/gjson"
 )
 
 /**
@@ -74,16 +75,22 @@ func UpdateInfo(ctx iris.Context) {
 	admin := models.Admin{}
 	fields := []string{"avatar", "name", "email"}
 	validateFields := []string{"Avatar", "Name", "Email"}
-	_, err := getRightModel(ctx, &admin, fields, validateFields)
+	data, err := getRightModel(ctx, &admin, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
 	}
-	res := helper.VerifyMobileFormat(admin.Mobile)
+	phone := gjson.Get(data, "phone").String()
+	if phone == "" {
+		response.RenderError(ctx, "请输入正确的电话号码", nil)
+		return
+	}
+	res := helper.VerifyMobileFormat(phone)
 	if !res {
 		response.RenderError(ctx, "请输入正确的电话号码", nil)
 		return
 	}
+	admin.Mobile = phone
 	err = models.UpdateInfo(ctx, &admin)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)

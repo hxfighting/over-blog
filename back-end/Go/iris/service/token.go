@@ -33,15 +33,12 @@ func GetJWTHandler() *jwtmiddleware.Middleware {
 		ContextKey:    JWT_KEY,
 		ErrorHandler: func(ctx iris.Context, s error) {
 			if s.Error() == "Token is expired" {
-				token, err := renewalToken(ctx)
-				if err != nil {
-					response.RenderError(ctx, err.Error(), nil)
-					return
-				}
-				ctx.Header(JWT_KEY, token)
 				ctx.Next()
+				//response.RenderError(ctx, "token已过期", nil)
+				return
 			} else {
-				response.RenderError(ctx, s.Error(), nil)
+				response.RenderError(ctx, "非法token", nil)
+				return
 			}
 		},
 	})
@@ -50,28 +47,33 @@ func GetJWTHandler() *jwtmiddleware.Middleware {
 /**
 生成token
 */
-func GenerateToken(user_id uint, exp_end int64) (string, *jwt.Token, error) {
+func GenerateToken(user_id uint, exp_end int64) (map[string]interface{}, error) {
 	if exp_end == 0 {
 		exp_end = time.Now().Unix() + 86400*7
 	}
+	exp := time.Now().Add(time.Minute * 1).Unix()
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"foo":     "bar",
 		"nbf":     time.Now().Unix(),
-		"exp":     time.Now().Add(time.Minute * 60).Unix(),
+		"exp":     exp,
 		"id":      float64(user_id),
-		"exp_end": time.Now().Unix() + 86400*7,
+		"exp_end": exp_end,
 	})
 	// Sign and get the complete encoded token as a string using the secret
 	tokenString, err := token.SignedString([]byte(config.GetConfig("jwt.secret").(string)))
 	if err != nil {
 		Log.Error(err.Error())
-		return "", nil, errors.New("token生成失败！")
+		return nil, errors.New("token生成失败！")
 	}
 	tokenString = "Bearer " + tokenString
 	if cacheToken(user_id, tokenString) {
-		return tokenString, token, nil
+		data := map[string]interface{}{
+			"token":  tokenString,
+			"expire": exp,
+		}
+		return data, nil
 	}
-	return "", &jwt.Token{}, errors.New("token缓存失败！")
+	return nil, errors.New("token缓存失败！")
 }
 
 /**
@@ -79,7 +81,7 @@ func GenerateToken(user_id uint, exp_end int64) (string, *jwt.Token, error) {
 */
 func cacheToken(user_id uint, token string) bool {
 	val := md5.Sum([]byte(token))
-	set := Redis.Set(fmt.Sprintf("%x", val), user_id, time.Minute*65)
+	set := Redis.Set(fmt.Sprintf("%x", val), user_id, time.Minute*1)
 	_, e := set.Result()
 	if e != nil {
 		return false
@@ -116,17 +118,23 @@ func getClaims(ctx iris.Context) jwt.MapClaims {
 }
 
 /**
-一周内续签token
+刷新token
 */
-func renewalToken(ctx iris.Context) (string, error) {
-	userIdStr, err := getCacheToken(ctx)
-	if err != nil || userIdStr == "" {
-		return "", errors.New("Token已过期，请重新登录！")
-	}
+func RefreshToken(ctx iris.Context) (map[string]interface{}, error) {
 	s, e := jwtmiddleware.FromAuthHeader(ctx)
 	if e != nil {
-		Log.Error(e.Error())
-		return "", errors.New("Token已过期，请重新登录！")
+		return nil, errors.New("缺少token")
+	}
+	_, e = new(jwt.Parser).Parse(s, func(token *jwt.Token) (i interface{}, e error) {
+		return []byte(config.GetConfig("jwt.secret").(string)), nil
+	})
+	if e != nil && e.Error() != "Token is expired" {
+		return nil, errors.New("非法token")
+	}
+	key := fmt.Sprintf("%x", md5.Sum([]byte("Bearer "+s)))
+	exist_black_list := Redis.SIsMember("token_black_list", key)
+	if exist_black_list.Val() {
+		return nil, errors.New("非法token")
 	}
 	my_claims := jwt.MapClaims{
 		"foo":     "",
@@ -135,26 +143,21 @@ func renewalToken(ctx iris.Context) (string, error) {
 		"id":      "",
 		"exp_end": "",
 	}
-	_, _, e = new(jwt.Parser).ParseUnverified(s, &my_claims)
-	if e != nil {
-		Log.Error(e.Error())
-		return "", errors.New("Token已过期，请重新登录！")
-	}
+	_, _, _ = new(jwt.Parser).ParseUnverified(s, &my_claims)
+	exp_float := my_claims["exp"].(float64)
+	exp := int64(exp_float)
+	now_unix := time.Now().Unix()
 	exp_end := int64(my_claims["exp_end"].(float64))
-	if exp_end < time.Now().Unix() {
-		return "", errors.New("Token已过期，请重新登录！")
+	if now_unix-exp > 86400 || exp_end < now_unix {
+		return nil, errors.New("Token已过期，请重新登录！")
 	}
-	new_token, parseToken, e := GenerateToken(uint(my_claims["id"].(float64)), exp_end)
+	new_token, e := GenerateToken(uint(my_claims["id"].(float64)), exp_end)
 	if e != nil {
-		return "", errors.New("Token已过期，请重新登录！")
+		return nil, errors.New("Token已过期，请重新登录！")
 	}
-	token := "Bearer " + s
-	key := md5.Sum([]byte(token))
-	res := Redis.Del(fmt.Sprintf("%x", key))
-	_, e = res.Result()
-	if e != nil {
-		return "", errors.New("Token已过期，请重新登录！")
+	res := Redis.SAdd("token_black_list", key)
+	if res.Err() != nil {
+		return nil, errors.New("Token已过期，请重新登录！")
 	}
-	ctx.Values().Set(JWT_KEY, parseToken)
 	return new_token, nil
 }

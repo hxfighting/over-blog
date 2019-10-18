@@ -1,20 +1,20 @@
 <template>
-    <div>
-        <card>
-            <div class="search-con search-con-top">
-                <Button @click="addTag" class="search-btn" type="primary">
-                    <Icon type="search"/>&nbsp;&nbsp;新增标签
-                </Button>
-            </div>
-            <Table :loading="loading" :data="tableData" :columns="tableColumns" stripe></Table>
-            <div style="margin: 10px;overflow: hidden">
-                <div style="float: right;">
-                    <Page :total="total" :current="page.pageNum" :page-size="page.pageSize" @on-change="changePage"
-                          show-total></Page>
-                </div>
-            </div>
-        </card>
-    </div>
+  <div>
+    <card>
+      <div class="search-con search-con-top">
+        <Button @click="addTag" class="search-btn" type="primary">
+          <Icon type="search"/>&nbsp;&nbsp;新增标签
+        </Button>
+      </div>
+      <Table :loading="loading" :data="tableData" :columns="tableColumns" stripe></Table>
+      <div style="margin: 10px;overflow: hidden">
+        <div style="float: right;">
+          <Page :total="total" :current="page.pageNum" :page-size="page.pageSize" @on-change="changePage"
+                show-total></Page>
+        </div>
+      </div>
+    </card>
+  </div>
 </template>
 
 <script>
@@ -71,7 +71,8 @@
                                 h('Poptip', {
                                     props: {
                                         confirm: true,
-                                        title: '你确定要删除吗?'
+                                        title: '你确定要删除吗?',
+                                        transfer: true
                                     },
                                     on: {
                                         'on-ok': () => {
@@ -130,7 +131,7 @@
                         })
                     },
                     onOk: () => {
-                        if(this.tagName===undefined || this.tagName==''){
+                        if (this.tagName === undefined || this.tagName == '') {
                             this.$Message.error('请输入标签名称!');
                             return;
                         }
@@ -168,7 +169,7 @@
                         })
                     },
                     onOk: () => {
-                        if(this.tagName===undefined || this.tagName==''){
+                        if (this.tagName === undefined || this.tagName == '') {
                             this.$Message.error('请输入标签名称!');
                             return;
                         }
@@ -208,24 +209,24 @@
 </script>
 
 <style type="text/less" scoped>
-    .search-con {
-        padding: 10px 0;
+  .search-con {
+    padding: 10px 0;
 
-        .search {
-            &-col {
-                display: inline-block;
-                width: 200px;
-            }
+    .search {
+      &-col {
+        display: inline-block;
+        width: 200px;
+      }
 
-            &-input {
-                display: inline-block;
-                width: 200px;
-                margin-left: 2px;
-            }
+      &-input {
+        display: inline-block;
+        width: 200px;
+        margin-left: 2px;
+      }
 
-            &-btn {
-                margin-left: 2px;
-            }
-        }
+      &-btn {
+        margin-left: 2px;
+      }
     }
+  }
 </style>

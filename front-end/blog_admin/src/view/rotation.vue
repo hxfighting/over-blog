@@ -204,7 +204,8 @@
                                 h('Poptip', {
                                     props: {
                                         confirm: true,
-                                        title: '你确定要删除吗?'
+                                        title: '你确定要删除吗?',
+                                        transfer: true
                                     },
                                     on: {
                                         'on-ok': () => {
