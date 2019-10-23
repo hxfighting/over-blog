@@ -31,7 +31,7 @@ export const getToken = () => {
 export const isTokenExpired = () => {
   let expiredTime = Cookies.get(TOKEN_EXPIRE);
   let nowTime = new Date().getTime();
-  if ((expiredTime - nowTime / 1000) < 10) {
+  if ((expiredTime - nowTime / 1000) < 120) {
     return true
   } else {
     return false;

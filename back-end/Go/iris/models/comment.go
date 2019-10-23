@@ -6,6 +6,7 @@ import (
 	"blog/helper"
 	"blog/service"
 	"fmt"
+	"sort"
 	"strings"
 	"time"
 )
@@ -26,9 +27,30 @@ type Comment struct {
 	ReplyContent *string     `gorm:"-" json:"reply_content" mapstructure:"reply_content" validate:"gte=2,lte=255"`
 }
 
-type simpleArticle struct {
-	ID    int64  `json:"id"`
-	Title string `json:"title"`
+type ArticleComment struct {
+	ID          *int64            `json:"id" validate:"gt=0"`
+	Pid         *int64            `json:"pid" gorm:"column:pid"`
+	ReplyID     *int64            `json:"reply_id"`
+	UserID      *int64            `json:"user_id"`
+	ArticleID   *int64            `json:"article_id"`
+	Content     *string           `json:"content"`
+	CreatedUnix int64             `json:"created_unix" gorm:"column:created_at"`
+	UpdatedUnix int64             `json:"updated_unix" gorm:"column:updated_at"`
+	CreatedAt   string            `json:"created_at" gorm:"-"`
+	UpdatedAt   string            `json:"updated_at" gorm:"-"`
+	ReplyAvatar string            `json:"reply_avatar"`
+	ReplyName   string            `json:"reply_name"`
+	Username    string            `json:"username"`
+	UserAvatar  string            `json:"user_avatar"`
+	Children    []*ArticleComment `json:"children"`
+}
+
+type RecentComment struct {
+	ArticleID int64  `json:"article_id"`
+	Content   string `json:"content"`
+	CreatedAt int64  `json:"created_at"`
+	Avatar    string `json:"avatar"`
+	Name      string `json:"name"`
 }
 
 type simpleUser struct {
@@ -45,12 +67,17 @@ func (this *Comment) AfterFind() {
 	this.UpdatedAt = helper.GetDateTime(this.UpdatedUnix, helper.YMDHIS)
 }
 
+func (this *ArticleComment) AfterFind() {
+	this.CreatedAt = helper.GetDateTime(this.CreatedUnix, helper.YMDHIS)
+	this.UpdatedAt = helper.GetDateTime(this.UpdatedUnix, helper.YMDHIS)
+}
+
 /**
 获取评论列表
 */
 func GetCommentList(pageNum, pageSize, article_id int64) map[string]interface{} {
 	var data = make(map[string]interface{})
-	articles := []simpleArticle{}
+	articles := []SimpleArticle{}
 	database.Db.Table("article").Select("id,title").Find(&articles)
 	comments := []Comment{}
 	total := 0
@@ -304,4 +331,35 @@ func HandleEmailQueue(id int64) {
 	} else {
 		service.Log.Info("发送邮件成功！")
 	}
+}
+
+/**
+获取文章评论数据
+article_id 文章ID
+*/
+func GetArticleComment(article_id int64) []*ArticleComment {
+	all_comments := []ArticleComment{}
+	new_all_comments := make([]*ArticleComment, 0)
+	database.Db.Table("article_comment").
+		Joins("left join `user` as `a` on `article_comment`.reply_id = `a`.id left join `user` as `b` on `b`.id = `article_comment`.user_id").
+		Select("`article_comment`.*, `a`.`avatar` as `reply_avatar`, `a`.`name` as `reply_name`, `b`.`avatar` as `user_avatar`, `b`.`name` as `username`").
+		Where("article_comment.article_id = ?", article_id).Find(&all_comments)
+	if len(all_comments) > 0 {
+		comments := make(map[int64]*ArticleComment)
+		for _, value := range all_comments {
+			comment := value
+			comments[*value.ID] = &comment
+		}
+		for _, value := range comments {
+			if comments[*value.Pid] != nil {
+				comments[*value.Pid].Children = append(comments[*value.Pid].Children, value)
+			} else {
+				new_all_comments = append(new_all_comments, value)
+			}
+		}
+		sort.Slice(new_all_comments, func(i, j int) bool {
+			return new_all_comments[i].CreatedUnix > new_all_comments[j].CreatedUnix
+		})
+	}
+	return new_all_comments
 }

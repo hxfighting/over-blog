@@ -59,6 +59,21 @@ func GetDateTime(unix int64, format string) string {
 }
 
 /**
+时间转时间戳
+*/
+func GetUnixTimeFromDate(date, format string) (int64, error) {
+	loc, err := time.LoadLocation("Asia/Shanghai")
+	if err != nil {
+		return 0, errors.New("时区设置失败")
+	}
+	tt, err := time.ParseInLocation(format, date, loc)
+	if err != nil {
+		return 0, errors.New("时间转换失败！")
+	}
+	return tt.Unix(), nil
+}
+
+/**
 获取post、put的json请求数据
 */
 func GetRequestData(ctx iris.Context) (map[string]interface{}, error) {

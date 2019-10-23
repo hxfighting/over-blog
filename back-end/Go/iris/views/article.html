@@ -1,0 +1,221 @@
+<%: func ArticleInfo(article,preArticle,afterArticle models.Article,randArticles []models.SimpleArticle,comments []*models.ArticleComment,buffer *bytes.Buffer) %>
+
+<%~ "layout.html" %>
+
+<%@ meta { %>
+<title><%= Config["web_title"] %> - <%= article.Title %></title>
+<meta name="keywords" content="<%= article.Keywords %>">
+<meta name="description" content="<%= article.Description %>">
+<% } %>
+
+<%@ other_css { %>
+<style>
+    code {
+        padding: 2px 4px;
+        font-size: 90%;
+        color: #c7254e;
+        background-color: #f9f2f4;
+        border-radius: 4px;
+        white-space: unset;
+    }
+</style>
+<% } %>
+
+<%@ body_header { %>
+<div class="featured container">
+    <h7>随机文章推荐</h7>
+    <br/>
+    <div id="owl-demo-2" class="owl-carousel">
+        <% if len(randArticles)>0 { %>
+        <% for _,val := range randArticles { %>
+        <div class="item">
+            <div class="zoom-container">
+                <div class="zoom-caption" title="<%= val.Title %>">
+                    <span></span>
+                    <a href="/article/<%==i val.ID %>">
+                        <i class="" style="color: #fff"></i>
+                    </a>
+                </div>
+                <img src="<%== val.Thumb %>" style="width: 200px;height: 128px" title="<%= val.Title %>"/>
+            </div>
+        </div>
+        <% } %>
+        <% } %>
+    </div>
+</div>
+<% } %>
+
+<%@ main_content { %>
+<div id="main-content" class="col-md-8">
+    <div class="box single_article">
+        <div class="line"></div>
+        <h2 style="text-align: center;color: black;" title="<%= article.Title %>">
+            <%
+            title_rune := []rune(article.Title)
+            var title string
+            if len(title_rune)>20{
+            title = string(title_rune[0:20])+"..."
+            }else{
+            title = string(title_rune[:])
+            }
+            hero.EscapeHTML(title,buffer)
+            %>
+        </h2>
+        <div class="info">
+            <span class="center1"><i class="fa fa-user"></i><%= article.Author %></span>
+            <span class="center1"><i class="fa fa-calendar"></i><%= article.CreatedAt %></span>
+            <span class="center1"><i class="fa fa-eye"></i><%==i article.Click %></span>
+            <span class="center1"><i class="fa fa-comments-o"></i><%==i article.CommentsCount %>&nbsp;comments</span>
+        </div>
+        <p style="margin-top: 20px;"><%== article.ContentHtml %></p>
+        <br/>
+        <ul class="b-prev-next">
+            <li class="b-prev">
+                上一篇：
+                <% if preArticle.ID==nil { %>
+                <span>没有了</span>
+                <% }else { %>
+                <a href="/article/<%==i *preArticle.ID %>"
+                   style="color: black"><%= preArticle.Title %></a>
+                <% } %>
+            </li>
+            <li class="b-next">
+                下一篇：
+                <% if afterArticle.ID==nil { %>
+                <span>没有了</span>
+                <% }else { %>
+                <a href="/article/<%==i *afterArticle.ID %>"
+                   style="color: black"><%= afterArticle.Title %></a>
+                <% } %>
+            </li>
+        </ul>
+        <div class="share">
+            <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more">
+                </a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+                <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+                <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+                <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a>
+                <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+                <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+            </div>
+            <script>window._bd_share_config = {
+                    "common": {
+                        "bdSnsKey": {},
+                        "bdText": "",
+                        "bdMini": "2",
+                        "bdMiniList": false,
+                        "bdPic": "",
+                        "bdStyle": "1",
+                        "bdSize": "24"
+                    }, "share": {}
+                };
+                with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = '/static/api/js/share.js'];</script>
+        </div>
+        <br/>
+        <h6>标签</h6>
+        <div class="vid-tags">
+            <% if len(article.Tags)>0 { %>
+            <% for _,tag := range article.Tags { %>
+            <a href="/tag/<%==i *tag.ID %>"><%= tag.Name %></a>
+            <% } %>
+            <% } %>
+        </div>
+        <div class="line"></div>
+        <div class="comment a_comment">
+            <h5>评论一下</h5>
+            <div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type="email" class="form-control input-lg" name="email" id="email"
+                                   placeholder="接收回复的邮箱" required="required" value=""/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                                    <textarea name="message" id="message" class="form-control" rows="4" cols="25"
+                                              required="required" placeholder="评论内容"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-4 btn-block save" data="<%==i *article.ID %>" style="background-color: #f0efee">
+                            立即评论
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <h5>评论列表</h5>
+        <hr/>
+        <div class="widget wid-comment hx-comments">
+            <div class="content">
+                <% if len(comments)>0 { %>
+                <% for _,comment := range comments { %>
+                <div class="post">
+                    <img src="<%== comment.UserAvatar %>" class="img-circle" title="<%= comment.Username %>"/>
+                    <div class="wrapper" style="max-width: 620px;display: inline-block;text-align: left;margin-left: 5px">
+                        <ul class="list-inline">
+                            <li><%= comment.Username %>&emsp;评论:</li>
+                        </ul>
+                        <h5><%= *comment.Content %></h5>
+                        <ul class="list-inline">
+                            <li><i class="fa fa-calendar"></i> <%= comment.CreatedAt %></li>
+                            <li style="cursor: pointer" class="c_reply"><i class="fa fa-comment"></i>回复</li>
+                        </ul>
+                    </div>
+                    <div class="form-group hx_group" style="display: none">
+                        <textarea id="co_content" name="co_content" class="form-control co_content" required="required" placeholder="回复内容"></textarea>
+                        <input class="pull-left co_email" type="email" name="co_email" placeholder="请输入接收回复的邮箱" required="required" value=""/>
+                        <button type="submit" class="btn btn-success co_reply" data-pid="<%==i *comment.ID %>" data-aid="<%==i *article.ID %>" data-rid="<%==i *comment.UserID %>">回复</button>
+                        <button type="submit" class="btn btn-success co_cancel">取消</button>
+                    </div>
+                    <% if len(comment.Children)>0 { %>
+                    <% for _,children := range comment.Children { %>
+                    <div class="post hx_child_comments" style="margin-left: 55px;margin-bottom: 0; border-bottom: 1px solid #ddd;padding-top: 10px;">
+                        <img src="<%== children.UserAvatar %>" class="img-circle" title="<%= children.Username %>"/>
+                        <div class="wrapper child_wrapper" style="max-width: 580px;display: inline-block;text-align: left;margin-left: 5px">
+                            <ul class="list-inline">
+                                <li><%= children.Username %>&nbsp;回复&nbsp;<%= children.ReplyName %></li>
+                            </ul>
+                            <h5><%= *children.Content %></h5>
+                            <ul class="list-inline">
+                                <li><i class="fa fa-calendar"></i><%= children.CreatedAt %></li>
+                                <li style="cursor: pointer" class="hx_child_co_reply"><i class="fa fa-comments"></i>回复</li>
+                            </ul>
+                        </div>
+                        <div class="form-group hx_child_group" style="display: none">
+                            <textarea id="co_content" name="co_content" class="form-control co_content" required="required" placeholder="回复内容"></textarea>
+                            <input class="pull-left co_email" type="email" name="co_email" placeholder="请输入接收回复的邮箱" required="required" value=""/>
+                            <button type="submit" class="btn btn-success child_co_reply" data-pid="<%==i *children.Pid %>" data-aid="<%==i *article.ID %>" data-rid="<%==i *children.UserID %>">回复</button>
+                            <button type="submit" class="btn btn-success child_co_cancel">取消</button>
+                        </div>
+                    </div>
+                    <% } %>
+                    <% } %>
+                </div>
+                <% } %>
+                <% }else { %>
+                <h6 style="text-align: center">暂时没有评论,快来评论吧..</h6>
+                <% } %>
+            </div>
+        </div>
+
+    </div>
+</div>
+<% } %>
+
+<%@ scripts { %>
+<script>
+    var user_id = "";
+    var user_name = "";
+</script>
+<script src="/js/home/comment.js"></script>
+<script src="/js/jqueryTpfd/js/postbird-img-glass.js"></script>
+<script>
+    PostbirdImgGlass.init({
+        domSelector:".hx_article_images img",
+        animation:true
+    });
+</script>
+<% } %>

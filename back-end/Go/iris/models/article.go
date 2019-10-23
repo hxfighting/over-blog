@@ -4,10 +4,14 @@ import (
 	"blog/database"
 	"blog/helper"
 	"blog/service"
+	"errors"
 	"fmt"
+	"github.com/jinzhu/gorm"
 	"github.com/microcosm-cc/bluemonday"
 	"time"
 )
+
+const ARTICLE_VIEW = "blog_article_view"
 
 type Article struct {
 	ID            *int64         `json:"id" validate:"gt=0"`
@@ -31,10 +35,18 @@ type Article struct {
 	Tags          []simpleTag    `json:"tags" gorm:"-"`
 	CommentsCount int64          `json:"comments_count" gorm:"-"`
 }
+
+type SimpleArticle struct {
+	ID    int64  `json:"id"`
+	Title string `json:"title"`
+	Thumb string `json:"thumb"`
+}
+
 type simpleCategory struct {
 	ID    *int64  `json:"id"`
 	Title *string `json:"title"`
 }
+
 type simpleTag struct {
 	ID        *int64 `json:"id"`
 	Name      string `json:"name"`
@@ -59,7 +71,6 @@ func (this Article) GetArticleList(pageNum, pageSize, category_id int64, search 
 	database.Db.Table("tag").
 		Select("id,name").
 		Find(&tags)
-	articles := []Article{}
 	db := database.Db.Table("article")
 	if search != "" {
 		db = db.Where("title like ?", "%"+search+"%")
@@ -67,10 +78,32 @@ func (this Article) GetArticleList(pageNum, pageSize, category_id int64, search 
 	if category_id != 0 {
 		db = db.Where("category_id = ?", category_id)
 	}
-	total := 0
+	articles, total := GetArticles(db, pageNum, pageSize, false, false)
+	data := make(map[string]interface{})
+	data["category"] = article_category
+	data["tag"] = tags
+	data["list"] = articles
+	data["total"] = total
+	return data
+}
+
+/**
+获取文章数据
+*/
+func GetArticles(db *gorm.DB, pageNum, pageSize int64, is_top, is_show bool) ([]Article, int64) {
+	articles := []Article{}
+	var total int64 = 0
+	if is_show {
+		db = db.Where("is_show = ?", 1)
+	}
 	db.Count(&total)
+	if is_top {
+		db = db.Order("is_top desc,created_at desc")
+	} else {
+		db = db.Order("created_at desc")
+	}
 	db.Select("article.*,(select count(*) from article_comment where article_comment.article_id = article.id) as comments_count").
-		Order("created_at desc").Offset((pageNum - 1) * pageSize).Limit(pageSize).
+		Offset((pageNum - 1) * pageSize).Limit(pageSize).
 		Find(&articles)
 	if total > 0 {
 		article_ids := []int64{}
@@ -107,12 +140,64 @@ func (this Article) GetArticleList(pageNum, pageSize, category_id int64, search 
 			}
 		}
 	}
-	data := make(map[string]interface{})
-	data["category"] = article_category
-	data["tag"] = tags
-	data["list"] = articles
-	data["total"] = total
-	return data
+	return articles, total
+}
+
+/**
+根据文章id获取文章
+*/
+func GetArticleById(id int64) (Article, error) {
+	article := Article{}
+	database.Db.Where("is_show = ? and id = ?", 1, id).
+		Select("article.*,(select count(*) from article_comment where article_comment.article_id = article.id) as comments_count").
+		First(&article)
+	if article.ID == nil {
+		return article, errors.New("文章不存在！")
+	}
+	article_tag := []simpleTag{}
+	article_category := simpleCategory{}
+	database.Db.Table("tag").Select("tag.id,tag.name,article_tag.article_id").
+		Where("article_tag.article_id = ?", *article.ID).
+		Joins("left join article_tag on article_tag.tag_id = tag.id").Find(&article_tag)
+	if len(article_tag) > 0 {
+		article.Tags = article_tag
+	}
+	database.Db.Table("category").Select("id,title").
+		Where("id = ?", *article.CategoryID).Find(&article_category)
+	article.Category = article_category
+	return article, nil
+}
+
+/**
+获取上一篇或下一篇文章
+flag true 上一篇文章
+flag false 下一篇文章
+*/
+func GetPreOrNextArticle(id int64, flag bool) (Article, error) {
+	article := Article{}
+	db := database.Db.Table("article").Select("id,title")
+	if flag {
+		db = db.Order("id desc").Where("id < ? and is_show = ?", id, 1)
+	} else {
+		db = db.Order("id asc").Where("id > ? and is_show = ?", id, 1)
+	}
+	db.First(&article)
+	if article.ID != nil {
+		return article, nil
+	}
+	return article, errors.New("暂无文章数据")
+}
+
+/**
+获取随机文章
+num 文章数
+*/
+func GerRandArticle(num int64) []SimpleArticle {
+	articles := []SimpleArticle{}
+	database.Db.Table("article").
+		Where("is_show = ?", 1).
+		Order("RAND()").Limit(num).Find(&articles)
+	return articles
 }
 
 /**
@@ -236,4 +321,15 @@ func (this Article) UpdateArticle(tag_ids []int64) bool {
 	}
 	tx.Commit()
 	return true
+}
+
+/**
+缓存文章浏览数
+ */
+func CacheArticleView(id int64) {
+	field := "article_" + fmt.Sprintf("%d", id)
+	by := service.Redis.HIncrBy(ARTICLE_VIEW, field, 1)
+	if by.Err() != nil {
+		service.Log.Error(by.Err().Error())
+	}
 }

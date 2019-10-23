@@ -19,6 +19,12 @@ type Link struct {
 	UpdatedAt   string  `json:"updated_at" gorm:"-"`
 }
 
+type SimpleLink struct {
+	Url         string `json:"url"`
+	Description string `json:"description"`
+	Name        string `json:"name"`
+}
+
 func (this *Link) AfterFind() {
 	this.CreatedAt = helper.GetDateTime(this.CreatedUnix, helper.YMDHIS)
 	this.UpdatedAt = helper.GetDateTime(this.UpdatedUnix, helper.YMDHIS)

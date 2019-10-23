@@ -1,0 +1,58 @@
+<%: func ChatPage(leftChat,rightChat []models.Chat,buffer *bytes.Buffer) %>
+
+<%~ "layout.html" %>
+
+<%@ meta { %>
+<title><%= Config["web_title"] %></title>
+<meta name="keywords" content='<%= Config["keywords"] %>'>
+<meta name="description" content='<%= Config["description"] %>'>
+<meta name="author" content='<%= Config["seo_title"] %>'>
+<% } %>
+
+<%@ main_content { %>
+<div id="main-content" class="col-md-8">
+    <div id="b-content" class="container">
+        <div class="row">
+            <% if len(leftChat)>0 || len(rightChat)>0 { %>
+            <div class="col-xs-12 col-md-12 col-lg-8 b-chat">
+                <div class="b-chat-left">
+                    <% if len(leftChat)>0 { %>
+                    <% for _, lc := range leftChat { %>
+                    <ul class="b-chat-one animated bounceInLeft">
+                        <li class="b-chat-title "><%== lc.CreatedAt %></li>
+                        <li class="b-chat-content"><%= lc.Content %></li>
+                        <div class="b-arrows-right1">
+                            <div class="b-arrows-round"></div>
+                        </div>
+                        <div class="b-arrows-right2"></div>
+                    </ul>
+                    <% } %>
+                    <% } %>
+                </div>
+                <div class="b-chat-middle"></div>
+                <div class="b-chat-right">
+                    <% if len(rightChat)>0 { %>
+                    <% for _, rc := range rightChat { %>
+                    <ul class="b-chat-one animated bounceInRight">
+                        <li class="b-chat-title "><%== rc.CreatedAt %></li>
+                        <li class="b-chat-content"><%= rc.Content %></li>
+                        <div class="b-arrows-right1">
+                            <div class="b-arrows-round"></div>
+                        </div>
+                        <div class="b-arrows-right2"></div>
+                    </ul>
+                    <% } %>
+                    <% } %>
+                </div>
+            </div>
+            <% }else { %>
+            暂无说说数据
+            <% } %>
+        </div>
+    </div>
+</div>
+<% } %>
+
+<%@ scripts { %>
+<script src="/js/index.js" type="text/javascript"></script>
+<% } %>

@@ -54,7 +54,7 @@ class ArticleController extends BasicController
      */
     private function getNextArticle(int $id)
     {
-        return Article::where('id', '<', $id)
+        return Article::where('id', '>', $id)
             ->show(1)
             ->oldest('id')
             ->select('id', 'title')

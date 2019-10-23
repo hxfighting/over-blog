@@ -1,0 +1,163 @@
+<%: func ArticleByCategory(articleList []models.Article,total,pageNum int64,search,tag string,buffer *bytes.Buffer) %>
+
+<%~ "layout.html" %>
+
+<%@ meta { %>
+<title><%= Config["web_title"] %></title>
+<meta name="keywords" content='<%= Config["keywords"] %>'>
+<meta name="description" content='<%= Config["description"] %>'>
+<meta name="author" content='<%= Config["seo_title"] %>'>
+<% } %>
+
+<%@ main_content { %>
+<div id="main-content" class="col-md-8">
+    <div id="b-content" class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-12 col-lg-8">
+                <% if tag!="" { %>
+                <div class="row b-tag-title">
+                    <div class="col-xs-12 col-md-12 col-lg-12">
+                        <h3>拥有<span class="b-highlight"><%= tag %></span>标签的文章</h3>
+                    </div>
+                </div>
+                <% } %>
+                <% if search!="" { %>
+                <div class="row b-tag-title">
+                    <div class="col-xs-12 col-md-12 col-lg-12">
+                        <h3>搜索到的与<span
+                                    class="b-highlight"><%== search %></span>相关的文章
+                        </h3>
+                    </div>
+                </div>
+                <% } %>
+                <% if len(articleList)<=0 { %>
+                <div class="row b-one-article">
+                    <div class="col-xs-12 col-md-12 col-lg-12 b-date">
+                        <div class="box">
+                            <center>
+                                <div class="box-header">
+                                    <div class="zoom-container">
+                                        <div class="zoom-caption">
+                                        </div>
+                                        <img src="/image/sorry.jpg"/>
+                                    </div>
+                                </div>
+                            </center>
+                            <div class="box-content">
+                                <div id="contact_form">
+                                    <% if search!="" { %>
+                                    <p style="text-align: center;font-size: large">
+                                        博主很懒,暂时没有写关于"<%== search %>"的文章,看看其它文章吧！</p>
+                                    <% }else { %>
+                                    <p style="text-align: center;font-size: large">
+                                        博主很懒,暂时没有写关于"<%= tag %>"的文章,看看其它文章吧！</p>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% }else { %>
+                <% for _,article := range articleList { %>
+                <div class="row b-one-article">
+                    <h3 class="col-xs-12 col-md-12 col-lg-12">
+                        <a class="b-oa-title" href="/article/<%==i *article.ID %>"
+                           style="color: black;"
+                           title="<%= article.Title %>">
+                            <%
+                            title_rune := []rune(article.Title)
+                            var title string
+                            if len(title_rune)>20{
+                            title = string(title_rune[0:20])+"..."
+                            }else{
+                            title = string(title_rune[:])
+                            }
+                            hero.EscapeHTML(title,buffer)
+                            %>
+                        </a>
+                    </h3>
+                    <div class="col-xs-12 col-md-12 col-lg-12 b-date">
+                        <ul class="row">
+                            <li class="col-xs-5 col-md-2 col-lg-2">
+                                <i class="fa fa-user"></i>&nbsp;<%= article.Author %>
+                            </li>
+                            <li class="col-xs-7 col-md-3 col-lg-3">
+                                <i class="fa fa-calendar"></i>&nbsp;<%== article.CreatedAt %>
+                            </li>
+                            <li class="col-xs-5 col-md-2 col-lg-2">
+                                <i class="fa fa-eye"></i>&nbsp;<%==i article.Click %>
+
+                            </li>
+                            <li class="col-xs-7 col-md-5 col-lg-4 "><i class="fa fa-tags"></i>
+                                <% for _, tag := range article.Tags { %>
+                                <a class="b-tag-name"
+                                   style="color: black"><%= tag.Name %></a>
+                                <% } %>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-12 col-md-12 col-lg-12">
+                        <div class="row">
+                            <!-- 文章封面图片开始 -->
+                            <div class="col-sm-6 col-md-6 col-lg-4 hidden-xs">
+                                <figure class="b-oa-pic b-style1">
+                                    <a href="/article/<%==i *article.ID %>">
+                                        <img src="<%== article.Thumb %>" alt="<%= article.Title %>"
+                                             title="<%= article.Title %>">
+                                    </a>
+                                    <figcaption>
+                                        <a href="/article/<%==i *article.ID %>"></a>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                            <!-- 文章封面图片结束 -->
+
+                            <!-- 文章描述开始 -->
+                            <div class="col-xs-12 col-sm-6  col-md-6 col-lg-8 b-des-read">
+                                <%= article.Description %>
+                            </div>
+                            <!-- 文章描述结束 -->
+                        </div>
+                    </div>
+                    <a class=" b-readall" href="/article/<%==i *article.ID %>">阅读全文</a>
+                </div>
+                <% } %>
+                <ul class="ca_page" style="text-align: center"></ul>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+<% } %>
+
+<%@ scripts { %>
+<script type="text/javascript" src="/js/bootstrap-paginator.min.js"></script>
+<script>
+    $(function () {
+
+        function GetQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]);
+            return null;
+        }
+
+        $(".ca_page").bootstrapPaginator({
+            currentPage: '<%==i pageNum %>',
+            totalPages: '<%==i total %>',
+            bootstrapMajorVersion: 3,
+            alignment: 'center',
+            size: "small",
+            onPageClicked: function (e, originalEvent, type, page) {
+                let search = GetQueryString('search')
+                let url = "/search?page=" + page
+                if (search) {
+                    url = url + '&search=' + search
+                }
+                window.location.href = url
+            }
+        });
+    })
+</script>
+<% } %>
+

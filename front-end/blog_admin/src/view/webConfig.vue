@@ -8,9 +8,9 @@
             <Button @click="handleSearch" class="search-btn" type="primary">
                 <Icon type="search"/>&nbsp;&nbsp;搜索
             </Button>
-            <Button @click="configModal=true" class="link_add_button" type="primary">
-                <Icon type="search"/>&nbsp;&nbsp;新增配置
-            </Button>
+<!--            <Button @click="configModal=true" class="link_add_button" type="primary">-->
+<!--                <Icon type="search"/>&nbsp;&nbsp;新增配置-->
+<!--            </Button>-->
         </div>
         <Table :data="tableData" :columns="tableColumns" :loading="loading" stripe></Table>
         <div style="margin: 10px;overflow: hidden">
@@ -34,7 +34,7 @@
                         <Radio label="3">其他配置</Radio>
                     </RadioGroup>
                 </FormItem>
-                <FormItem label="配置标题" prop="title">
+                <FormItem label="配置标题" prop="title" v-if="formData.type!='1'">
                     <Input v-model="formData.title" placeholder="请输入配置标题"></Input>
                 </FormItem>
                 <FormItem label="配置key" prop="name">
@@ -70,29 +70,29 @@
             <Form ref="configUpdate" :model="formData" :rules="ruleValidate" :label-width="80">
                 <FormItem label="配置类型" prop="type">
                     <RadioGroup v-model="formData.type">
-                        <Radio label="1">社交地址</Radio>
-                        <Radio label="2">footer内容</Radio>
-                        <Radio label="3">其他配置</Radio>
+                        <Radio label="1" disabled>社交地址</Radio>
+                        <Radio label="2" disabled>footer内容</Radio>
+                        <Radio label="3" disabled>其他配置</Radio>
                     </RadioGroup>
                 </FormItem>
-                <FormItem label="配置标题" prop="title">
-                    <Input v-model="formData.title" placeholder="请输入配置标题"></Input>
+                <FormItem label="配置标题" prop="title" v-if="formData.type!='1'">
+                    <Input v-model="formData.title" placeholder="请输入配置标题" disabled></Input>
                 </FormItem>
                 <FormItem label="配置key" prop="name">
                     <RadioGroup v-model="formData.name" v-if="formData.type=='1'">
-                        <Radio label="qq">QQ</Radio>
-                        <Radio label="twitter">twitter</Radio>
-                        <Radio label="weibo">微博</Radio>
-                        <Radio label="git">码云</Radio>
-                        <Radio label="github">github</Radio>
+                        <Radio label="qq" disabled>QQ</Radio>
+                        <Radio label="twitter" disabled>twitter</Radio>
+                        <Radio label="weibo" disabled>微博</Radio>
+                        <Radio label="git" disabled>码云</Radio>
+                        <Radio label="github" disabled>github</Radio>
                     </RadioGroup>
                     <RadioGroup v-model="formData.name" v-else-if="formData.type=='2'">
-                        <Radio label="famous_remark">名言</Radio>
-                        <Radio label="blog_related">博客相关</Radio>
-                        <Radio label="blogger_collection">博主常逛</Radio>
-                        <Radio label="copyright">版权信息</Radio>
+                        <Radio label="famous_remark" disabled>名言</Radio>
+                        <Radio label="blog_related" disabled>博客相关</Radio>
+                        <Radio label="blogger_collection" disabled>博主常逛</Radio>
+                        <Radio label="copyright" disabled>版权信息</Radio>
                     </RadioGroup>
-                    <Input v-model="formData.name" placeholder="请输入配置key" v-else></Input>
+                    <Input v-model="formData.name" placeholder="请输入配置key" v-else disabled></Input>
                 </FormItem>
                 <FormItem label="配置value" prop="val">
                     <Input v-model="formData.val" type="textarea" :rows="6"

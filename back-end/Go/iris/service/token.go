@@ -51,7 +51,7 @@ func GenerateToken(user_id uint, exp_end int64) (map[string]interface{}, error) 
 	if exp_end == 0 {
 		exp_end = time.Now().Unix() + 86400*7
 	}
-	exp := time.Now().Add(time.Minute * 1).Unix()
+	exp := time.Now().Add(time.Minute * 60).Unix()
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"foo":     "bar",
 		"nbf":     time.Now().Unix(),
@@ -81,7 +81,7 @@ func GenerateToken(user_id uint, exp_end int64) (map[string]interface{}, error) 
 */
 func cacheToken(user_id uint, token string) bool {
 	val := md5.Sum([]byte(token))
-	set := Redis.Set(fmt.Sprintf("%x", val), user_id, time.Minute*1)
+	set := Redis.Set(fmt.Sprintf("%x", val), user_id, time.Minute*65)
 	_, e := set.Result()
 	if e != nil {
 		return false

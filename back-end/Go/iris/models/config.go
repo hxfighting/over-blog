@@ -18,6 +18,12 @@ type Config struct {
 	UpdatedAt   string  `json:"updated_at" gorm:"-"`
 }
 
+type SimpleConfig struct {
+	Title string
+	Val   string
+	Name  string
+}
+
 func (Config) TableName() string {
 	return "web_config"
 }

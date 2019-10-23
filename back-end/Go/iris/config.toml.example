@@ -19,6 +19,7 @@ db=0
 host=""
 port="6379"
 
+#邮箱配置
 [email]
 host=""
 port=465
@@ -27,8 +28,16 @@ password=""
 from=""
 subject=""
 
+#七牛相关配置
 [qiniu]
-accessKey=""
+accessKey="-"
 secretKey=""
 bucket=""
+
+#百度统计配置
+[tongji]
 url=""
+token=""
+username=""
+password=""
+siteId=""

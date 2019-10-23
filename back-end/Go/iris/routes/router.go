@@ -2,11 +2,20 @@ package routes
 
 import (
 	"blog/controllers/backend"
+	"blog/controllers/frontend"
 	"blog/service"
 	"github.com/kataras/iris"
 )
 
 func RegisterRoutes(app *iris.Application) {
+	registerApiRoutes(app)
+	registerWebRoutes(app)
+}
+
+/**
+注册api路由
+*/
+func registerApiRoutes(app *iris.Application) {
 	app.Get("/api/captcha", backend.GetCaptcha)
 
 	adminNeedAuth := app.Party("/api/admin", service.GetJWTHandler().Serve)
@@ -184,4 +193,26 @@ func RegisterRoutes(app *iris.Application) {
 		//添加错误日志
 		adminNoAuth.Post("/error", backend.AddWebError)
 	}
+}
+
+/**
+注册web路由
+*/
+func registerWebRoutes(app *iris.Application) {
+	//首页
+	app.Get("/", frontend.Index)
+	//文章搜索
+	app.Get("/search", frontend.SearchArticle)
+	//获取博客统计
+	app.Get("/getBlogCount", frontend.GetBlogCount)
+	//联系我
+	app.Get("/contact", frontend.GetContactPage)
+	//说说页面
+	app.Get("/chat", frontend.GetChatPage)
+	//文章页
+	app.Get("/article/{id:int min(1) else 404}", frontend.GetArticleDetail)
+	//根据标签获取文章列表
+	app.Get("/tag/{id:int min(1) else 404}", frontend.GetArticleByTag)
+	//根据文章分类获取文章
+	app.Get("/category/{id:int min(1) else 404}", frontend.GetArticleByCategory)
 }
