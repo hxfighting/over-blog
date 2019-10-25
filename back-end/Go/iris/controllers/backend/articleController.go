@@ -17,7 +17,7 @@ func GetArticleList(ctx iris.Context) {
 	category_id := ctx.URLParamInt64Default("category_id", 0)
 	search := ctx.URLParamTrim("search")
 	list := models.Article{}.GetArticleList(pageNum, pageSize, category_id, search)
-	if list["total"].(int) > 0 {
+	if list["total"].(int64) > 0 {
 		response.RenderSuccess(ctx, "获取文章列表成功", list)
 		return
 	}
