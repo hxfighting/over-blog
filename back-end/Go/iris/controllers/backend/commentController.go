@@ -1,6 +1,8 @@
 package backend
 
 import (
+	"blog/controllers"
+	"blog/controllers/frontend"
 	"blog/models"
 	"github.com/kataras/iris"
 )
@@ -27,7 +29,7 @@ func DeleteComment(ctx iris.Context) {
 	comment := models.Comment{}
 	fields := []string{"id"}
 	validateFields := []string{"ID"}
-	_, err := getRightModel(ctx, &comment, fields, validateFields)
+	_, err := controllers.GetRightModel(ctx, &comment, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -37,6 +39,7 @@ func DeleteComment(ctx iris.Context) {
 		response.RenderError(ctx, "删除评论失败，请稍后再试！", nil)
 		return
 	}
+	removeFrontendCache(frontend.COMMENT_KEY)
 	response.RenderSuccess(ctx, "删除评论成功！", nil)
 }
 
@@ -47,7 +50,7 @@ func ReplyComment(ctx iris.Context) {
 	comment := models.Comment{}
 	fields := []string{"id", "reply_content"}
 	validateFields := []string{"ID", "ReplyContent"}
-	_, err := getRightModel(ctx, &comment, fields, validateFields)
+	_, err := controllers.GetRightModel(ctx, &comment, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -57,5 +60,6 @@ func ReplyComment(ctx iris.Context) {
 		response.RenderError(ctx, "回复评论失败，请稍后再试！", nil)
 		return
 	}
+	removeFrontendCache(frontend.COMMENT_KEY)
 	response.RenderSuccess(ctx, "回复评论成功！", nil)
 }

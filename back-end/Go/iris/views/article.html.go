@@ -19,7 +19,9 @@ func ArticleInfo(article, preArticle, afterArticle models.Article, randArticles 
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <link rel="shortcut icon" type="image/ico" href="/image/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta name="csrf-token" content="">
+    <meta name="csrf-token" content="`)
+	buffer.WriteString(CsrfToken)
+	buffer.WriteString(`">
     `)
 	buffer.WriteString(`
 <title>`)
@@ -92,20 +94,21 @@ func ArticleInfo(article, preArticle, afterArticle models.Article, randArticles 
                 </div>
                 <div class="col-md-6">
                     <ul class="list-inline top-link link">
-
                         <li><a title="首页" href=""><i class="fa fa-home"></i> 首页</a></li>
-
-                        <li style="cursor: pointer"><a title="后台" href=""
-                                                       target="_blank"><i
-                                        class="fa fa-home"></i> 后台</a></li>
-
+                        `)
+	if len(AuthInfo) <= 0 {
+		buffer.WriteString(`
                         <li style="cursor: pointer"><a title="登录" class="oauth_login"><i class="fa fa-user"></i> 登录</a>
                         </li>
-
+                        `)
+	} else {
+		buffer.WriteString(`
                         <li style="cursor: pointer"><a title="退出登录" class="oauth_quit"><i class="fa fa-user"></i>
                                 退出登录</a></li>
-
-                        <li><a title="联系我" href=""><i class="fa fa-comments"></i>↓联系我↓</a></li>
+                        `)
+	}
+	buffer.WriteString(`
+                        <li><a title="联系我" href="/contact"><i class="fa fa-comments"></i>↓联系我↓</a></li>
                     </ul>
                 </div>
             </div>
@@ -832,7 +835,9 @@ func ArticleInfo(article, preArticle, afterArticle models.Article, randArticles 
 
         });
     });
-    let APP_URL = ""
+    let APP_URL = "`)
+	hero.EscapeHTML(AppUrl, buffer)
+	buffer.WriteString(`"
 </script>
 `)
 	buffer.WriteString(Config["baidu_tuisong"])

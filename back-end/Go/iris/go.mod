@@ -13,6 +13,7 @@ require (
 	github.com/go-playground/universal-translator v0.16.0
 	github.com/go-redis/redis v6.15.6+incompatible
 	github.com/google/go-querystring v1.0.0 // indirect
+	github.com/gorilla/securecookie v1.1.1 // indirect
 	github.com/imkira/go-interpol v1.1.0 // indirect
 	github.com/iris-contrib/middleware v0.0.0-20190816193017-7838277651e8
 	github.com/jinzhu/gorm v1.9.11
@@ -56,7 +57,7 @@ require (
 	golang.org/x/crypto v0.0.0-20191011191535-87dc89f01550
 	golang.org/x/image v0.0.0-20191009234506-e7c1f5e7dbb8 // indirect
 	golang.org/x/net v0.0.0-20191021144547-ec77196f6094 // indirect
-	golang.org/x/sys v0.0.0-20191022100944-742c48ecaeb7 // indirect
+	golang.org/x/sys v0.0.0-20191025021431-6c3a3bfe00ae // indirect
 	google.golang.org/appengine v1.6.5 // indirect
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
 	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect

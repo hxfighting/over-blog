@@ -84,7 +84,7 @@ class WeChatController extends BasicController
         $user_info = app('miniProgram')->auth->session($data['code']);
         if (!empty($user_info))
         {
-            $exist_user = $user->firstOrNew(['openid' => $user_info['openid']]);
+            $exist_user = $user->firstOrNew(['openid' => $user_info['openid'],'type'=>2]);
             $exist_user->access_token = $user_info['session_key'];
             $exist_user->avatar = $data['avatar'];
             $exist_user->name = $data['name'];

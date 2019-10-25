@@ -1,6 +1,8 @@
 package backend
 
 import (
+	"blog/controllers"
+	"blog/controllers/frontend"
 	"blog/models"
 	"github.com/kataras/iris"
 )
@@ -27,7 +29,7 @@ func DeleteLink(ctx iris.Context) {
 	link := models.Link{}
 	fields := []string{"id"}
 	validateFields := []string{"ID"}
-	_, err := getRightModel(ctx, &link, fields, validateFields)
+	_, err := controllers.GetRightModel(ctx, &link, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -37,6 +39,7 @@ func DeleteLink(ctx iris.Context) {
 		response.RenderError(ctx, "删除友联失败，请稍后再试！", nil)
 		return
 	}
+	removeFrontendCache(frontend.LINK_KEY)
 	response.RenderSuccess(ctx, "删除友联成功！", nil)
 }
 
@@ -47,7 +50,7 @@ func AddLink(ctx iris.Context) {
 	link := models.Link{}
 	fields := []string{"name", "order", "is_show", "url", "description"}
 	validateFields := []string{"Name", "Order", "IsShow", "Description", "Url"}
-	_, err := getRightModel(ctx, &link, fields, validateFields)
+	_, err := controllers.GetRightModel(ctx, &link, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -57,6 +60,7 @@ func AddLink(ctx iris.Context) {
 		response.RenderError(ctx, "添加友联失败，请稍后再试！", nil)
 		return
 	}
+	removeFrontendCache(frontend.LINK_KEY)
 	response.RenderSuccess(ctx, "添加友联成功！", nil)
 }
 
@@ -67,7 +71,7 @@ func UpdateLink(ctx iris.Context) {
 	link := models.Link{}
 	fields := []string{"id", "name", "order", "is_show", "url", "description"}
 	validateFields := []string{"ID", "Name", "Order", "IsShow", "Description", "Url"}
-	_, err := getRightModel(ctx, &link, fields, validateFields)
+	_, err := controllers.GetRightModel(ctx, &link, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -77,5 +81,6 @@ func UpdateLink(ctx iris.Context) {
 		response.RenderError(ctx, "修改友联失败，请稍后再试！", nil)
 		return
 	}
+	removeFrontendCache(frontend.LINK_KEY)
 	response.RenderSuccess(ctx, "修改友联成功！", nil)
 }

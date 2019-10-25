@@ -16,7 +16,9 @@ func (this *Response) RenderSuccess(ctx iris.Context, msg string, data interface
 }
 
 func (this *Response) RenderError(ctx iris.Context, msg string, data interface{}) {
-	this.Code = -1
+	if this.Code == 0 {
+		this.Code = -1
+	}
 	this.Message = msg
 	this.Data = data
 	ctx.JSON(this)

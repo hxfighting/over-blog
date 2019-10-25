@@ -1,6 +1,7 @@
 package backend
 
 import (
+	"blog/controllers"
 	"blog/models"
 	"github.com/kataras/iris"
 )
@@ -28,7 +29,7 @@ func DeleteUser(ctx iris.Context) {
 	user := models.User{}
 	fields := []string{"id"}
 	validateFields := []string{"ID"}
-	_, err := getRightModel(ctx, &user, fields, validateFields)
+	_, err := controllers.GetRightModel(ctx, &user, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -48,7 +49,7 @@ func UpdateUser(ctx iris.Context) {
 	user := models.User{}
 	fields := []string{"id", "is_admin"}
 	validateFields := []string{"ID", "IsAdmin"}
-	_, err := getRightModel(ctx, &user, fields, validateFields)
+	_, err := controllers.GetRightModel(ctx, &user, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return

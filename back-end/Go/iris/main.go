@@ -6,6 +6,7 @@ import (
 	stdContext "context"
 	"github.com/iris-contrib/middleware/cors"
 	"github.com/kataras/iris"
+	"github.com/kataras/iris/middleware/recover"
 	"log"
 	"os"
 	"os/signal"
@@ -15,6 +16,7 @@ import (
 
 func main() {
 	app := iris.New()
+	app.Use(recover.New())
 	app.Use(cors.New(cors.Options{
 		AllowedOrigins:   []string{"*"}, // allows everything, use that to change the hosts.
 		AllowCredentials: true,
@@ -24,10 +26,10 @@ func main() {
 		ExposedHeaders:   []string{"Authorization"},
 	}))
 	app.AllowMethods(iris.MethodOptions)
-	app.HandleDir("/css","./public/css")
-	app.HandleDir("/js","./public/js")
-	app.HandleDir("/image","./public/image")
-	app.HandleDir("/static","./public/static")
+	app.HandleDir("/css", "./public/css")
+	app.HandleDir("/js", "./public/js")
+	app.HandleDir("/image", "./public/image")
+	app.HandleDir("/static", "./public/static")
 	//app.RegisterView(iris.HTML("./views", ".html"))
 	routes.RegisterRoutes(app)
 	go func() {
@@ -54,7 +56,7 @@ func main() {
 			app.Shutdown(ctx)
 		}
 	}()
-	if run := app.Run(iris.Addr(":8080"), iris.WithoutInterruptHandler); run != nil {
+	if run := app.Run(iris.Addr(":8080"), iris.WithoutInterruptHandler, iris.WithOptimizations); run != nil {
 		log.Fatalln(run.Error())
 	}
 }

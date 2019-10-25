@@ -1,6 +1,8 @@
 package backend
 
 import (
+	"blog/controllers"
+	"blog/controllers/frontend"
 	"blog/models"
 	"github.com/kataras/iris"
 )
@@ -25,7 +27,7 @@ func AddRotation(ctx iris.Context) {
 	rotation := models.Rotation{}
 	fields := []string{"image_url", "words"}
 	validateFields := []string{"ImageUrl", "Words"}
-	_, err := getRightModel(ctx, &rotation, fields, validateFields)
+	_, err := controllers.GetRightModel(ctx, &rotation, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -35,6 +37,7 @@ func AddRotation(ctx iris.Context) {
 		response.RenderError(ctx, "添加轮播图失败，请稍后再试！", nil)
 		return
 	}
+	removeFrontendCache(frontend.ROTATION_KEY)
 	response.RenderSuccess(ctx, "添加轮播图成功！", nil)
 }
 
@@ -45,7 +48,7 @@ func UpdateRotation(ctx iris.Context) {
 	rotation := models.Rotation{}
 	fields := []string{"id", "image_url", "words"}
 	validateFields := []string{"ID", "ImageUrl", "Words"}
-	_, err := getRightModel(ctx, &rotation, fields, validateFields)
+	_, err := controllers.GetRightModel(ctx, &rotation, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -55,6 +58,7 @@ func UpdateRotation(ctx iris.Context) {
 		response.RenderError(ctx, "修改轮播图失败，请稍后再试！", nil)
 		return
 	}
+	removeFrontendCache(frontend.ROTATION_KEY)
 	response.RenderSuccess(ctx, "修改轮播图成功！", nil)
 }
 
@@ -65,7 +69,7 @@ func DeleteRotation(ctx iris.Context) {
 	rotation := models.Rotation{}
 	fields := []string{"id"}
 	validateFields := []string{"ID"}
-	_, err := getRightModel(ctx, &rotation, fields, validateFields)
+	_, err := controllers.GetRightModel(ctx, &rotation, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -75,5 +79,6 @@ func DeleteRotation(ctx iris.Context) {
 		response.RenderError(ctx, "删除轮播图失败，请稍后再试！", nil)
 		return
 	}
+	removeFrontendCache(frontend.ROTATION_KEY)
 	response.RenderSuccess(ctx, "删除轮播图成功！", nil)
 }

@@ -1,6 +1,7 @@
 package backend
 
 import (
+	"blog/controllers"
 	"blog/models"
 	"github.com/kataras/iris"
 )
@@ -27,7 +28,7 @@ func DeleteContact(ctx iris.Context) {
 	contact := models.Contact{}
 	fields := []string{"id"}
 	validateFields := []string{"ID"}
-	_, err := getRightModel(ctx, &contact, fields, validateFields)
+	_, err := controllers.GetRightModel(ctx, &contact, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -47,7 +48,7 @@ func ReplyContact(ctx iris.Context) {
 	contact := models.Contact{}
 	fields := []string{"id", "reply_content"}
 	validateFields := []string{"ID", "ReplyContent"}
-	_, err := getRightModel(ctx, &contact, fields, validateFields)
+	_, err := controllers.GetRightModel(ctx, &contact, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return

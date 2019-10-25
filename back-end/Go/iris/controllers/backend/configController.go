@@ -1,6 +1,8 @@
 package backend
 
 import (
+	"blog/controllers"
+	"blog/controllers/frontend"
 	"blog/models"
 	"github.com/kataras/iris"
 )
@@ -27,7 +29,7 @@ func AddConfig(ctx iris.Context) {
 	config := models.Config{}
 	fields := []string{"type", "name", "title", "val"}
 	validateFields := []string{"Type", "Name", "Title", "Val"}
-	_, err := getRightModel(ctx, &config, fields, validateFields)
+	_, err := controllers.GetRightModel(ctx, &config, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -37,6 +39,7 @@ func AddConfig(ctx iris.Context) {
 		response.RenderError(ctx, res["msg"].(string), nil)
 		return
 	}
+	removeFrontendCache(frontend.CONFIG_KEY, frontend.FOOTER_KEY, frontend.SOCIAL_KEY)
 	response.RenderSuccess(ctx, res["msg"].(string), nil)
 }
 
@@ -47,7 +50,7 @@ func UpdateConfig(ctx iris.Context) {
 	config := models.Config{}
 	fields := []string{"id", "type", "name", "title", "val"}
 	validateFields := []string{"ID", "Type", "Name", "Title", "Val"}
-	_, err := getRightModel(ctx, &config, fields, validateFields)
+	_, err := controllers.GetRightModel(ctx, &config, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -57,6 +60,7 @@ func UpdateConfig(ctx iris.Context) {
 		response.RenderError(ctx, res["msg"].(string), nil)
 		return
 	}
+	removeFrontendCache(frontend.CONFIG_KEY, frontend.FOOTER_KEY, frontend.SOCIAL_KEY)
 	response.RenderSuccess(ctx, res["msg"].(string), nil)
 }
 
@@ -67,7 +71,7 @@ func DeleteConfig(ctx iris.Context) {
 	config := models.Config{}
 	fields := []string{"id"}
 	validateFields := []string{"ID"}
-	_, err := getRightModel(ctx, &config, fields, validateFields)
+	_, err := controllers.GetRightModel(ctx, &config, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -77,5 +81,6 @@ func DeleteConfig(ctx iris.Context) {
 		response.RenderError(ctx, "删除配置失败，请稍后再试", nil)
 		return
 	}
+	removeFrontendCache(frontend.CONFIG_KEY, frontend.FOOTER_KEY, frontend.SOCIAL_KEY)
 	response.RenderSuccess(ctx, "删除配置成功！", nil)
 }

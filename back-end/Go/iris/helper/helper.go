@@ -4,7 +4,10 @@ import (
 	"blog/config"
 	"errors"
 	"github.com/kataras/iris"
+	"io"
+	"io/ioutil"
 	"log"
+	"net/http"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -87,4 +90,26 @@ func GetRequestData(ctx iris.Context) (map[string]interface{}, error) {
 		return map[string]interface{}{}, errors.New("数据格式错误！")
 	}
 	return request_values, nil
+}
+
+/**
+获取http请求结果
+*/
+func GetHttpResponse(http_url, method string, body io.Reader) ([]byte, string, error) {
+	res := []byte{}
+	request, e := http.NewRequest(method, http_url, body)
+	if e != nil {
+		return res, "", e
+	}
+	response, e := http.DefaultClient.Do(request)
+	if e != nil {
+		return res, "", e
+	}
+	defer response.Body.Close()
+	body_byte, e := ioutil.ReadAll(response.Body)
+	if e != nil {
+		return res, "", e
+	}
+	contentType := response.Header.Get("Content-Type")
+	return body_byte, contentType, nil
 }

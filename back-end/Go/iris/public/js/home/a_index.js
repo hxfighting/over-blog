@@ -124,7 +124,7 @@ var index_ops = {
                         setTimeout(function () {
                             window.location.href = window.location.href;
                         }, 1600);
-                    }else {
+                    } else {
                         Swal({
                             position: 'center',
                             type: 'error',
@@ -167,13 +167,15 @@ var index_ops = {
             dd = setTimeout(dsq, 3000);
         };
 
+        $('#b-modal-login').on('hidden.bs.modal', function (event) {
+            if(dd!=null){
+                clearTimeout(dd)
+            }
+        })
+
         $('.hx-wechat').click(function () {
             let i = $(this);
-            if (timeout) {
-                timeout = false;
-                sleep(1000);
-                dsq();
-            } else {
+            if (dd == null) {
                 dsq();
             }
             let image = `<img src="${APP_URL}/wechat/qrcode/${window.scene}">`;

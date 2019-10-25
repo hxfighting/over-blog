@@ -1,6 +1,7 @@
 package backend
 
 import (
+	"blog/controllers"
 	"blog/models"
 	"errors"
 	"github.com/kataras/iris"
@@ -32,7 +33,7 @@ func AddArticle(ctx iris.Context) {
 		"description", "thumb", "content_html", "content_md", "is_show", "is_top", "is_original"}
 	validateFields := []string{"CategoryID", "Title", "Author", "Keywords", "Description",
 		"Thumb", "ContentHtml", "ContentMd", "IsShow", "IsTop", "IsOriginal"}
-	data, err := getRightModel(ctx, &article, fields, validateFields)
+	data, err := controllers.GetRightModel(ctx, &article, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -81,7 +82,7 @@ func UpdateArticle(ctx iris.Context) {
 		"description", "thumb", "content_html", "content_md", "is_show", "is_top", "is_original"}
 	validateFields := []string{"ID", "CategoryID", "Title", "Author", "Keywords", "Description",
 		"Thumb", "ContentHtml", "ContentMd", "IsShow", "IsTop", "IsOriginal"}
-	data, err := getRightModel(ctx, &article, fields, validateFields)
+	data, err := controllers.GetRightModel(ctx, &article, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -106,7 +107,7 @@ func DeleteArticle(ctx iris.Context) {
 	article := models.Article{}
 	fields := []string{"id"}
 	validateFields := []string{"ID"}
-	_, err := getRightModel(ctx, &article, fields, validateFields)
+	_, err := controllers.GetRightModel(ctx, &article, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return

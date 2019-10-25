@@ -1,20 +1,19 @@
 package frontend
 
 import (
+	"blog/config"
 	"blog/database"
 	"blog/helper"
 	"blog/models"
 	"blog/service"
 	template "blog/views"
 	"fmt"
-	jsoniter "github.com/json-iterator/go"
 	"github.com/kataras/iris/sessions"
 	"sort"
 	"time"
 )
 
 var (
-	fastJson               = jsoniter.ConfigCompatibleWithStandardLibrary
 	CONFIG_KEY             = "blog_config"
 	ROTATION_KEY           = "blog_rotation"
 	PHOTO_KEY              = "blog_photo"
@@ -27,6 +26,7 @@ var (
 	FOOTER_KEY             = "blog_footer"
 	cookieNameForSessionID = "3f904b9b9b6606cd5df65e8b0b1e4b53"
 	Sess                   = sessions.New(sessions.Config{Cookie: cookieNameForSessionID})
+	Response               = service.Response{}
 )
 
 func init() {
@@ -45,6 +45,7 @@ func InitData() {
 	template.RecentComment = getRecentComments()
 	template.Link = getLinkData()
 	template.FooterData = getFooterData()
+	template.AppUrl = config.GetConfig("app.url").(string)
 }
 
 /**
@@ -60,7 +61,7 @@ func GetWebConfigContent() map[string]string {
 			for _, value := range configs {
 				data[*value.Name] = *value.Val
 			}
-			res, _ := fastJson.Marshal(&data)
+			res, _ := service.FastJson.Marshal(&data)
 			s = string(res)
 			service.Redis.Set(CONFIG_KEY, s, 0)
 			return data
@@ -68,7 +69,7 @@ func GetWebConfigContent() map[string]string {
 		return map[string]string{}
 	} else {
 		config_data := make(map[string]string)
-		fastJson.Unmarshal([]byte(s), &config_data)
+		service.FastJson.Unmarshal([]byte(s), &config_data)
 		return config_data
 	}
 }
@@ -98,7 +99,7 @@ func getCategoryData() []*models.Category {
 			sort.Slice(all_data, func(i, j int) bool {
 				return all_data[i].CreatedAt < all_data[j].CreatedAt
 			})
-			res, _ := fastJson.Marshal(&all_data)
+			res, _ := service.FastJson.Marshal(&all_data)
 			s = string(res)
 			service.Redis.Set(CATEGORY_KEY, s, 0)
 			return all_data
@@ -106,7 +107,7 @@ func getCategoryData() []*models.Category {
 		return all_data
 	} else {
 		category_data := make([]*models.Category, 0)
-		fastJson.Unmarshal([]byte(s), &category_data)
+		service.FastJson.Unmarshal([]byte(s), &category_data)
 		return category_data
 	}
 }
@@ -120,14 +121,14 @@ func getSocialData() []models.Config {
 		configs := []models.Config{}
 		database.Db.Where("type = ?", 1).Find(&configs)
 		if len(configs) > 0 {
-			res, _ := fastJson.Marshal(&configs)
+			res, _ := service.FastJson.Marshal(&configs)
 			s = string(res)
 			service.Redis.Set(SOCIAL_KEY, s, 0)
 		}
 		return configs
 	} else {
 		config_data := make([]models.Config, 0)
-		fastJson.Unmarshal([]byte(s), &config_data)
+		service.FastJson.Unmarshal([]byte(s), &config_data)
 		return config_data
 	}
 }
@@ -141,14 +142,14 @@ func getTagData() []models.Tag {
 		tag := []models.Tag{}
 		database.Db.Find(&tag)
 		if len(tag) > 0 {
-			res, _ := fastJson.Marshal(&tag)
+			res, _ := service.FastJson.Marshal(&tag)
 			s = string(res)
 			service.Redis.Set(TAG_KEY, s, 0)
 		}
 		return tag
 	} else {
 		tag := make([]models.Tag, 0)
-		fastJson.Unmarshal([]byte(s), &tag)
+		service.FastJson.Unmarshal([]byte(s), &tag)
 		return tag
 	}
 }
@@ -180,7 +181,7 @@ func getHotArticle() []map[string]string {
 					}
 					data = append(data, da)
 				}
-				res, _ := fastJson.Marshal(&data)
+				res, _ := service.FastJson.Marshal(&data)
 				s = string(res)
 				expire := time.Unix(end_time, 0).Sub(time.Now())
 				service.Redis.Set(ARTICLE_KEY, s, expire)
@@ -189,7 +190,7 @@ func getHotArticle() []map[string]string {
 		return data
 	} else {
 		article := make([]map[string]string, 0)
-		fastJson.Unmarshal([]byte(s), &article)
+		service.FastJson.Unmarshal([]byte(s), &article)
 		return article
 	}
 }
@@ -206,14 +207,14 @@ func getRecentComments() []models.RecentComment {
 			Select("article_comment.article_id,article_comment.content,article_comment.created_at,user.avatar,user.name").
 			Limit(10).Order("created_at desc").Find(&comments)
 		if len(comments) > 0 {
-			res, _ := fastJson.Marshal(&comments)
+			res, _ := service.FastJson.Marshal(&comments)
 			s = string(res)
 			service.Redis.Set(COMMENT_KEY, s, 0)
 		}
 		return comments
 	} else {
 		comments := make([]models.RecentComment, 0)
-		fastJson.Unmarshal([]byte(s), &comments)
+		service.FastJson.Unmarshal([]byte(s), &comments)
 		return comments
 	}
 }
@@ -230,14 +231,14 @@ func getLinkData() []models.SimpleLink {
 			Select("url,name,description").
 			Order("`order` desc,created_at asc").Find(&links)
 		if len(links) > 0 {
-			res, _ := fastJson.Marshal(&links)
+			res, _ := service.FastJson.Marshal(&links)
 			s = string(res)
 			service.Redis.Set(LINK_KEY, s, 0)
 		}
 		return links
 	} else {
 		links := make([]models.SimpleLink, 0)
-		fastJson.Unmarshal([]byte(s), &links)
+		service.FastJson.Unmarshal([]byte(s), &links)
 		return links
 	}
 }
@@ -269,14 +270,14 @@ func getFooterData() map[string]map[int64]models.SimpleConfig {
 					}
 				}
 			}
-			res, _ := fastJson.Marshal(&data)
+			res, _ := service.FastJson.Marshal(&data)
 			s = string(res)
 			service.Redis.Set(FOOTER_KEY, s, 0)
 		}
 		return data
 	} else {
 		config_data := make(map[string]map[int64]models.SimpleConfig)
-		fastJson.Unmarshal([]byte(s), &config_data)
+		service.FastJson.Unmarshal([]byte(s), &config_data)
 		return config_data
 	}
 }

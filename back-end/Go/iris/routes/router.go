@@ -4,7 +4,10 @@ import (
 	"blog/controllers/backend"
 	"blog/controllers/frontend"
 	"blog/service"
+	template "blog/views"
+	"github.com/iris-contrib/middleware/csrf"
 	"github.com/kataras/iris"
+	"github.com/kataras/iris/context"
 )
 
 func RegisterRoutes(app *iris.Application) {
@@ -199,20 +202,74 @@ func registerApiRoutes(app *iris.Application) {
 注册web路由
 */
 func registerWebRoutes(app *iris.Application) {
-	//首页
-	app.Get("/", frontend.Index)
-	//文章搜索
-	app.Get("/search", frontend.SearchArticle)
-	//获取博客统计
-	app.Get("/getBlogCount", frontend.GetBlogCount)
-	//联系我
-	app.Get("/contact", frontend.GetContactPage)
-	//说说页面
-	app.Get("/chat", frontend.GetChatPage)
-	//文章页
-	app.Get("/article/{id:int min(1) else 404}", frontend.GetArticleDetail)
-	//根据标签获取文章列表
-	app.Get("/tag/{id:int min(1) else 404}", frontend.GetArticleByTag)
-	//根据文章分类获取文章
-	app.Get("/category/{id:int min(1) else 404}", frontend.GetArticleByCategory)
+	csrfMiddleware := csrf.Protect([]byte("893263524e68086c9ac536e1c638d7da"))
+	frontendRoute := app.Party("/", csrfMiddleware, initTemplateCsrfToken)
+	{
+		//首页
+		frontendRoute.Get("/", frontend.Index)
+		//文章搜索
+		frontendRoute.Get("/search", frontend.SearchArticle)
+		//获取博客统计
+		frontendRoute.Get("/getBlogCount", frontend.GetBlogCount)
+		//联系我
+		frontendRoute.Get("/contact", frontend.GetContactPage)
+		//说说页面
+		frontendRoute.Get("/chat", frontend.GetChatPage)
+		//申请友链
+		frontendRoute.Post("/link", frontend.AddLink)
+		//添加留言
+		frontendRoute.Post("/contact", frontend.AddContact)
+		//添加评论
+		frontendRoute.Post("/comment", frontend.AddComment)
+		//文章页
+		frontendRoute.Get("/article/{id:int min(1) else 404}", frontend.GetArticleDetail)
+		//根据标签获取文章列表
+		frontendRoute.Get("/tag/{id:int min(1) else 404}", frontend.GetArticleByTag)
+		//根据文章分类获取文章
+		frontendRoute.Get("/category/{id:int min(1) else 404}", frontend.GetArticleByCategory)
+	}
+
+	//退出登录
+	app.Get("/logout", frontend.Logout)
+
+	wechatRoute := app.Party("/wechat")
+	{
+		//获取小程序scene
+		wechatRoute.Get("/scene", frontend.GetScene)
+		//获取登录结果
+		wechatRoute.Get("/status", frontend.GetLoginResult)
+		//获取小程序二维码
+		wechatRoute.Get("/qrcode/{scene}", frontend.GetQrCodeForWeChat)
+	}
+
+	oauthRoute := app.Party("/oauth")
+	{
+		//三方授权
+		oauthRoute.Get("/redirectToProvider/{service:string}", frontend.Oauth)
+		//三方授权回调
+		oauthRoute.Get("/handleOauth/{service:string}", frontend.OauthCallback)
+	}
+
+	//微信小程序登录
+	app.Post("/home/wechat", frontend.WeChatLogin)
+}
+
+/**
+csfrtoken赋值到模板
+*/
+func initTemplateCsrfToken(ctx context.Context) {
+	token := csrf.Token(ctx)
+	template.CsrfToken = token
+	ctx.Next()
+}
+
+/**
+检查是否登录
+*/
+func checkLogin(ctx context.Context) {
+	if auth, _ := frontend.Sess.Start(ctx).GetBoolean("is_login"); !auth {
+		ctx.StatusCode(iris.StatusForbidden)
+		return
+	}
+	ctx.Next()
 }

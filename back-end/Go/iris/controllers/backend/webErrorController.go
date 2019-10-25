@@ -1,6 +1,7 @@
 package backend
 
 import (
+	"blog/controllers"
 	"blog/models"
 	"github.com/kataras/iris"
 )
@@ -26,7 +27,7 @@ func AddWebError(ctx iris.Context) {
 	webError := models.WebError{}
 	fields := []string{"code", "mes", "url", "type"}
 	validateFields := []string{"Code", "Mes", "Url", "Type"}
-	_, err := getRightModel(ctx, &webError, fields, validateFields)
+	_, err := controllers.GetRightModel(ctx, &webError, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -46,7 +47,7 @@ func DeleteWebError(ctx iris.Context) {
 	webError := models.WebError{}
 	fields := []string{"ids"}
 	validateFields := []string{"IDs"}
-	_, err := getRightModel(ctx, &webError, fields, validateFields)
+	_, err := controllers.GetRightModel(ctx, &webError, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return

@@ -1,6 +1,8 @@
 package backend
 
 import (
+	"blog/controllers"
+	"blog/controllers/frontend"
 	"blog/models"
 	"github.com/kataras/iris"
 )
@@ -27,7 +29,7 @@ func DeleteTag(ctx iris.Context) {
 	tag := models.Tag{}
 	fields := []string{"id"}
 	validateFields := []string{"ID"}
-	_, err := getRightModel(ctx, &tag, fields, validateFields)
+	_, err := controllers.GetRightModel(ctx, &tag, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -37,6 +39,7 @@ func DeleteTag(ctx iris.Context) {
 		response.RenderError(ctx, "删除标签失败，请稍后再试！", nil)
 		return
 	}
+	removeFrontendCache(frontend.TAG_KEY)
 	response.RenderSuccess(ctx, "删除标签成功！", nil)
 }
 
@@ -47,7 +50,7 @@ func AddTag(ctx iris.Context) {
 	tag := models.Tag{}
 	fields := []string{"name"}
 	validateFields := []string{"Name"}
-	_, err := getRightModel(ctx, &tag, fields, validateFields)
+	_, err := controllers.GetRightModel(ctx, &tag, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -57,6 +60,7 @@ func AddTag(ctx iris.Context) {
 		response.RenderError(ctx, "添加标签失败，请稍后再试！", nil)
 		return
 	}
+	removeFrontendCache(frontend.TAG_KEY)
 	response.RenderSuccess(ctx, "添加标签成功！", nil)
 }
 
@@ -67,7 +71,7 @@ func UpdateTag(ctx iris.Context) {
 	tag := models.Tag{}
 	fields := []string{"id", "name"}
 	validateFields := []string{"ID", "Name"}
-	_, err := getRightModel(ctx, &tag, fields, validateFields)
+	_, err := controllers.GetRightModel(ctx, &tag, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -77,5 +81,6 @@ func UpdateTag(ctx iris.Context) {
 		response.RenderError(ctx, "修改标签失败，请稍后再试！", nil)
 		return
 	}
+	removeFrontendCache(frontend.TAG_KEY)
 	response.RenderSuccess(ctx, "修改标签成功！", nil)
 }

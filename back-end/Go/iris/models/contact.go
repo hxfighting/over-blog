@@ -11,9 +11,9 @@ import (
 
 type Contact struct {
 	ID           *int64  `json:"id" validate:"gt=0"`
-	Content      *string `json:"content"`
-	Name         *string `json:"name"`
-	Email        *string `json:"email"`
+	Content      *string `json:"content" validate:"gte=2,lte=255"`
+	Name         *string `json:"name" validate:"gte=2,lte=20"`
+	Email        *string `json:"email" validate:"email"`
 	IsReply      *int64  `json:"is_reply" mapstructure:"is_reply"`
 	CreatedUnix  int64   `json:"created_unix" gorm:"column:created_at"`
 	UpdatedUnix  int64   `json:"updated_unix" gorm:"column:updated_at"`
@@ -83,6 +83,20 @@ func (this Contact) ReplyContact() bool {
 }
 
 /**
+添加留言
+*/
+func (this Contact) AddContact() bool {
+	this.CreatedUnix = time.Now().Unix()
+	this.UpdatedUnix = time.Now().Unix()
+	res := database.Db.Create(&this)
+	if res.Error != nil {
+		return false
+	}
+	service.ReplyEmailChan <- *this.ID
+	return true
+}
+
+/**
 发送留言回复邮件
 */
 func HandleReplyContactEmail(id int64) {
@@ -97,6 +111,12 @@ func HandleReplyContactEmail(id int64) {
 	if contact.ID == nil {
 		service.Log.Error("ID 为" + fmt.Sprintf("%d", id) + "的留言回复发送邮件失败,留言不存在！")
 		return
+	}
+	var content string
+	if contact.ReplyContent == nil {
+		content = "非常感谢你的留言,我会尽快回复你的."
+	} else {
+		content = *contact.ReplyContent
 	}
 	year := time.Now().Year()
 	html := `<html xmlns="http://www.w3.org/1999/xhtml">
@@ -143,7 +163,7 @@ func HandleReplyContactEmail(id int64) {
                                 <tr>
                                     <td class="content-cell" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; box-sizing: border-box; padding: 35px;">
                                         <h1 style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; box-sizing: border-box; color: #3d4852; font-size: 19px; font-weight: bold; margin-top: 0; text-align: left;">` + *contact.Name + ` 你好</h1>
-<p style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; box-sizing: border-box; color: #3d4852; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;">` + *contact.ReplyContent + `</p>
+<p style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; box-sizing: border-box; color: #3d4852; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;">` + content + `</p>
 <p style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; box-sizing: border-box; color: #3d4852; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;">Thanks,<br>
 <a href="` + url + `" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; box-sizing: border-box; color: #3869d4;">` + blog_name + `</a></p>
 

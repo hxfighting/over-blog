@@ -23,8 +23,8 @@ func Index(ctx iris.Context) {
 	ctx.Gzip(true)
 	ctx.ContentType("text/html")
 	var pageSize int64 = 5
-	articles, total, pageNum, _ := getArticleData(ctx, pageSize,0,0,
-		false,true,true)
+	articles, total, pageNum, _ := getArticleData(ctx, pageSize, 0, 0,
+		false, true, true)
 	rotation := getRotation()
 	photo := getPhoto()
 	totalPage := total / pageSize
@@ -60,14 +60,14 @@ func getPhoto() []map[string]string {
 				}
 				all_data = append(all_data, data)
 			}
-			res, _ := fastJson.Marshal(all_data)
+			res, _ := service.FastJson.Marshal(all_data)
 			service.Redis.Set(PHOTO_KEY, string(res), 0)
 			return all_data
 		}
 		return []map[string]string{}
 	} else {
 		photo_data := make([]map[string]string, 0)
-		fastJson.Unmarshal([]byte(s), &photo_data)
+		service.FastJson.Unmarshal([]byte(s), &photo_data)
 		return photo_data
 	}
 }
@@ -92,14 +92,14 @@ func getRotation() []map[string]string {
 				}
 				all_data = append(all_data, data)
 			}
-			res, _ := fastJson.Marshal(all_data)
+			res, _ := service.FastJson.Marshal(all_data)
 			service.Redis.Set(ROTATION_KEY, string(res), 0)
 			return all_data
 		}
 		return []map[string]string{}
 	} else {
 		rotation_data := make([]map[string]string, 0)
-		fastJson.Unmarshal([]byte(s), &rotation_data)
+		service.FastJson.Unmarshal([]byte(s), &rotation_data)
 		return rotation_data
 	}
 }
@@ -126,7 +126,7 @@ func GetBlogCount(ctx iris.Context) {
 	data["header"]["account_type"] = "1"
 	data["body"]["site_id"] = siteID
 	data["body"]["method"] = "overview/getOutline"
-	json_byte, e := fastJson.Marshal(&data)
+	json_byte, e := service.FastJson.Marshal(&data)
 	if e != nil {
 		service.Log.Error(e.Error())
 		return

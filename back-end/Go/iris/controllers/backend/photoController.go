@@ -1,6 +1,8 @@
 package backend
 
 import (
+	"blog/controllers"
+	"blog/controllers/frontend"
 	"blog/models"
 	"github.com/kataras/iris"
 )
@@ -25,7 +27,7 @@ func AddPhoto(ctx iris.Context) {
 	photo := models.Photo{}
 	fields := []string{"image_url"}
 	validateFields := []string{"ImageUrl"}
-	_, err := getRightModel(ctx, &photo, fields, validateFields)
+	_, err := controllers.GetRightModel(ctx, &photo, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -35,6 +37,7 @@ func AddPhoto(ctx iris.Context) {
 		response.RenderError(ctx, "添加照片失败，请稍后再试！", nil)
 		return
 	}
+	removeFrontendCache(frontend.PHOTO_KEY)
 	response.RenderSuccess(ctx, "添加照片成功！", nil)
 }
 
@@ -45,7 +48,7 @@ func UpdatePhoto(ctx iris.Context) {
 	photo := models.Photo{}
 	fields := []string{"id", "image_url"}
 	validateFields := []string{"ID", "ImageUrl"}
-	_, err := getRightModel(ctx, &photo, fields, validateFields)
+	_, err := controllers.GetRightModel(ctx, &photo, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -55,6 +58,7 @@ func UpdatePhoto(ctx iris.Context) {
 		response.RenderError(ctx, "修改照片失败，请稍后再试！", nil)
 		return
 	}
+	removeFrontendCache(frontend.PHOTO_KEY)
 	response.RenderSuccess(ctx, "修改照片成功！", nil)
 }
 
@@ -65,7 +69,7 @@ func DeletePhoto(ctx iris.Context) {
 	photo := models.Photo{}
 	fields := []string{"id"}
 	validateFields := []string{"ID"}
-	_, err := getRightModel(ctx, &photo, fields, validateFields)
+	_, err := controllers.GetRightModel(ctx, &photo, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -75,5 +79,6 @@ func DeletePhoto(ctx iris.Context) {
 		response.RenderError(ctx, "删除照片失败，请稍后再试！", nil)
 		return
 	}
+	removeFrontendCache(frontend.PHOTO_KEY)
 	response.RenderSuccess(ctx, "删除照片成功！", nil)
 }

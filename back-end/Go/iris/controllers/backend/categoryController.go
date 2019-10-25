@@ -1,6 +1,8 @@
 package backend
 
 import (
+	"blog/controllers"
+	"blog/controllers/frontend"
 	"blog/database"
 	"blog/models"
 	"github.com/kataras/iris"
@@ -25,7 +27,7 @@ func AddCategory(ctx iris.Context) {
 	category := models.Category{}
 	fields := []string{"pid", "title"}
 	validateFields := []string{"Pid", "Title"}
-	_, err := getRightModel(ctx, &category, fields, validateFields)
+	_, err := controllers.GetRightModel(ctx, &category, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -39,6 +41,7 @@ func AddCategory(ctx iris.Context) {
 		response.RenderError(ctx, "分类添加失败，请稍后再试！", nil)
 		return
 	}
+	removeFrontendCache(frontend.CATEGORY_KEY)
 	response.RenderSuccess(ctx, "分类添加成功", nil)
 }
 
@@ -65,7 +68,7 @@ func UpdateCategory(ctx iris.Context) {
 	category := models.Category{}
 	fields := []string{"id", "title"}
 	validateFields := []string{"ID", "Title"}
-	_, err := getRightModel(ctx, &category, fields, validateFields)
+	_, err := controllers.GetRightModel(ctx, &category, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -79,6 +82,7 @@ func UpdateCategory(ctx iris.Context) {
 		response.RenderError(ctx, "分类修改失败，请稍后再试！", nil)
 		return
 	}
+	removeFrontendCache(frontend.CATEGORY_KEY)
 	response.RenderSuccess(ctx, "分类修改成功", nil)
 }
 
@@ -89,7 +93,7 @@ func DeleteCategory(ctx iris.Context) {
 	category := models.Category{}
 	fields := []string{"id"}
 	validateFields := []string{"ID"}
-	_, err := getRightModel(ctx, &category, fields, validateFields)
+	_, err := controllers.GetRightModel(ctx, &category, fields, validateFields)
 	if err != nil {
 		response.RenderError(ctx, err.Error(), nil)
 		return
@@ -99,5 +103,6 @@ func DeleteCategory(ctx iris.Context) {
 		response.RenderError(ctx, "分类删除失败，请稍后再试！", nil)
 		return
 	}
+	removeFrontendCache(frontend.CATEGORY_KEY)
 	response.RenderSuccess(ctx, "分类删除成功", nil)
 }
