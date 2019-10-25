@@ -12,7 +12,6 @@ import (
 
 func RegisterRoutes(app *iris.Application) {
 	registerApiRoutes(app)
-	registerWebRoutes(app)
 }
 
 /**
@@ -196,12 +195,7 @@ func registerApiRoutes(app *iris.Application) {
 		//添加错误日志
 		adminNoAuth.Post("/error", backend.AddWebError)
 	}
-}
 
-/**
-注册web路由
-*/
-func registerWebRoutes(app *iris.Application) {
 	csrfMiddleware := csrf.Protect([]byte("893263524e68086c9ac536e1c638d7da"))
 	frontendRoute := app.Party("/", csrfMiddleware, initTemplateCsrfToken)
 	{
