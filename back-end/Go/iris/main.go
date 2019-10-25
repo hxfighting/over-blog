@@ -30,6 +30,7 @@ func main() {
 		ExposedHeaders:   []string{"Authorization"},
 	}))
 	app.AllowMethods(iris.MethodOptions)
+	app.Favicon("./public/image/favicon.ico")
 	app.HandleDir("/css", "./public/css")
 	app.HandleDir("/js", "./public/js")
 	app.HandleDir("/image", "./public/image")
