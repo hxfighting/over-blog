@@ -21,6 +21,8 @@ import (
 )
 
 func main() {
+	dir, _ := os.Executable()
+
 	app := iris.New()
 	app.Use(panicCapture())
 	if helper.CheckDebug() {
@@ -36,10 +38,10 @@ func main() {
 	}))
 	app.AllowMethods(iris.MethodOptions)
 	app.Favicon("./public/image/favicon.ico")
-	app.HandleDir("/css", "./public/css")
-	app.HandleDir("/js", "./public/js")
-	app.HandleDir("/image", "./public/image")
-	app.HandleDir("/static", "./public/static")
+	app.HandleDir("/css", dir+"/public/css")
+	app.HandleDir("/js", dir+"/public/js")
+	app.HandleDir("/image", dir+"/public/image")
+	app.HandleDir("/static", dir+"/public/static")
 
 	//app.RegisterView(iris.HTML("./views", ".html"))
 	routes.RegisterRoutes(app)
