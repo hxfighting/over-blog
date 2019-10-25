@@ -21,7 +21,7 @@ require (
 	github.com/juju/errors v0.0.0-20190930114154-d42613fe1ab9 // indirect
 	github.com/k0kubun/colorstring v0.0.0-20150214042306-9440f1994b88 // indirect
 	github.com/kataras/golog v0.0.9 // indirect
-	github.com/kataras/iris v0.0.0-20190916050704-df882273e219
+	github.com/kataras/iris v0.0.0-20191006184023-c8e73f4f4df2
 	github.com/klauspost/compress v1.8.6 // indirect
 	github.com/klauspost/cpuid v1.2.1 // indirect
 	github.com/leodido/go-urn v1.2.0 // indirect
