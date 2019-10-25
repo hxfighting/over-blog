@@ -5,13 +5,13 @@ import (
 	"blog/models"
 	"blog/service"
 	template "blog/views"
-	"github.com/kataras/iris"
 	"bytes"
+	"github.com/kataras/iris"
 )
 
 /**
 说说页面
- */
+*/
 func GetChatPage(ctx iris.Context) {
 	chats := []models.Chat{}
 	left_chat, right_chat := []models.Chat{}, []models.Chat{}
@@ -26,7 +26,7 @@ func GetChatPage(ctx iris.Context) {
 		}
 	}
 	buffer := new(bytes.Buffer)
-	template.ChatPage(left_chat,right_chat,buffer)
+	template.ChatPage(left_chat, right_chat, buffer)
 	_, err := ctx.Write(buffer.Bytes())
 	if err != nil {
 		service.Log.Error(err.Error())

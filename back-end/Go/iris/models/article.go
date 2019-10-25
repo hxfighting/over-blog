@@ -325,7 +325,7 @@ func (this Article) UpdateArticle(tag_ids []int64) bool {
 
 /**
 缓存文章浏览数
- */
+*/
 func CacheArticleView(id int64) {
 	field := "article_" + fmt.Sprintf("%d", id)
 	by := service.Redis.HIncrBy(ARTICLE_VIEW, field, 1)
