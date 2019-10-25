@@ -61,7 +61,7 @@ func main() {
 			app.Shutdown(ctx)
 		}
 	}()
-	if run := app.Run(iris.Addr(":8080"), iris.WithoutInterruptHandler, iris.WithOptimizations); run != nil {
+	if run := app.Run(iris.Addr(":3024"), iris.WithoutInterruptHandler, iris.WithOptimizations); run != nil {
 		log.Fatalln(run.Error())
 	}
 }
