@@ -18,7 +18,7 @@ export default {
    */
   baseUrl: {
     dev: 'http://127.0.0.1:8080/api/',
-    pro: 'http://www.ohdata.top/api/'
+    pro: 'https://www.ohdata.top/api/'
   },
   /**
    * @description 默认打开的首页的路由name值，默认为home
@@ -42,6 +42,6 @@ export default {
   /**
    * 上传图片地址
    */
-  uploadUrl:'http://127.0.0.1:8080/api/admin/upload'
+  uploadUrl:'https://www.ohdata.top/api/admin/upload'
 
 }

@@ -4,7 +4,9 @@ import (
 	"blog/helper"
 	"errors"
 	"github.com/tidwall/gjson"
+	"log"
 	"net/url"
+	"regexp"
 	"strings"
 )
 
@@ -31,12 +33,22 @@ func (this OauthConfig) GetAccessTokenFromQQ(code string) (string, error) {
 		return "", e
 	}
 	body_str := string(body)
-	access_token := gjson.Get(body_str, "access_token").String()
-	if access_token == "" {
-		msg := gjson.Get(body_str, "msg").String()
+	err_match, _ := regexp.MatchString("error", body_str)
+	if err_match {
+		re, _ := regexp.Compile("({.*})")
+		err_slice := re.FindStringSubmatch(body_str)
+		err_str := err_slice[0]
+		msg := gjson.Get(err_str, "error_description").String()
 		return "", errors.New(msg)
+	} else {
+		log.Println(body_str)
+		access_token := gjson.Get(body_str, "access_token").String()
+		if access_token == "" {
+			msg := "获取access_token失败"
+			return "", errors.New(msg)
+		}
+		return access_token, nil
 	}
-	return access_token, nil
 }
 
 /**
@@ -49,15 +61,25 @@ func (this OauthConfig) GetOpenIDFromQQ(access_token string) (string, error) {
 		return "", e
 	}
 	body_str := string(body)
-	openid := gjson.Get(body_str, "openid").String()
-	if openid == "" {
-		msg := gjson.Get(body_str, "msg").String()
-		if msg == "" {
-			msg = "获取access_token失败"
-		}
+	err_match, _ := regexp.MatchString("error", body_str)
+	if err_match {
+		re, _ := regexp.Compile("({.*})")
+		err_slice := re.FindStringSubmatch(body_str)
+		err_str := err_slice[0]
+		msg := gjson.Get(err_str, "error_description").String()
 		return "", errors.New(msg)
+	} else {
+		log.Println(body_str)
+		openid := gjson.Get(body_str, "openid").String()
+		if openid == "" {
+			msg := gjson.Get(body_str, "msg").String()
+			if msg == "" {
+				msg = "获取openid失败"
+			}
+			return "", errors.New(msg)
+		}
+		return openid, nil
 	}
-	return openid, nil
 }
 
 /**
@@ -80,14 +102,25 @@ func (this OauthConfig) GetUserFromQQ(code string) (map[string]string, error) {
 		return user, e
 	}
 	body_str := string(body)
-	err := gjson.Get(body_str, "ret").Int()
-	if err != 0 {
-		msg := gjson.Get(body_str, "msg").String()
+	err_match, _ := regexp.MatchString("error", body_str)
+	if err_match {
+		re, _ := regexp.Compile("({.*})")
+		err_slice := re.FindStringSubmatch(body_str)
+		err_str := err_slice[0]
+		msg := gjson.Get(err_str, "error_description").String()
 		return user, errors.New(msg)
+	} else {
+		log.Println(body_str)
+		err := gjson.Get(body_str, "ret").Int()
+		if err != 0 {
+			msg := gjson.Get(body_str, "msg").String()
+			return user, errors.New(msg)
+		}
+		user["access_token"] = access_token
+		user["openid"] = openid
+		user["name"] = gjson.Get(body_str, "nickname").String()
+		user["avatar"] = strings.Replace(gjson.Get(body_str, "figureurl_qq_1").String(), "http", "https", -1)
+		return user, nil
 	}
-	user["access_token"] = access_token
-	user["openid"] = openid
-	user["name"] = gjson.Get(body_str, "nickname").String()
-	user["avatar"] = strings.Replace(gjson.Get(body_str, "figureurl_qq_1").String(), "http", "https", -1)
-	return user, nil
+
 }
