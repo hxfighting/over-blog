@@ -16,13 +16,14 @@ import (
 	"os/signal"
 	"runtime"
 	"strconv"
+	"strings"
 	"syscall"
 	"time"
 )
 
 func main() {
 	dir, _ := os.Executable()
-
+	dir = strings.TrimRight(dir, "blog")
 	app := iris.New()
 	app.Use(panicCapture())
 	if helper.CheckDebug() {

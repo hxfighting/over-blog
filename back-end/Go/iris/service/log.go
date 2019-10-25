@@ -3,6 +3,7 @@ package service
 import (
 	"github.com/phachon/go-logger"
 	"os"
+	"strings"
 )
 
 var (
@@ -11,7 +12,7 @@ var (
 
 func newLog() *go_logger.Logger {
 	dir, _ := os.Executable()
-	path := dir
+	path := strings.TrimRight(dir, "blog")
 	logger := go_logger.NewLogger()
 	logger.Detach("console")
 	fileConfig := &go_logger.FileConfig{
