@@ -10,7 +10,6 @@ import (
 	"fmt"
 	"github.com/jinzhu/gorm"
 	"github.com/kataras/iris"
-	"log"
 	"strings"
 	"time"
 )
@@ -49,7 +48,6 @@ func Oauth(ctx iris.Context) {
 授权回调
 */
 func OauthCallback(ctx iris.Context) {
-	log.Println(2)
 	code := ctx.URLParamTrim("code")
 	oauthService := strings.Trim(ctx.Params().GetEscape("service"), "")
 	if oauthService == "" || code == "" {
