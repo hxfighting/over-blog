@@ -207,8 +207,8 @@
 
 <%@ scripts { %>
 <script>
-    var user_id = "";
-    var user_name = "";
+    var user_id = '<%== AuthInfo["id"] %>';
+    var user_name = '<%= AuthInfo["name"] %>';
 </script>
 <script src="/js/home/comment.js"></script>
 <script src="/js/jqueryTpfd/js/postbird-img-glass.js"></script>

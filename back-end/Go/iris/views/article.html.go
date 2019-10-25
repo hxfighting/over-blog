@@ -850,8 +850,12 @@ func ArticleInfo(article, preArticle, afterArticle models.Article, randArticles 
 `)
 	buffer.WriteString(`
 <script>
-    var user_id = "";
-    var user_name = "";
+    var user_id = '`)
+	buffer.WriteString(AuthInfo["id"])
+	buffer.WriteString(`';
+    var user_name = '`)
+	hero.EscapeHTML(AuthInfo["name"], buffer)
+	buffer.WriteString(`';
 </script>
 <script src="/js/home/comment.js"></script>
 <script src="/js/jqueryTpfd/js/postbird-img-glass.js"></script>

@@ -70,12 +70,9 @@ func (this OauthConfig) GetOpenIDFromQQ(access_token string) (string, error) {
 		msg := gjson.Get(err_str, "error_description").String()
 		return "", errors.New(msg)
 	} else {
-		re, _ := regexp.Compile("({.*})")
-		openid_slice := re.FindStringSubmatch(body_str)
-		openid_str := openid_slice[0]
-		openid := gjson.Get(openid_str, "openid").String()
+		openid := gjson.Get(body_str, "openid").String()
 		if openid == "" {
-			msg := gjson.Get(openid_str, "msg").String()
+			msg := gjson.Get(body_str, "msg").String()
 			if msg == "" {
 				msg = "获取openid失败"
 			}
