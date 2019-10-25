@@ -21,7 +21,6 @@ import (
 )
 
 func main() {
-	iris.Default()
 	app := iris.New()
 	app.Use(panicCapture())
 	if helper.CheckDebug() {
@@ -68,7 +67,7 @@ func main() {
 			app.Shutdown(ctx)
 		}
 	}()
-	if run := app.Run(iris.Addr(":3024"), iris.WithoutInterruptHandler, iris.WithOptimizations); run != nil {
+	if run := app.Run(iris.Addr(":3024"), iris.WithoutInterruptHandler); run != nil {
 		log.Fatalln(run.Error())
 	}
 }
