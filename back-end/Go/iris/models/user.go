@@ -5,7 +5,6 @@ import (
 	"blog/helper"
 	"blog/service"
 	"github.com/oschwald/geoip2-golang"
-	"log"
 	"net"
 	"time"
 )
@@ -62,7 +61,7 @@ func getAddress(ip string) string {
 		service.Log.Error(err.Error())
 		return "未知地方"
 	}
-	var city, country string
+	var city, country, province string
 	iso_code := record.Country.IsoCode
 	if iso_code == "TW" {
 		country = "中国"
@@ -77,8 +76,9 @@ func getAddress(ip string) string {
 		city = record.City.Names["zh-CN"]
 		country = record.Country.Names["zh-CN"]
 	}
-	log.Println(record.Subdivisions)
-	province := record.Subdivisions[0].Names["zh-CN"]
+	if len(record.Subdivisions) > 0 {
+		province = record.Subdivisions[0].Names["zh-CN"]
+	}
 	return country + province + city
 }
 
