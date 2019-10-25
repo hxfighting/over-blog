@@ -5,6 +5,7 @@ import (
 	"blog/helper"
 	"blog/service"
 	"github.com/oschwald/geoip2-golang"
+	"log"
 	"net"
 	"time"
 )
@@ -76,6 +77,7 @@ func getAddress(ip string) string {
 		city = record.City.Names["zh-CN"]
 		country = record.Country.Names["zh-CN"]
 	}
+	log.Println(record.Subdivisions)
 	province := record.Subdivisions[0].Names["zh-CN"]
 	return country + province + city
 }
