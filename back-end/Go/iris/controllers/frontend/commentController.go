@@ -21,12 +21,12 @@ func AddComment(ctx iris.Context) {
 	}
 	res := comment.AddComment()
 	if !res {
-		Response.RenderError(ctx, "申请友联失败,请稍后再试!", nil)
+		Response.RenderError(ctx, "评论失败,请稍后再试!", nil)
 		return
 	}
 	cacheRes := service.Redis.Del(COMMENT_KEY)
 	if cacheRes.Err() == nil {
 		InitData()
 	}
-	Response.RenderSuccess(ctx, "申请友联成功！", nil)
+	Response.RenderSuccess(ctx, "评论成功！", nil)
 }
