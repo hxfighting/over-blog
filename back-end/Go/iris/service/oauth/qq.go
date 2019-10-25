@@ -24,6 +24,7 @@ func (this OauthConfig) GetOauthUrlFromQQ(state string) string {
 获取qq的access_token
 */
 func (this OauthConfig) GetAccessTokenFromQQ(code string) (string, error) {
+	log.Println(1)
 	v := url.Values{}
 	v.Set("redirect_uri", this.Callback)
 	urll := "https://graph.qq.com/oauth2.0/token?grant_type=authorization_code&client_id=" +
