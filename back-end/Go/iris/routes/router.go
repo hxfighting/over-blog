@@ -8,7 +8,6 @@ import (
 	"github.com/iris-contrib/middleware/csrf"
 	"github.com/kataras/iris"
 	"github.com/kataras/iris/context"
-	"strings"
 )
 
 func RegisterRoutes(app *iris.Application) {
