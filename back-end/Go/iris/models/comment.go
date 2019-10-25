@@ -13,8 +13,8 @@ import (
 
 type Comment struct {
 	ID           *int64      `json:"id" validate:"gt=0"`
-	Pid          *int64      `json:"pid" gorm:"column:pid" mapstructure:"pid"`
-	ReplyID      *int64      `json:"reply_id" validate:"gt=0" mapstructure:"reply_id"`
+	Pid          *int64      `json:"pid" gorm:"column:pid" mapstructure:"pid" validate:"gte=0"`
+	ReplyID      *int64      `json:"reply_id" validate:"gte=0" mapstructure:"reply_id"`
 	UserID       *int64      `json:"user_id" validate:"gt=0" mapstructure:"user_id"`
 	ArticleID    *int64      `json:"article_id" validate:"gt=0" mapstructure:"article_id"`
 	Content      *string     `json:"content" validate:"gte=2,lte=255"`
@@ -195,6 +195,8 @@ func ReplyComment(comment *Comment) bool {
 */
 func (this Comment) AddComment() bool {
 	tx := database.Db.Begin()
+	this.CreatedUnix = time.Now().Unix()
+	this.UpdatedUnix = time.Now().Unix()
 	commentRes := tx.Create(&this)
 	if commentRes.Error != nil {
 		service.Log.Error(commentRes.Error.Error())
@@ -208,7 +210,11 @@ func (this Comment) AddComment() bool {
 		return false
 	}
 	tx.Commit()
-	service.CommentEmailChan <- *this.ID
+	if *this.ReplyID != 0 {
+		service.EmailChan <- *this.ID
+	} else {
+		service.CommentEmailChan <- *this.ID
+	}
 	return true
 }
 

@@ -36,12 +36,14 @@ var comment_ops = {
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                data: {
+                data: JSON.stringify({
                     user_id: user_id,
                     article_id: article_id,
                     email: email,
-                    content: content
-                },
+                    content: content,
+                    reply_id: 0,
+                    pid: 0,
+                }),
                 contentType: "application/json; charset=utf-8",
                 dataType: 'json',
                 success: function (res) {
@@ -147,14 +149,14 @@ var comment_ops = {
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                data: {
+                data: JSON.stringify({
                     user_id: co_uid,
                     article_id: co_aid,
                     email: co_email,
                     content: co_content,
                     reply_id: co_rid,
                     pid: co_pid
-                },
+                }),
                 contentType: "application/json; charset=utf-8",
                 dataType: 'json',
                 success: function (res) {
@@ -232,14 +234,14 @@ var comment_ops = {
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                data: {
+                data: JSON.stringify({
                     user_id: co_uid,
                     article_id: co_aid,
                     email: co_email,
                     content: co_content,
                     reply_id: co_rid,
                     pid: co_pid
-                },
+                }),
                 contentType: "application/json; charset=utf-8",
                 dataType: 'json',
                 success: function (res) {

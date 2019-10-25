@@ -262,7 +262,8 @@ func ContactPage(buffer *bytes.Buffer) {
                         <textarea name="content" id="message"
                                   placeholder="说点你对这个家伙想说的话！,如果是交换友链，请写下你的友链地址和友链名字。"></textarea>
                     </label>
-                    <center><input class="sendButton" type="submit" name="Submit" value="确定" onclick="contact()"></center>
+                    <center><input class="sendButton" type="submit" name="Submit" value="确定" onclick="contact()">
+                    </center>
                 </div>
             </div>
         </div>
@@ -585,7 +586,7 @@ func ContactPage(buffer *bytes.Buffer) {
 `)
 	buffer.WriteString(`
 <script>
-    function contact(){
+    function contact() {
         var btn = $(this);
         if (btn.hasClass('disabled')) {
             Swal({
@@ -610,7 +611,7 @@ func ContactPage(buffer *bytes.Buffer) {
             })
             return false;
         }
-        if(email.length<1){
+        if (email.length < 1) {
             Swal({
                 position: 'center',
                 type: 'error',
@@ -631,7 +632,7 @@ func ContactPage(buffer *bytes.Buffer) {
             })
             return false;
         }
-        if(content.length<1){
+        if (content.length < 1) {
             Swal({
                 position: 'center',
                 type: 'error',
@@ -648,11 +649,11 @@ func ContactPage(buffer *bytes.Buffer) {
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            data: {
+            data: JSON.stringify({
                 name: name,
                 email: email,
                 content: content
-            },
+            }),
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
             success: function (res) {
@@ -668,7 +669,7 @@ func ContactPage(buffer *bytes.Buffer) {
                     setTimeout(function () {
                         window.location.href = window.location.href;
                     }, 1600);
-                }else {
+                } else {
                     Swal({
                         position: 'center',
                         type: 'error',

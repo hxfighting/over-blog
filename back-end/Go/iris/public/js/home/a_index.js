@@ -105,11 +105,11 @@ var index_ops = {
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                data: {
+                data: JSON.stringify({
                     url: ur_url,
                     name: ur_name,
                     description: ur_description
-                },
+                }),
                 contentType: "application/json; charset=utf-8",
                 dataType: 'json',
                 success: function (res) {
@@ -169,7 +169,7 @@ var index_ops = {
         };
 
         $('#b-modal-login').on('hidden.bs.modal', function (event) {
-            if(dd!=null){
+            if (dd != null) {
                 clearTimeout(dd)
             }
         })
