@@ -16,6 +16,7 @@ func AddComment(ctx iris.Context) {
 	validateFields := []string{"Email", "Content", "UserID", "ReplyID", "ArticleID", "Pid"}
 	_, err := controllers.GetRightModel(ctx, &comment, fields, validateFields)
 	if err != nil {
+		Response.Code = -1
 		Response.RenderError(ctx, err.Error(), nil)
 		return
 	}
