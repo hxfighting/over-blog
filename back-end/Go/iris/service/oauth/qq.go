@@ -41,13 +41,14 @@ func (this OauthConfig) GetAccessTokenFromQQ(code string) (string, error) {
 		msg := gjson.Get(err_str, "error_description").String()
 		return "", errors.New(msg)
 	} else {
-		log.Println(body_str)
-		access_token := gjson.Get(body_str, "access_token").String()
-		if access_token == "" {
-			msg := "获取access_token失败"
+		re, _ := regexp.Compile("access_token=(.*)&expires_in")
+		token_slice := re.FindStringSubmatch(body_str)
+		if len(token_slice) != 2 {
+			msg := "获取access_token失败" + body_str
 			return "", errors.New(msg)
+		} else {
+			return token_slice[1], nil
 		}
-		return access_token, nil
 	}
 }
 
@@ -69,10 +70,12 @@ func (this OauthConfig) GetOpenIDFromQQ(access_token string) (string, error) {
 		msg := gjson.Get(err_str, "error_description").String()
 		return "", errors.New(msg)
 	} else {
-		log.Println(body_str)
-		openid := gjson.Get(body_str, "openid").String()
+		re, _ := regexp.Compile("({.*})")
+		openid_slice := re.FindStringSubmatch(body_str)
+		openid_str := openid_slice[0]
+		openid := gjson.Get(openid_str, "openid").String()
 		if openid == "" {
-			msg := gjson.Get(body_str, "msg").String()
+			msg := gjson.Get(openid_str, "msg").String()
 			if msg == "" {
 				msg = "获取openid失败"
 			}
