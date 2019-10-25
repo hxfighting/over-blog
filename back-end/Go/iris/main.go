@@ -1,6 +1,7 @@
 package main
 
 import (
+	"blog/helper"
 	"blog/queue"
 	"blog/routes"
 	"blog/service"
@@ -9,6 +10,7 @@ import (
 	"github.com/iris-contrib/middleware/cors"
 	"github.com/kataras/iris"
 	"github.com/kataras/iris/context"
+	requestLogger "github.com/kataras/iris/middleware/logger"
 	"log"
 	"os"
 	"os/signal"
@@ -19,8 +21,12 @@ import (
 )
 
 func main() {
+	iris.Default()
 	app := iris.New()
 	app.Use(panicCapture())
+	if helper.CheckDebug() {
+		app.Use(requestLogger.New())
+	}
 	app.Use(cors.New(cors.Options{
 		AllowedOrigins:   []string{"*"}, // allows everything, use that to change the hosts.
 		AllowCredentials: true,
