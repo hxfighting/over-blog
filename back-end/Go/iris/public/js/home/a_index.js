@@ -110,6 +110,7 @@ var index_ops = {
                     name: ur_name,
                     description: ur_description
                 },
+                contentType: "application/json; charset=utf-8",
                 dataType: 'json',
                 success: function (res) {
                     btn.removeClass('disabled');

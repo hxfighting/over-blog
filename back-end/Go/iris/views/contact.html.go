@@ -653,6 +653,7 @@ func ContactPage(buffer *bytes.Buffer) {
                 email: email,
                 content: content
             },
+            contentType: "application/json; charset=utf-8",
             dataType: 'json',
             success: function (res) {
                 btn.removeClass('disabled');
