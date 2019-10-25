@@ -204,7 +204,7 @@ func registerApiRoutes(app *iris.Application) {
 */
 func registerWebRoutes(app *iris.Application) {
 	csrfMiddleware := csrf.Protect([]byte("893263524e68086c9ac536e1c638d7da"))
-	frontendRoute := app.Party("/", csrfMiddleware, initTemplateCsrfToken, favicon)
+	frontendRoute := app.Party("/", csrfMiddleware, initTemplateCsrfToken)
 	{
 		//首页
 		frontendRoute.Get("/", frontend.Index)
@@ -233,7 +233,7 @@ func registerWebRoutes(app *iris.Application) {
 	//退出登录
 	app.Get("/logout", frontend.Logout)
 
-	wechatRoute := app.Party("/wechat", favicon)
+	wechatRoute := app.Party("/wechat")
 	{
 		//获取小程序scene
 		wechatRoute.Get("/scene", frontend.GetScene)
@@ -243,7 +243,7 @@ func registerWebRoutes(app *iris.Application) {
 		wechatRoute.Get("/qrcode/{scene}", frontend.GetQrCodeForWeChat)
 	}
 
-	oauthRoute := app.Party("/oauth", favicon)
+	oauthRoute := app.Party("/oauth")
 	{
 		//三方授权
 		oauthRoute.Get("/redirectToProvider/{service:string}", frontend.Oauth)
@@ -270,13 +270,6 @@ func initTemplateCsrfToken(ctx context.Context) {
 func checkLogin(ctx context.Context) {
 	if auth, _ := frontend.Sess.Start(ctx).GetBoolean("is_login"); !auth {
 		ctx.StatusCode(iris.StatusForbidden)
-		return
-	}
-	ctx.Next()
-}
-
-func favicon(ctx context.Context) {
-	if strings.Contains(ctx.FullRequestURI(), "/favicon.ico") {
 		return
 	}
 	ctx.Next()
