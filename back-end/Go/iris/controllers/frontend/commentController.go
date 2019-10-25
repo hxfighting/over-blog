@@ -22,6 +22,7 @@ func AddComment(ctx iris.Context) {
 	}
 	res := comment.AddComment()
 	if !res {
+		Response.Code = -1
 		Response.RenderError(ctx, "评论失败,请稍后再试!", nil)
 		return
 	}

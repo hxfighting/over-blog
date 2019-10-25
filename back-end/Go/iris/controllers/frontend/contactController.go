@@ -34,11 +34,13 @@ func AddContact(ctx iris.Context) {
 	validateFields := []string{"Name", "Email", "Content"}
 	_, err := controllers.GetRightModel(ctx, &contact, fields, validateFields)
 	if err != nil {
+		Response.Code = -1
 		Response.RenderError(ctx, err.Error(), nil)
 		return
 	}
 	res := contact.AddContact()
 	if !res {
+		Response.Code = -1
 		Response.RenderError(ctx, "留言失败，请稍后再试！", nil)
 		return
 	}
