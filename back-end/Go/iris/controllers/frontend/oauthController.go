@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"github.com/jinzhu/gorm"
 	"github.com/kataras/iris"
+	"log"
 	"strings"
 	"time"
 )
@@ -48,6 +49,8 @@ func Oauth(ctx iris.Context) {
 授权回调
 */
 func OauthCallback(ctx iris.Context) {
+	log.Println(ctx.FullRequestURI())
+	log.Println(time.Now().Unix())
 	if strings.Contains(ctx.FullRequestURI(), "/favicon.ico") {
 		return
 	}
