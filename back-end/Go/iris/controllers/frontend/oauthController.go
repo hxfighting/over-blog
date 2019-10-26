@@ -10,7 +10,6 @@ import (
 	"fmt"
 	"github.com/jinzhu/gorm"
 	"github.com/kataras/iris"
-	"log"
 	"strings"
 	"time"
 )
@@ -49,11 +48,7 @@ func Oauth(ctx iris.Context) {
 授权回调
 */
 func OauthCallback(ctx iris.Context) {
-	log.Println(ctx.RemoteAddr())
-	log.Println(ctx.Request().Header)
-	if strings.Contains(ctx.FullRequestURI(), "/favicon.ico") {
-		return
-	}
+	ip := ctx.Request().Header.Get("X-Real-Ip")
 	code := ctx.URLParamTrim("code")
 	oauthService := strings.Trim(ctx.Params().GetEscape("service"), "")
 	if oauthService == "" || code == "" {
@@ -92,7 +87,7 @@ func OauthCallback(ctx iris.Context) {
 	database.Db.Where("openid = ? and type = ?", user["openid"], oauth_type[oauthService]).First(&user_model)
 	if user_model.ID != nil {
 		user["login_times"] = fmt.Sprintf("%d", *user_model.LoginTimes+1)
-		user["last_login_ip"] = ctx.RemoteAddr()
+		user["last_login_ip"] = ip
 		res = database.Db.Model(&user_model).Updates(user)
 	} else {
 		user_model.Name = user["name"]
@@ -102,7 +97,7 @@ func OauthCallback(ctx iris.Context) {
 		user_model.OpenID = user["openid"]
 		user_model.AccessToken = user["access_token"]
 		user_model.Type = oauth_type[oauthService]
-		user_model.LastLoginIp = ctx.RemoteAddr()
+		user_model.LastLoginIp = ip
 		*user_model.LoginTimes = 1
 		res = database.Db.Create(&user_model)
 	}

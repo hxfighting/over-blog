@@ -88,6 +88,7 @@ func GetLoginResult(ctx iris.Context) {
 微信小程序登录
 */
 func WeChatLogin(ctx iris.Context) {
+	ip := ctx.Request().Header.Get("X-Real-Ip")
 	needField := weChatLoginStruct{}
 	fields := []string{"code", "avatar", "name", "sence"}
 	validateFields := []string{"Name", "Code", "Avatar", "Sence"}
@@ -126,7 +127,7 @@ func WeChatLogin(ctx iris.Context) {
 	database.Db.Where("openid = ? and type = ?", openid, 2).First(&user_model)
 	if user_model.ID != nil {
 		user["login_times"] = fmt.Sprintf("%d", *user_model.LoginTimes+1)
-		user["last_login_ip"] = ctx.RemoteAddr()
+		user["last_login_ip"] = ip
 		res = database.Db.Model(&user_model).Updates(user)
 	} else {
 		user_model.Name = user["name"]
@@ -135,7 +136,7 @@ func WeChatLogin(ctx iris.Context) {
 		user_model.UpdatedUnix = time.Now().Unix()
 		user_model.OpenID = user["openid"]
 		user_model.Type = 2
-		user_model.LastLoginIp = ctx.RemoteAddr()
+		user_model.LastLoginIp = ip
 		user_model.AccessToken = sessionKey
 		*user_model.LoginTimes = 1
 		res = database.Db.Create(&user_model)
