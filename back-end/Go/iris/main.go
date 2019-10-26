@@ -28,6 +28,7 @@ func init() {
 	getConfigPath()
 	config.NewConfig()
 	database.NewDB()
+	service.NewGeoDb()
 	service.NewRedis()
 	service.NewLog()
 	service.NewEmail()

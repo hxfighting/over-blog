@@ -4,7 +4,6 @@ import (
 	"blog/database"
 	"blog/helper"
 	"blog/service"
-	"github.com/oschwald/geoip2-golang"
 	"net"
 	"time"
 )
@@ -37,26 +36,15 @@ func (this *User) AfterFind() {
 	this.LastLoginIp = getAddress(this.LastLoginIp)
 }
 
-var geoDb = getGeoDb()
-
-func getGeoDb() *geoip2.Reader {
-	db, err := geoip2.Open("./geo.mmdb")
-	if err != nil {
-		service.Log.Error(err.Error())
-		return nil
-	}
-	return db
-}
-
 /**
 获取IP对应的地址
 */
 func getAddress(ip string) string {
-	if geoDb == nil {
+	if service.GeoDB == nil {
 		return "未知地方"
 	}
 	right_ip := net.ParseIP(ip)
-	record, err := geoDb.City(right_ip)
+	record, err := service.GeoDB.City(right_ip)
 	if err != nil {
 		service.Log.Error(err.Error())
 		return "未知地方"
