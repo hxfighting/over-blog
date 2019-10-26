@@ -12,19 +12,18 @@ type Email struct {
 }
 
 var (
-	EmailService     = newEmail()
+	EmailService     *gomail.Dialer
 	EmailChan        = make(chan int64, 10)
 	ReplyEmailChan   = make(chan int64, 10)
 	CommentEmailChan = make(chan int64, 10)
 )
 
-func newEmail() *gomail.Dialer {
+func NewEmail() {
 	host := config.GetConfig("email.host").(string)
 	port := int(config.GetConfig("email.port").(int64))
 	username := config.GetConfig("email.username").(string)
 	pass := config.GetConfig("email.password").(string)
-	email := gomail.NewDialer(host, port, username, pass)
-	return email
+	EmailService = gomail.NewDialer(host, port, username, pass)
 }
 
 /**

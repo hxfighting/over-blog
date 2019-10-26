@@ -1,11 +1,15 @@
 package main
 
 import (
+	"blog/config"
+	"blog/controllers/frontend"
+	"blog/database"
 	"blog/helper"
 	"blog/queue"
 	"blog/routes"
 	"blog/service"
 	stdContext "context"
+	"flag"
 	"fmt"
 	"github.com/iris-contrib/middleware/cors"
 	"github.com/kataras/iris"
@@ -16,14 +20,22 @@ import (
 	"os/signal"
 	"runtime"
 	"strconv"
-	"strings"
 	"syscall"
 	"time"
 )
 
+func init() {
+	getConfigPath()
+	config.NewConfig()
+	database.NewDB()
+	service.NewRedis()
+	service.NewLog()
+	service.NewEmail()
+	frontend.InitData()
+}
+
 func main() {
-	dir, _ := os.Executable()
-	dir = strings.TrimRight(dir, "blog")
+	dir := config.ConfigPath
 	app := iris.New()
 	app.Use(panicCapture())
 	if helper.CheckDebug() {
@@ -73,6 +85,19 @@ func main() {
 	if run := app.Run(iris.Addr(":3024"), iris.WithoutInterruptHandler, iris.WithOptimizations); run != nil {
 		log.Fatalln(run.Error())
 	}
+}
+
+/**
+获取配置文件路径
+*/
+func getConfigPath() {
+	var configPath string
+	flag.StringVar(&configPath, "config", "", "获取配置文件目录")
+	flag.Parse()
+	if configPath == "" {
+		log.Fatalln("缺少配置文件路径")
+	}
+	config.ConfigPath = configPath
 }
 
 /**

@@ -29,10 +29,6 @@ var (
 	Response               = service.Response{}
 )
 
-func init() {
-	InitData()
-}
-
 /**
 初始化数据
 */

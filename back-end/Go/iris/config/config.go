@@ -1,24 +1,21 @@
 package config
 
 import (
-	"fmt"
 	"github.com/pelletier/go-toml"
-	"os"
-	"strings"
+	"log"
 )
 
 var (
-	Config = getConfig()
+	Config     *toml.Tree
+	ConfigPath = ""
 )
 
-func getConfig() *toml.Tree {
-	dir, _ := os.Executable()
-	dir = strings.TrimRight(dir, "blog")
-	config, err := toml.LoadFile(dir + "/config.toml")
+func NewConfig() {
+	config, err := toml.LoadFile(ConfigPath + "/config.toml")
 	if err != nil {
-		fmt.Println("缺少配置文件，", err.Error())
+		log.Fatalln("缺少配置文件，", err.Error())
 	}
-	return config
+	Config = config
 }
 
 func GetConfig(key string) interface{} {

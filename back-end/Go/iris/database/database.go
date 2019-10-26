@@ -18,10 +18,10 @@ type MyDb struct {
 }
 
 var (
-	Db = getDb()
+	Db *gorm.DB
 )
 
-func getDb() *gorm.DB {
+func NewDB() {
 	my_db := MyDb{
 		config.GetConfig("database.username").(string),
 		config.GetConfig("database.password").(string),
@@ -35,8 +35,8 @@ func getDb() *gorm.DB {
 	if err != nil {
 		panic(err.Error())
 	}
-	db.DB().SetMaxIdleConns(2)
-	db.DB().SetMaxOpenConns(5)
+	db.DB().SetMaxIdleConns(50)
+	db.DB().SetMaxOpenConns(100)
 
 	if helper.CheckDebug() {
 		db.LogMode(true)
@@ -48,5 +48,5 @@ func getDb() *gorm.DB {
 	db.Callback().Create().Remove("gorm:update_time_stamp")
 	db.Callback().Update().Remove("gorm:update_time_stamp")
 	db.SingularTable(true)
-	return db
+	Db = db
 }

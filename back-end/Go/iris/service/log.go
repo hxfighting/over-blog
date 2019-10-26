@@ -1,18 +1,16 @@
 package service
 
 import (
+	"blog/config"
 	"github.com/phachon/go-logger"
-	"os"
-	"strings"
 )
 
 var (
-	Log = newLog()
+	Log *go_logger.Logger
 )
 
-func newLog() *go_logger.Logger {
-	dir, _ := os.Executable()
-	path := strings.TrimRight(dir, "blog")
+func NewLog() {
+	path := config.ConfigPath + "/"
 	logger := go_logger.NewLogger()
 	logger.Detach("console")
 	fileConfig := &go_logger.FileConfig{
@@ -29,5 +27,5 @@ func newLog() *go_logger.Logger {
 		Format:     "%millisecond_format% [%level_string%] [%file%:%line%] %body%",
 	}
 	logger.Attach("file", go_logger.LOGGER_LEVEL_DEBUG, fileConfig)
-	return logger
+	Log = logger
 }

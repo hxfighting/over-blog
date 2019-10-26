@@ -6,10 +6,10 @@ import (
 )
 
 var (
-	Redis = NewInstance()
+	Redis *redis.Client
 )
 
-func NewInstance() *redis.Client {
+func NewRedis() {
 	addr := config.GetConfig("redis.host").(string)
 	port := config.GetConfig("redis.port").(string)
 	pass := config.GetConfig("redis.password").(string)
@@ -23,5 +23,5 @@ func NewInstance() *redis.Client {
 	if err != nil {
 		panic(err)
 	}
-	return client
+	Redis = client
 }
