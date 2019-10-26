@@ -49,8 +49,7 @@ func Oauth(ctx iris.Context) {
 授权回调
 */
 func OauthCallback(ctx iris.Context) {
-	log.Println(ctx.FullRequestURI())
-	log.Println(time.Now().Unix())
+	log.Println(ctx.RemoteAddr())
 	if strings.Contains(ctx.FullRequestURI(), "/favicon.ico") {
 		return
 	}
