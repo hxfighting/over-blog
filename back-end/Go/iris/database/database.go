@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"log"
 )
 
 type MyDb struct {
@@ -33,7 +34,7 @@ func NewDB() {
 		my_db.User, my_db.Password, my_db.Host, my_db.Port, my_db.Database)
 	db, err := gorm.Open("mysql", connArgs)
 	if err != nil {
-		panic(err.Error())
+		log.Fatalln(err.Error())
 	}
 	db.DB().SetMaxIdleConns(50)
 	db.DB().SetMaxOpenConns(100)

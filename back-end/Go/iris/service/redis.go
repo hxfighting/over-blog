@@ -3,6 +3,7 @@ package service
 import (
 	"blog/config"
 	"github.com/go-redis/redis"
+	"log"
 )
 
 var (
@@ -21,7 +22,7 @@ func NewRedis() {
 	})
 	_, err := client.Ping().Result()
 	if err != nil {
-		panic(err)
+		log.Fatalln(err.Error())
 	}
 	Redis = client
 }
