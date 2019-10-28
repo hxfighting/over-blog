@@ -64,7 +64,7 @@ func (this Config) GetAccessToken() (access_token string, err error) {
 /**
 获取二维码
 */
-func (this Config) GetQrCode(scene string, coder QRCoder) (response []byte, err error) {
+func (this Config) GetQrCode(coder QRCoder) (response []byte, err error) {
 	access_token, err := this.GetAccessToken()
 	if err != nil {
 		return

@@ -40,7 +40,7 @@ func GetQrCodeForWeChat(ctx iris.Context) {
 	if scene == "" {
 		return
 	}
-	coderConfig := wechat.QRCoder{Width: 200}
+	coderConfig := wechat.QRCoder{Width: 200, Scene: scene}
 	wechatConfig := wechat.Config{
 		ClientID: config.GetConfig("miniProgram.client_id").(string),
 		Secret:   config.GetConfig("miniProgram.secret").(string),
@@ -48,7 +48,7 @@ func GetQrCodeForWeChat(ctx iris.Context) {
 	if wechatConfig.Secret == "" || wechatConfig.ClientID == "" {
 		return
 	}
-	qrcode, err := wechatConfig.GetQrCode(scene, coderConfig)
+	qrcode, err := wechatConfig.GetQrCode(coderConfig)
 	if err != nil {
 		service.Log.Error(err.Error())
 		return
