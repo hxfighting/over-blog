@@ -101,7 +101,7 @@ func WeChatLogin(ctx iris.Context) {
 	}
 	wechatConfig := wechat.Config{
 		ClientID: config.GetConfig("miniProgram.client_id").(string),
-		Secret:   config.GetConfig("miniProgram.client_id").(string),
+		Secret:   config.GetConfig("miniProgram.secret").(string),
 	}
 	if wechatConfig.Secret == "" || wechatConfig.ClientID == "" {
 		service.Log.Error("缺少微信小程序配置")
