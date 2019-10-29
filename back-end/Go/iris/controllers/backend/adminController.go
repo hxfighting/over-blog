@@ -7,7 +7,7 @@ import (
 	"blog/service"
 	"crypto/md5"
 	"fmt"
-	"github.com/kataras/iris"
+	"github.com/kataras/iris/v12"
 	"github.com/tidwall/gjson"
 )
 

@@ -4,10 +4,13 @@ import (
 	"blog/database"
 	"blog/helper"
 	"blog/service"
+	"crypto/md5"
 	"errors"
 	"fmt"
 	"github.com/jinzhu/gorm"
 	"github.com/microcosm-cc/bluemonday"
+	"log"
+	"strings"
 	"time"
 )
 
@@ -332,4 +335,35 @@ func CacheArticleView(id int64) {
 	if by.Err() != nil {
 		service.Log.Error(by.Err().Error())
 	}
+}
+
+/**
+增加文章每日浏览数
+*/
+func (this *Article) IncrementArticleView() {
+	log.Println(fmt.Sprintf("%x", md5.Sum([]byte("测试你哦"))))
+	all := service.Redis.HGetAll(ARTICLE_VIEW)
+	if all.Err() != nil {
+		return
+	}
+	res := all.Val()
+	if len(res) <= 0 {
+		return
+	}
+	sql := "UPDATE `article` SET `click` = CASE id"
+	id_str := ""
+	for key, val := range res {
+		id := key[8:]
+		id_str += id + ","
+		sql += " WHEN " + id + " THEN `click`+" + val + " "
+	}
+	id_str = strings.Trim(id_str, ",")
+	sql += " END WHERE id in (" + id_str + ")"
+	exec := database.Db.Exec(sql)
+	if exec.Error != nil {
+		service.Log.Error(exec.Error.Error())
+		return
+	}
+	service.Redis.Del(ARTICLE_VIEW)
+	service.Log.Info("文章浏览数更新成功！")
 }

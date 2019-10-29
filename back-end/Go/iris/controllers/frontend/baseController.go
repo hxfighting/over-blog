@@ -8,7 +8,7 @@ import (
 	"blog/service"
 	template "blog/views"
 	"fmt"
-	"github.com/kataras/iris/sessions"
+	"github.com/kataras/iris/v12/sessions"
 	"sort"
 	"time"
 )

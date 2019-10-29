@@ -3,7 +3,7 @@ package helper
 import (
 	"blog/config"
 	"errors"
-	"github.com/kataras/iris"
+	"github.com/kataras/iris/v12"
 	"io"
 	"io/ioutil"
 	"log"
@@ -112,4 +112,60 @@ func GetHttpResponse(http_url, method string, body io.Reader) ([]byte, string, e
 	}
 	contentType := response.Header.Get("Content-Type")
 	return body_byte, contentType, nil
+}
+
+/**
+获取今日23:59:59
+*/
+func GetTimeRemainingToday() (time.Time, error) {
+	loc, err := time.LoadLocation("Asia/Shanghai")
+	if err != nil {
+		return time.Time{}, errors.New("时区设置失败")
+	}
+	tt, err := time.ParseInLocation(YMDHIS, time.Now().Format(YMD)+" 23:59:59", loc)
+	if err != nil {
+		return time.Time{}, errors.New("时间转换失败！")
+	}
+	return tt, nil
+}
+
+/**
+获取两个日期相差多少天
+dayFirst Y-m-d
+dayLast Y-m-d
+*/
+func GetDateDiffDay(dayFirst, dayLast string) (int, error) {
+	loc, err := time.LoadLocation("Asia/Shanghai")
+	if err != nil {
+		return 0, errors.New("时区设置失败")
+	}
+	tt, err := time.ParseInLocation(YMD, dayFirst, loc)
+	if err != nil {
+		return 0, errors.New("时间转换失败！")
+	}
+	tt_two, err := time.ParseInLocation(YMD, dayLast, loc)
+	if err != nil {
+		return 0, errors.New("时间转换失败！")
+	}
+	hours := tt_two.Sub(tt).Hours()
+	if hours <= 0 {
+		return 0, errors.New("时间错误")
+	}
+	if hours < 24 {
+		// may same day
+		t1y, t1m, t1d := tt.Date()
+		t2y, t2m, t2d := tt_two.Date()
+		isSameDay := (t1y == t2y && t1m == t2m && t1d == t2d)
+		if isSameDay {
+			return 0, errors.New("时间错误")
+		} else {
+			return 1, nil
+		}
+	} else {
+		if (hours/24)-float64(int(hours/24)) == 0 {
+			return int(hours / 24), nil
+		} else {
+			return int(hours/24) + 1, nil
+		}
+	}
 }

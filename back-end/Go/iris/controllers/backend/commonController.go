@@ -1,9 +1,16 @@
 package backend
 
 import (
+	"blog/config"
 	"blog/controllers/frontend"
+	"blog/helper"
 	"blog/service"
-	"github.com/kataras/iris"
+	"blog/service/sms"
+	"fmt"
+	"github.com/kataras/iris/v12"
+	"math/rand"
+	"strings"
+	"time"
 )
 
 var response = service.Response{}
@@ -40,5 +47,38 @@ func removeFrontendCache(keys ...string) {
 		service.Log.Error(del.Err().Error())
 	} else {
 		frontend.InitData()
+	}
+}
+
+/**
+发送短信
+*/
+func SendSms(ctx iris.Context) {
+	token := strings.Trim(ctx.URLParamEscape("token"), "")
+	right_token := config.GetConfig("sms.access_token").(string)
+	if token == "" || right_token == "" || right_token != token {
+		return
+	}
+	var smsService sms.SmsInterface
+	ali := sms.Ali{
+		AppID:    config.GetConfig("sms.sms_key").(string),
+		Secret:   config.GetConfig("sms.sms_secret").(string),
+		SignName: config.GetConfig("sms.sms_sign_name").(string),
+	}
+	for i := 0; i < 2; i++ {
+		if i == 0 {
+			rand.Seed(time.Now().Unix())
+			num := rand.Intn(10)
+			ali.Data = map[string]interface{}{"code": fmt.Sprintf("%d", num)}
+			ali.TemplateCode = config.GetConfig("sms.phone_one_template").(string)
+			ali.PhoneNumber = config.GetConfig("sms.phone_one").(string)
+		} else {
+			days, _ := helper.GetDateDiffDay("1994-03-10", time.Now().Format(helper.YMD))
+			ali.Data = map[string]interface{}{"number": fmt.Sprintf("%d", days)}
+			ali.TemplateCode = config.GetConfig("sms.phone_two_template").(string)
+			ali.PhoneNumber = config.GetConfig("sms.phone_two").(string)
+		}
+		smsService = ali
+		smsService.Send()
 	}
 }

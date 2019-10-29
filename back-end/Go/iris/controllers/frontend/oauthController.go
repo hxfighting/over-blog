@@ -9,7 +9,7 @@ import (
 	template "blog/views"
 	"fmt"
 	"github.com/jinzhu/gorm"
-	"github.com/kataras/iris"
+	"github.com/kataras/iris/v12"
 	"strings"
 	"time"
 )

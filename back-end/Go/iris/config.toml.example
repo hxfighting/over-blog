@@ -58,3 +58,15 @@ callback=""
 [miniProgram]
 client_id=""
 secret=""
+
+#短信相关(阿里云短信)
+[sms]
+sms_key=""
+sms_secret=""
+sms_sign_name=""
+phone_one=""
+phone_one_template=""
+phone_two=""
+phone_two_template=""
+#自定义token，用来防止其他人调用此短信接口
+access_token=""

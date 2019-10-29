@@ -2,7 +2,7 @@ package backend
 
 import (
 	"blog/database"
-	"github.com/kataras/iris"
+	"github.com/kataras/iris/v12"
 )
 
 /**

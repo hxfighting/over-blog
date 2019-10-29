@@ -6,7 +6,7 @@ import (
 	"blog/service"
 	template "blog/views"
 	"bytes"
-	"github.com/kataras/iris"
+	"github.com/kataras/iris/v12"
 	"strings"
 )
 

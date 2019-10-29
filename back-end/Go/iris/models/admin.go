@@ -4,7 +4,7 @@ import (
 	"blog/database"
 	"blog/service"
 	"errors"
-	"github.com/kataras/iris"
+	"github.com/kataras/iris/v12"
 	"strings"
 	"time"
 )

@@ -4,7 +4,7 @@ import (
 	"blog/controllers"
 	"blog/models"
 	"errors"
-	"github.com/kataras/iris"
+	"github.com/kataras/iris/v12"
 	"github.com/tidwall/gjson"
 )
 
@@ -118,4 +118,12 @@ func DeleteArticle(ctx iris.Context) {
 		return
 	}
 	response.RenderSuccess(ctx, "删除文章成功！", nil)
+}
+
+/**
+增加文章每日浏览数
+*/
+func IncrementArticleView(ctx iris.Context) {
+	article := models.Article{}
+	article.IncrementArticleView()
 }

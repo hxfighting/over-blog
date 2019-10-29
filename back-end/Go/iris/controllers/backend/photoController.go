@@ -4,7 +4,7 @@ import (
 	"blog/controllers"
 	"blog/controllers/frontend"
 	"blog/models"
-	"github.com/kataras/iris"
+	"github.com/kataras/iris/v12"
 )
 
 /**

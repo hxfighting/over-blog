@@ -12,15 +12,12 @@ import (
 	"flag"
 	"fmt"
 	"github.com/iris-contrib/middleware/cors"
-	"github.com/kataras/iris"
-	"github.com/kataras/iris/context"
-	requestLogger "github.com/kataras/iris/middleware/logger"
+	"github.com/kataras/iris/v12"
+	"github.com/kataras/iris/v12/context"
+	requestLogger "github.com/kataras/iris/v12/middleware/logger"
 	"log"
-	"os"
-	"os/signal"
 	"runtime"
 	"strconv"
-	"syscall"
 	"time"
 )
 
@@ -56,33 +53,19 @@ func main() {
 	app.HandleDir("/js", dir+"/public/js")
 	app.HandleDir("/image", dir+"/public/image")
 	app.HandleDir("/static", dir+"/public/static")
-
-	//app.RegisterView(iris.HTML("./views", ".html"))
 	routes.RegisterRoutes(app)
 	go func() {
 		queue.HandleQueue()
 	}()
-	go func() {
-		ch := make(chan os.Signal, 1)
-		signal.Notify(ch,
-			// kill -SIGINT XXXX 或 Ctrl+c
-			os.Interrupt,
-			syscall.SIGINT, // register that too, it should be ok
-			// os.Kill等同于syscall.Kill
-			os.Kill,
-			syscall.SIGKILL, // register that too, it should be ok
-			// kill -SIGTERM XXXX
-			syscall.SIGTERM,
-		)
-		select {
-		case <-ch:
-			println("\n服务器关闭...")
-			timeout := 5 * time.Second
-			ctx, cancel := stdContext.WithTimeout(stdContext.Background(), timeout)
-			defer cancel()
-			app.Shutdown(ctx)
-		}
-	}()
+	iris.RegisterOnInterrupt(func() {
+		println("\n服务器关闭...")
+		timeout := 5 * time.Second
+		ctx, cancel := stdContext.WithTimeout(stdContext.Background(), timeout)
+		defer cancel()
+		app.Shutdown(ctx)
+		database.Db.Close()
+		service.Redis.Close()
+	})
 	if run := app.Run(iris.Addr(":3024"), iris.WithoutInterruptHandler, iris.WithOptimizations); run != nil {
 		log.Fatalln(run.Error())
 	}

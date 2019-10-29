@@ -11,7 +11,7 @@ import (
 	"crypto/md5"
 	"fmt"
 	"github.com/jinzhu/gorm"
-	"github.com/kataras/iris"
+	"github.com/kataras/iris/v12"
 	"strings"
 	"time"
 )

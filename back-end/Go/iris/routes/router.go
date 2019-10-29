@@ -3,11 +3,12 @@ package routes
 import (
 	"blog/controllers/backend"
 	"blog/controllers/frontend"
+	"blog/helper"
 	"blog/service"
 	template "blog/views"
 	"github.com/iris-contrib/middleware/csrf"
-	"github.com/kataras/iris"
-	"github.com/kataras/iris/context"
+	"github.com/kataras/iris/v12"
+	"github.com/kataras/iris/v12/context"
 )
 
 func RegisterRoutes(app *iris.Application) {
@@ -195,6 +196,10 @@ func registerApiRoutes(app *iris.Application) {
 		adminNoAuth.Post("/login", backend.Login)
 		//添加错误日志
 		adminNoAuth.Post("/error", backend.AddWebError)
+		//发送短信
+		adminNoAuth.Get("/sms", backend.SendSms)
+		//增加文章浏览数
+		adminNoAuth.Put("/article/view", backend.IncrementArticleView)
 	}
 }
 
@@ -203,6 +208,9 @@ func registerApiRoutes(app *iris.Application) {
 */
 func registerWebRoutes(app *iris.Application) {
 	csrfMiddleware := csrf.Protect([]byte("893263524e68086c9ac536e1c638d7da"))
+	if helper.CheckDebug() {
+		csrf.Secure(false)
+	}
 	frontendRoute := app.Party("/", csrfMiddleware, initTemplateCsrfToken)
 	{
 		//首页

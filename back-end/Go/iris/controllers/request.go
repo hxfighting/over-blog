@@ -5,7 +5,7 @@ import (
 	"errors"
 	"github.com/go-playground/locales/zh"
 	ut "github.com/go-playground/universal-translator"
-	"github.com/kataras/iris"
+	"github.com/kataras/iris/v12"
 	"github.com/mitchellh/mapstructure"
 	"github.com/tidwall/gjson"
 	"gopkg.in/go-playground/validator.v9"

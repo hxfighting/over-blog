@@ -6,7 +6,7 @@ import (
 	"context"
 	"crypto/md5"
 	"encoding/hex"
-	"github.com/kataras/iris"
+	"github.com/kataras/iris/v12"
 	"github.com/qiniu/api.v7/auth/qbox"
 	"github.com/qiniu/api.v7/storage"
 	"io/ioutil"

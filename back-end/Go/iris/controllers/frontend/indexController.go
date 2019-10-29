@@ -3,18 +3,22 @@ package frontend
 import (
 	"blog/config"
 	"blog/database"
+	"blog/helper"
 	"blog/models"
 	"blog/service"
 	template "blog/views"
 	"bytes"
 	"fmt"
 	"github.com/jinzhu/gorm"
-	"github.com/kataras/iris"
+	"github.com/kataras/iris/v12"
 	"github.com/tidwall/gjson"
 	"io/ioutil"
 	"net/http"
+	"time"
 	"unicode/utf8"
 )
+
+const BLOG_UV = "blog_uv"
 
 /**
 博客首页
@@ -108,6 +112,9 @@ func getRotation() []map[string]string {
 从百度统计获取博客每日UV
 */
 func GetBlogCount(ctx iris.Context) {
+	if !repeatIncrUVCheck() {
+		return
+	}
 	url := config.GetConfig("tongji.url").(string)
 	username := config.GetConfig("tongji.username").(string)
 	password := config.GetConfig("tongji.password").(string)
@@ -157,5 +164,20 @@ func GetBlogCount(ctx iris.Context) {
 			service.Log.Error(res.Error.Error())
 			return
 		}
+		today, _ := helper.GetTimeRemainingToday()
+		sub := today.Sub(time.Now())
+		service.Redis.Set(BLOG_UV, 1, sub)
+		service.Log.Info("跟新博客每日UV成功")
 	}
+}
+
+/**
+检查今日是否已经获取了uv统计
+*/
+func repeatIncrUVCheck() bool {
+	get := service.Redis.Get(BLOG_UV)
+	if get.Val() == "" {
+		return true
+	}
+	return false
 }

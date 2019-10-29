@@ -3,7 +3,7 @@ package frontend
 import (
 	"blog/controllers"
 	"blog/models"
-	"github.com/kataras/iris"
+	"github.com/kataras/iris/v12"
 )
 
 /**
