@@ -113,7 +113,6 @@ func panicCapture() context.Handler {
 				ctx.StopExecution()
 			}
 		}()
-
 		ctx.Next()
 	}
 }
