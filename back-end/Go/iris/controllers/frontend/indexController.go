@@ -166,6 +166,8 @@ func GetBlogCount(ctx iris.Context) {
 		}
 		today, _ := helper.GetTimeRemainingToday()
 		sub := today.Sub(time.Now())
+		service.Redis.Del(FOOTER_KEY)
+		InitData()
 		service.Redis.Set(BLOG_UV, 1, sub)
 		service.Log.Info("跟新博客每日UV成功")
 	}

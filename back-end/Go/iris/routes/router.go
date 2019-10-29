@@ -199,7 +199,7 @@ func registerApiRoutes(app *iris.Application) {
 		//发送短信
 		adminNoAuth.Get("/sms", backend.SendSms)
 		//增加文章浏览数
-		adminNoAuth.Put("/article/view", backend.IncrementArticleView)
+		adminNoAuth.Get("/article/view", backend.IncrementArticleView)
 	}
 }
 
