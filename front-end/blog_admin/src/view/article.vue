@@ -404,7 +404,7 @@
                                     props: {
                                         confirm: true,
                                         title: '你确定要删除吗?',
-                                        transfer:true,
+                                        transfer: true,
                                     },
                                     on: {
                                         'on-ok': () => {
@@ -536,7 +536,7 @@
                 this.formData.category_id = data.category_id;
                 this.formData.author = data.author;
                 this.formData.title = data.title;
-                this.formData.content_md = data.content_md ? data.content_md : data.content_html;
+                this.formData.content_md = data.content_md ? this.htmlDecode(data.content_md) : this.htmlDecode(data.content_html);
                 this.formData.content_html = data.content_html;
                 this.formData.description = data.description;
                 this.formData.keywords = data.keywords;
@@ -559,7 +559,8 @@
                     this.loading = false;
                     let data = res.data;
                     if (data.code == 200) {
-                        this.tableData = data.data.list;
+                        let list = data.data.list
+                        this.tableData = list;
                         this.total = data.data.total;
                         this.category = data.data.category;
                         this.tags = data.data.tag;
@@ -575,6 +576,28 @@
                     this.$Message.error('服务器错误');
                 })
             },
+            htmlEncode(str) {
+                var s = "";
+                if (str.length == 0) return "";
+                s = str.replace(/&/g, "&amp;");
+                s = s.replace(/</g, "&lt;");
+                s = s.replace(/>/g, "&gt;");
+                s = s.replace(/\'/g, "&#39;");
+                s = s.replace(/\"/g, "&quot;");
+                s = s.replace(/\n/g, "&huhu;");
+                return s;
+            },
+            htmlDecode(str) {
+                var s = "";
+                if (str.length == 0) return "";
+                s = str.replace(/&amp;/g, "&");
+                s = s.replace(/&lt;/g, "<");
+                s = s.replace(/&gt;/g, ">");
+                s = s.replace(/&#39;/g, "\'");
+                s = s.replace(/&quot;/g, "\"");
+                s = s.replace(/&huhu;/g, "\n");
+                return s;
+            },
             //处理button的loading状态
             dealButtonLoading() {
                 let _this = this
@@ -589,6 +612,13 @@
                 this.$refs[name].validate((valid) => {
                     if (valid) {
                         let pro = '';
+                        if (!this.formData.description) {
+                            let des = this.formData.content_html.replace(/<\/?.+?>/g, "");
+                            let dess = des.replace(/ /g, "");
+                            let right_desc = dess.replace(/\s*/g,"")
+                            this.formData.description = right_desc.substring(0,150)+"..."
+                        }
+                        this.formData.content_html = this.htmlEncode(this.formData.content_html)
                         if (this.formData.id != '' && !isNaN(this.formData.id)) {
                             pro = updateArticle(this.formData);
                         } else {
