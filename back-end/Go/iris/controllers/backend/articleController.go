@@ -21,6 +21,7 @@ func GetArticleList(ctx iris.Context) {
 		response.RenderSuccess(ctx, "获取文章列表成功", list)
 		return
 	}
+	ctx.Gzip(true)
 	response.RenderError(ctx, "暂无文章列表数据", nil)
 }
 
