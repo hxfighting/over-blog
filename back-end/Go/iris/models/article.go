@@ -155,6 +155,7 @@ func GetArticleById(id int64) (Article, error) {
 	if article.ID == nil {
 		return article, errors.New("文章不存在！")
 	}
+	article.ContentHtml = helper.DecodeHtml(article.ContentHtml)
 	article_tag := []simpleTag{}
 	article_category := simpleCategory{}
 	database.Db.Table("tag").Select("tag.id,tag.name,article_tag.article_id").

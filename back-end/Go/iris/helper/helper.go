@@ -169,3 +169,20 @@ func GetDateDiffDay(dayFirst, dayLast string) (int, error) {
 		}
 	}
 }
+
+/**
+反转义html
+*/
+func DecodeHtml(str string) string {
+	var s = ""
+	if len(str) <= 0 {
+		return ""
+	}
+	s = strings.Replace(str, "&amp;", "&", -1)
+	s = strings.Replace(s, "&lt;", "<", -1)
+	s = strings.Replace(s, "&gt;", ">", -1)
+	s = strings.Replace(s, "&#39;", "'", -1)
+	s = strings.Replace(s, "&quot;", "\"", -1)
+	s = strings.Replace(s, "&huhu;", "\n", -1)
+	return s
+}
