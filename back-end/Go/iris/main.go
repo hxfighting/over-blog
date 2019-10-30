@@ -16,29 +16,36 @@ import (
 	"github.com/kataras/iris/v12/context"
 	requestLogger "github.com/kataras/iris/v12/middleware/logger"
 	"log"
+	"os"
 	"runtime"
 	"strconv"
 	"time"
 )
 
+var (
+	app  = iris.New()
+	file *os.File
+)
+
 func init() {
 	getConfigPath()
+	file = service.NewLogFile()
+	app.Logger().SetOutput(file)
 	config.NewConfig()
 	database.NewDB()
 	service.NewGeoDb()
 	service.NewRedis()
-	service.NewLog()
 	service.NewEmail()
 	frontend.InitData()
 }
 
 func main() {
 	dir := config.ConfigPath
-	app := iris.New()
 	app.Use(panicCapture())
 	if helper.CheckDebug() {
 		app.Use(requestLogger.New())
 	}
+	service.Log = app.Logger()
 	app.Use(cors.New(cors.Options{
 		AllowedOrigins:   []string{"*"}, // allows everything, use that to change the hosts.
 		AllowCredentials: true,
@@ -65,6 +72,7 @@ func main() {
 		app.Shutdown(ctx)
 		database.Db.Close()
 		service.Redis.Close()
+		file.Close()
 	})
 	if run := app.Run(iris.Addr(":3024"), iris.WithoutInterruptHandler, iris.WithOptimizations); run != nil {
 		log.Fatalln(run.Error())

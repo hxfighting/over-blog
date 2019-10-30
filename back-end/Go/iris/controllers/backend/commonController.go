@@ -6,7 +6,6 @@ import (
 	"blog/helper"
 	"blog/service"
 	"blog/service/sms"
-	"fmt"
 	"github.com/kataras/iris/v12"
 	"math/rand"
 	"strings"
@@ -69,12 +68,12 @@ func SendSms(ctx iris.Context) {
 		if i == 0 {
 			rand.Seed(time.Now().Unix())
 			num := rand.Intn(10)
-			ali.Data = map[string]interface{}{"code": fmt.Sprintf("%d", num)}
+			ali.Data = map[string]interface{}{"code": num}
 			ali.TemplateCode = config.GetConfig("sms.phone_one_template").(string)
 			ali.PhoneNumber = config.GetConfig("sms.phone_one").(string)
 		} else {
 			days, _ := helper.GetDateDiffDay("1994-03-10", time.Now().Format(helper.YMD))
-			ali.Data = map[string]interface{}{"number": fmt.Sprintf("%d", days)}
+			ali.Data = map[string]interface{}{"number": days}
 			ali.TemplateCode = config.GetConfig("sms.phone_two_template").(string)
 			ali.PhoneNumber = config.GetConfig("sms.phone_two").(string)
 		}

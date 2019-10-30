@@ -2,30 +2,25 @@ package service
 
 import (
 	"blog/config"
-	"github.com/phachon/go-logger"
+	"github.com/kataras/golog"
+	"os"
+	"time"
 )
 
 var (
-	Log *go_logger.Logger
+	Log *golog.Logger
 )
 
-func NewLog() {
-	path := config.ConfigPath + "/"
-	logger := go_logger.NewLogger()
-	logger.Detach("console")
-	fileConfig := &go_logger.FileConfig{
-		Filename: path + "blog.log",
-		LevelFileName: map[int]string{
-			logger.LoggerLevel("error"): path + "error.log",
-			logger.LoggerLevel("info"):  path + "info.log",
-			logger.LoggerLevel("debug"): path + "debug.log",
-		},
-		MaxSize:    1024 * 1024,
-		MaxLine:    10000,
-		DateSlice:  "d",
-		JsonFormat: false,
-		Format:     "%millisecond_format% [%level_string%] [%file%:%line%] %body%",
+func getFileName() string {
+	today := time.Now().Format("20060102")
+	return "blog_" + today + ".log"
+}
+
+func NewLogFile() *os.File {
+	filename := config.ConfigPath + string(os.PathSeparator) + getFileName()
+	f, err := os.OpenFile(filename, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	if err != nil {
+		panic(err)
 	}
-	logger.Attach("file", go_logger.LOGGER_LEVEL_DEBUG, fileConfig)
-	Log = logger
+	return f
 }

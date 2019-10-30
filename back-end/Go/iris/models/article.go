@@ -4,12 +4,10 @@ import (
 	"blog/database"
 	"blog/helper"
 	"blog/service"
-	"crypto/md5"
 	"errors"
 	"fmt"
 	"github.com/jinzhu/gorm"
 	"github.com/microcosm-cc/bluemonday"
-	"log"
 	"strings"
 	"time"
 )
@@ -341,7 +339,6 @@ func CacheArticleView(id int64) {
 增加文章每日浏览数
 */
 func (this *Article) IncrementArticleView() {
-	log.Println(fmt.Sprintf("%x", md5.Sum([]byte("测试你哦"))))
 	all := service.Redis.HGetAll(ARTICLE_VIEW)
 	if all.Err() != nil {
 		return
