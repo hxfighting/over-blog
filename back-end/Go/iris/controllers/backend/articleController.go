@@ -3,7 +3,6 @@ package backend
 import (
 	"blog/controllers"
 	"blog/models"
-	"blog/service"
 	"errors"
 	"github.com/kataras/iris/v12"
 	"github.com/tidwall/gjson"
@@ -19,11 +18,7 @@ func GetArticleList(ctx iris.Context) {
 	search := ctx.URLParamTrim("search")
 	list := models.Article{}.GetArticleList(pageNum, pageSize, category_id, search)
 	if list["total"].(int64) > 0 {
-		response.Code = 200
-		response.Message = "获取文章列表成功"
-		response.Data = list
-		res, _ := service.FastJson.Marshal(response)
-		ctx.GzipResponseWriter().Write(res)
+		response.RenderSuccess(ctx, "获取文章列表成功", list)
 		return
 	}
 	response.RenderError(ctx, "暂无文章列表数据", nil)
