@@ -1,4 +1,4 @@
-## 运行环境要求
+## PHP版本运行环境要求
 
 - Nginx 1.8+
 - PHP 7.2+
@@ -6,10 +6,10 @@
 - Redis 3.0+
 - node.js 8.0+
 
-## 说明
-> 目前Laravel版本已经完成，Yii2版本正在开发中，下面的操作是基于Laravel版本来进行的，微信小程序需要自己去编写小程序代码实现小程序登录，具体可以参考我这篇文章: [微信小程序实现微信扫码登录](https://www.ohdata.top/article/19)
+### 说明
+> 下面的操作是基于Laravel版本来进行的，微信小程序需要自己去编写小程序代码实现小程序登录，具体可以参考我这篇文章: [微信小程序实现微信扫码登录](https://www.ohdata.top/article/19)
 
-## 安装
+### 安装
 
 1. git clone https://github.com/hxfighting/over-blog.git -b 3.0
 2. 发布配置文件 `cd over-blog/back-end/PHP/laravel && cp .env.example .env`,然后将.env中的配置项填写完整
@@ -20,13 +20,13 @@
 7. 生成数据库数据表 `/over-blog/back-end/PHP/laravel/php artisan migrate`
 
 
-## 后台管理系统
+### 后台管理系统
 
 1. `cd over-blog/front-end/blog_admin && npm install`
 2. 修改over-blog/front-end/blog_admin/src/config 中的index.js文件配置
 3. `npm run dev`
 
-## 扩展包使用情况
+### 扩展包使用情况
 
 
 | **扩展包** | **一句话描述** | **本项目应用场景** |
@@ -49,12 +49,49 @@
 | [laravel/telescope](https://github.com/laravel/telescope) | Laravel 调试面板 | 调试 |
 
 
-## 自定义 Artisan 命令
+### 自定义 Artisan 命令
 
 | 命令行名字 | 说明 | Cron | 代码调用 |
 | --- | --- | --- | --- |
 | `sms:send` |  发送短信 | 无 | 无 |
 | `index:view` |  更新首页浏览统计 | 无 | 无 |
 
-## License 
+## golang版本说明
+
+> golang版本要大于等于go1.11,GO111MODULE="on"
+
+### 说明
+> golang版本基于框架[iris](https://github.com/kataras/iris),如果不熟悉的同学可以去了解下。
+
+### 安装
+
+> 安装请在gopath以外的目录下安装
+
+1. git clone https://github.com/hxfighting/over-blog.git -b 3.0
+2. cd over-blog && cp config.toml.example config.toml，然后把config.toml中的配置项填写完整
+3. 运行命令：go run main.go -config=".",注意：config参数写你的config.toml的目录地址，开发环境用.就可以了
+
+### 扩展包使用情况
+
+
+| **扩展包** | **一句话描述** | **本项目应用场景** |
+| ---- | ---- | ---- | 
+| [aliyun/alibaba-cloud-sdk-go](https://github.com/aliyun/alibaba-cloud-sdk-go) | 阿里云官方sdk | 发送短信 |
+| [jinzhu/gorm](https://github.com/jinzhu/gorm) | orm包 | mysql orm |
+| [dgrijalva/jwt-go](https://github.com/dgrijalva/jwt-go) | jwt | api token |
+| [go-redis/redis](https://github.com/go-redis/redis) | redis client | redis连接 |
+| [json-iterator/go](https://github.com/json-iterator/go) | 更快的json 序列化 | json数据序列化 |
+| [mojocn/base64Captcha](https://github.com/mojocn/base64Captcha) | 验证码 | 后台接口登录的验证码 |
+| [mitchellh/mapstructure](https://github.com/mitchellh/mapstructure) | map转换为struct | api接收指定数据为map，然后转换为对应的struct |
+| [pelletier/go-toml](https://github.com/pelletier/go-toml) | toml文件读取 | 配置文件读取 |
+| [gopkg.in/gomail.v2](https://github.com/go-gomail/gomail/tree/v2) | 邮件发送包 | 邮件发送 |
+| [tidwall/gjson](https://github.com/tidwall/gjson) | json数据提取包 | 提取json中需要的数据 |
+| [shiyanhui/hero](https://github.com/shiyanhui/hero) | golang模板引擎 | 用于前端页面的渲染  |
+| [qiniu/api.v7](https://github.com/qiniu/api.v7) | 七牛官方SDK | 图片上传 |
+| [oschwald/geoip2-golang](https://github.com/oschwald/geoip2-golang) | ip地址解析 | 用户ip地址解析 |
+| [go-playground/validator](https://github.com/go-playground/validator) | struct参数效验 | 接口参数效验 |
+| [getsentry/sentry-go](https://github.com/getsentry/sentry-go) | sentry异常报告 | 程序异常报告 |
+
+
+### License 
 MIT

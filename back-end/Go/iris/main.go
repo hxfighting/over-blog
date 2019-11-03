@@ -11,6 +11,7 @@ import (
 	stdContext "context"
 	"flag"
 	"fmt"
+	"github.com/getsentry/sentry-go"
 	"github.com/iris-contrib/middleware/cors"
 	"github.com/kataras/iris/v12"
 	"github.com/kataras/iris/v12/context"
@@ -37,6 +38,11 @@ func init() {
 	service.NewRedis()
 	service.NewEmail()
 	frontend.InitData()
+	if e := sentry.Init(sentry.ClientOptions{
+		Dsn: config.GetConfig("sentry.dsn").(string),
+	}); e != nil {
+		log.Fatalln("缺少sentry dsn")
+	}
 }
 
 func main() {
@@ -45,6 +51,9 @@ func main() {
 	if helper.CheckDebug() {
 		app.Use(requestLogger.New())
 	}
+	app.Use(service.NewSentry(service.SentryOptions{
+		Repanic: true,
+	}))
 	service.Log = app.Logger()
 	app.Use(cors.New(cors.Options{
 		AllowedOrigins:   []string{"*"}, // allows everything, use that to change the hosts.

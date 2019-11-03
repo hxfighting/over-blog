@@ -70,3 +70,7 @@ phone_two=""
 phone_two_template=""
 #自定义token，用来防止其他人调用此短信接口
 access_token=""
+
+#异常上报
+[sentry]
+dsn=""
