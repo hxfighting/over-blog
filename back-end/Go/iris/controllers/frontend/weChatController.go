@@ -117,6 +117,7 @@ func WeChatLogin(ctx iris.Context) {
 		return
 	}
 	var loginTimes int64 = 1
+	var IsAdmin int8 = 0
 	avatar := strings.Replace(needField.Avatar, "http", "https", -1)
 	user := make(map[string]string)
 	user["name"] = needField.Name
@@ -140,6 +141,7 @@ func WeChatLogin(ctx iris.Context) {
 		user_model.LastLoginIp = ip
 		user_model.AccessToken = sessionKey
 		user_model.LoginTimes = &loginTimes
+		user_model.IsAdmin = &IsAdmin
 		res = database.Db.Create(&user_model)
 	}
 	if res.Error != nil {

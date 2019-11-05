@@ -59,7 +59,6 @@ func OauthCallback(ctx iris.Context) {
 		"weibo": 3,
 		"qq":    1,
 	}
-	var loginTimes int64 = 1
 	oauthConfig := oauth.OauthConfig{}
 	if oauthService == "qq" {
 		oauthConfig.ClientID = config.GetConfig("qq.client_id").(string)
@@ -83,6 +82,8 @@ func OauthCallback(ctx iris.Context) {
 		ctx.WriteString("出错啦...")
 		return
 	}
+	var loginTimes int64 = 1
+	var IsAdmin int8 = 0
 	user_model := models.User{}
 	var res *gorm.DB
 	database.Db.Where("openid = ? and type = ?", user["openid"], oauth_type[oauthService]).First(&user_model)
@@ -100,6 +101,7 @@ func OauthCallback(ctx iris.Context) {
 		user_model.Type = oauth_type[oauthService]
 		user_model.LastLoginIp = ip
 		user_model.LoginTimes = &loginTimes
+		user_model.IsAdmin = &IsAdmin
 		res = database.Db.Create(&user_model)
 	}
 	if res.Error != nil {
