@@ -3,7 +3,7 @@ module blog
 go 1.13
 
 require (
-	github.com/aliyun/alibaba-cloud-sdk-go v0.0.0-20191102133839-dd2e121ec8be
+	github.com/aliyun/alibaba-cloud-sdk-go v0.0.0-20191104061422-c78ca2ea5e12
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fasthttp-contrib/websocket v0.0.0-20160511215533-1f3b11f56072 // indirect
 	github.com/getsentry/sentry-go v0.3.0

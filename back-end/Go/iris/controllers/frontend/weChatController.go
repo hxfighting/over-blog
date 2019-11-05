@@ -116,6 +116,7 @@ func WeChatLogin(ctx iris.Context) {
 		Response.RenderError(ctx, "登录失败！", nil)
 		return
 	}
+	var loginTimes int64 = 1
 	avatar := strings.Replace(needField.Avatar, "http", "https", -1)
 	user := make(map[string]string)
 	user["name"] = needField.Name
@@ -138,7 +139,7 @@ func WeChatLogin(ctx iris.Context) {
 		user_model.Type = 2
 		user_model.LastLoginIp = ip
 		user_model.AccessToken = sessionKey
-		*user_model.LoginTimes = 1
+		user_model.LoginTimes = &loginTimes
 		res = database.Db.Create(&user_model)
 	}
 	if res.Error != nil {

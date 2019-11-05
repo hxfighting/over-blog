@@ -59,6 +59,7 @@ func OauthCallback(ctx iris.Context) {
 		"weibo": 3,
 		"qq":    1,
 	}
+	var loginTimes int64 = 1
 	oauthConfig := oauth.OauthConfig{}
 	if oauthService == "qq" {
 		oauthConfig.ClientID = config.GetConfig("qq.client_id").(string)
@@ -98,7 +99,7 @@ func OauthCallback(ctx iris.Context) {
 		user_model.AccessToken = user["access_token"]
 		user_model.Type = oauth_type[oauthService]
 		user_model.LastLoginIp = ip
-		*user_model.LoginTimes = 1
+		user_model.LoginTimes = &loginTimes
 		res = database.Db.Create(&user_model)
 	}
 	if res.Error != nil {
