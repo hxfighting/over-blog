@@ -11,7 +11,7 @@ import (
 	"github.com/shiyanhui/hero"
 )
 
-func Index(articleList []models.Article, total, pageNum int64, rotation, photo []map[string]string, buffer *bytes.Buffer) {
+func Index(AuthInfo map[string]string, articleList []models.Article, total, pageNum int64, rotation, photo []map[string]string, buffer *bytes.Buffer) {
 	buffer.WriteString(`<!DOCTYPE html>
 <html lang="en">
 <head>

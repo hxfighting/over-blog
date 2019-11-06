@@ -11,7 +11,7 @@ import (
 	"github.com/shiyanhui/hero"
 )
 
-func ArticleInfo(article, preArticle, afterArticle models.Article, randArticles []models.SimpleArticle, comments []*models.ArticleComment, buffer *bytes.Buffer) {
+func ArticleInfo(AuthInfo map[string]string, article, preArticle, afterArticle models.Article, randArticles []models.SimpleArticle, comments []*models.ArticleComment, buffer *bytes.Buffer) {
 	buffer.WriteString(`<!DOCTYPE html>
 <html lang="en">
 <head>

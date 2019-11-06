@@ -10,7 +10,7 @@ import (
 	"github.com/shiyanhui/hero"
 )
 
-func ContactPage(buffer *bytes.Buffer) {
+func ContactPage(AuthInfo map[string]string, buffer *bytes.Buffer) {
 	buffer.WriteString(`<!DOCTYPE html>
 <html lang="en">
 <head>

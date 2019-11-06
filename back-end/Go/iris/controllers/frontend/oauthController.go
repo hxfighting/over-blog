@@ -6,7 +6,6 @@ import (
 	"blog/models"
 	"blog/service"
 	"blog/service/oauth"
-	template "blog/views"
 	"fmt"
 	"github.com/jinzhu/gorm"
 	"github.com/kataras/iris/v12"
@@ -128,6 +127,5 @@ func OauthCallback(ctx iris.Context) {
 */
 func Logout(ctx iris.Context) {
 	Sess.Start(ctx).Delete("user")
-	template.AuthInfo = make(map[string]string)
 	Response.RenderSuccess(ctx, "退出登录成功！", nil)
 }

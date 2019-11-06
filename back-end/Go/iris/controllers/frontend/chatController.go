@@ -26,7 +26,8 @@ func GetChatPage(ctx iris.Context) {
 		}
 	}
 	buffer := new(bytes.Buffer)
-	template.ChatPage(left_chat, right_chat, buffer)
+	user := GetUser(ctx)
+	template.ChatPage(user, left_chat, right_chat, buffer)
 	_, err := ctx.Write(buffer.Bytes())
 	if err != nil {
 		service.Log.Error(err.Error())

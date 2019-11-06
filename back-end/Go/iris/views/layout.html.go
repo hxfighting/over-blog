@@ -16,7 +16,6 @@ var (
 	Link          = make([]models.SimpleLink, 0)
 	Tag           = make([]models.Tag, 0)
 	HotArticle    = make([]map[string]string, 0)
-	AuthInfo      = make(map[string]string)
 	CsrfToken     = ""
 	AppUrl        = ""
 )

@@ -211,7 +211,7 @@ func registerWebRoutes(app *iris.Application) {
 	if helper.CheckDebug() {
 		csrf.Secure(false)
 	}
-	frontendRoute := app.Party("/", csrfMiddleware, initTemplateCsrfToken, getUser)
+	frontendRoute := app.Party("/", csrfMiddleware, initTemplateCsrfToken)
 	{
 		//首页
 		frontendRoute.Get("/", frontend.Index)
@@ -268,16 +268,5 @@ csfrtoken赋值到模板
 func initTemplateCsrfToken(ctx context.Context) {
 	token := csrf.Token(ctx)
 	template.CsrfToken = token
-	ctx.Next()
-}
-
-/**
-获取登录用户
-*/
-func getUser(ctx context.Context) {
-	user := frontend.Sess.Start(ctx).Get("user")
-	if val, ok := user.(map[string]string); ok {
-		template.AuthInfo = val
-	}
 	ctx.Next()
 }

@@ -11,7 +11,7 @@ import (
 	"github.com/shiyanhui/hero"
 )
 
-func ChatPage(leftChat, rightChat []models.Chat, buffer *bytes.Buffer) {
+func ChatPage(AuthInfo map[string]string, leftChat, rightChat []models.Chat, buffer *bytes.Buffer) {
 	buffer.WriteString(`<!DOCTYPE html>
 <html lang="en">
 <head>

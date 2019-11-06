@@ -36,7 +36,8 @@ func Index(ctx iris.Context) {
 		totalPage = total/pageSize + 1
 	}
 	buffer := new(bytes.Buffer)
-	template.Index(articles, totalPage, pageNum, rotation, photo, buffer)
+	user := GetUser(ctx)
+	template.Index(user, articles, totalPage, pageNum, rotation, photo, buffer)
 	_, err := ctx.Write(buffer.Bytes())
 	if err != nil {
 		service.Log.Error(err.Error())

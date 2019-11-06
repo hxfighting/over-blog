@@ -63,7 +63,8 @@ func GetArticleDetail(ctx iris.Context) {
 	comments := models.GetArticleComment(id)
 	models.CacheArticleView(id)
 	buffer := new(bytes.Buffer)
-	template.ArticleInfo(article, pre_article, after_article, rand_articles, comments, buffer)
+	user := GetUser(ctx)
+	template.ArticleInfo(user, article, pre_article, after_article, rand_articles, comments, buffer)
 	_, err := ctx.Write(buffer.Bytes())
 	if err != nil {
 		service.Log.Error(err.Error())
@@ -94,7 +95,8 @@ func SearchArticle(ctx iris.Context) {
 		totalPage = total/pageSize + 1
 	}
 	buffer := new(bytes.Buffer)
-	template.ArticleByCategory(articles, totalPage, pageNum, search, "", buffer)
+	user := GetUser(ctx)
+	template.ArticleByCategory(user, articles, totalPage, pageNum, search, "", buffer)
 	_, err := ctx.Write(buffer.Bytes())
 	if err != nil {
 		service.Log.Error(err.Error())
@@ -125,7 +127,8 @@ func GetArticleByTag(ctx iris.Context) {
 		}
 	}
 	buffer := new(bytes.Buffer)
-	template.ArticleByCategory(articles, totalPage, pageNum, "", tag_name, buffer)
+	user := GetUser(ctx)
+	template.ArticleByCategory(user, articles, totalPage, pageNum, "", tag_name, buffer)
 	_, err := ctx.Write(buffer.Bytes())
 	if err != nil {
 		service.Log.Error(err.Error())
@@ -149,7 +152,8 @@ func GetArticleByCategory(ctx iris.Context) {
 		totalPage = total/pageSize + 1
 	}
 	buffer := new(bytes.Buffer)
-	template.ArticleByCategory(articles, totalPage, pageNum, "", "", buffer)
+	user := GetUser(ctx)
+	template.ArticleByCategory(user, articles, totalPage, pageNum, "", "", buffer)
 	_, err := ctx.Write(buffer.Bytes())
 	if err != nil {
 		service.Log.Error(err.Error())

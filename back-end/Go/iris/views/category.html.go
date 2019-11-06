@@ -11,7 +11,7 @@ import (
 	"github.com/shiyanhui/hero"
 )
 
-func ArticleByCategory(articleList []models.Article, total, pageNum int64, search, tag string, buffer *bytes.Buffer) {
+func ArticleByCategory(AuthInfo map[string]string, articleList []models.Article, total, pageNum int64, search, tag string, buffer *bytes.Buffer) {
 	buffer.WriteString(`<!DOCTYPE html>
 <html lang="en">
 <head>

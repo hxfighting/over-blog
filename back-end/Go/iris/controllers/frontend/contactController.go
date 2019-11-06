@@ -16,7 +16,8 @@ func GetContactPage(ctx iris.Context) {
 	ctx.Gzip(true)
 	ctx.ContentType("text/html")
 	buffer := new(bytes.Buffer)
-	template.ContactPage(buffer)
+	user := GetUser(ctx)
+	template.ContactPage(user, buffer)
 	_, err := ctx.Write(buffer.Bytes())
 	if err != nil {
 		service.Log.Error(err.Error())

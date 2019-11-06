@@ -3,7 +3,7 @@ module blog
 go 1.13
 
 require (
-	github.com/aliyun/alibaba-cloud-sdk-go v0.0.0-20191104061422-c78ca2ea5e12
+	github.com/aliyun/alibaba-cloud-sdk-go v0.0.0-20191105111628-27aadc495f68
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fasthttp-contrib/websocket v0.0.0-20160511215533-1f3b11f56072 // indirect
 	github.com/getsentry/sentry-go v0.3.0
@@ -34,13 +34,14 @@ require (
 	github.com/shiyanhui/hero v0.0.2
 	github.com/tidwall/gjson v1.3.4
 	github.com/valyala/fasthttp v1.6.0 // indirect
-	golang.org/x/crypto v0.0.0-20191029031824-8986dd9e96cf
+	golang.org/x/crypto v0.0.0-20191105034135-c7e5f84aec59
 	golang.org/x/image v0.0.0-20191009234506-e7c1f5e7dbb8 // indirect
-	golang.org/x/net v0.0.0-20191101175033-0deb6923b6d9 // indirect
-	golang.org/x/sys v0.0.0-20191029155521-f43be2a4598c // indirect
+	golang.org/x/net v0.0.0-20191105084925-a882066a44e0 // indirect
+	golang.org/x/sys v0.0.0-20191105231009-c1f44814a5cd // indirect
 	google.golang.org/appengine v1.6.5 // indirect
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
 	gopkg.in/go-playground/validator.v9 v9.30.0
 	gopkg.in/gomail.v2 v2.0.0-20160411212932-81ebce5c23df
 	gopkg.in/ini.v1 v1.49.0 // indirect
+	gopkg.in/yaml.v2 v2.2.5 // indirect
 )

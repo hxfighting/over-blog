@@ -8,6 +8,7 @@ import (
 	"blog/service"
 	template "blog/views"
 	"fmt"
+	"github.com/kataras/iris/v12"
 	"github.com/kataras/iris/v12/sessions"
 	"sort"
 	"time"
@@ -42,6 +43,17 @@ func InitData() {
 	template.Link = getLinkData()
 	template.FooterData = getFooterData()
 	template.AppUrl = config.GetConfig("app.url").(string)
+}
+
+/**
+获取session用户
+*/
+func GetUser(ctx iris.Context) map[string]string {
+	user := Sess.Start(ctx).Get("user")
+	if val, ok := user.(map[string]string); ok {
+		return val
+	}
+	return map[string]string{}
 }
 
 /**
