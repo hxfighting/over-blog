@@ -7,7 +7,6 @@ import (
 	"blog/models"
 	"blog/service"
 	"blog/service/wechat"
-	template "blog/views"
 	"crypto/md5"
 	"fmt"
 	"github.com/jinzhu/gorm"
@@ -153,8 +152,7 @@ func WeChatLogin(ctx iris.Context) {
 	user["is_admin"] = fmt.Sprintf("%d", *user_model.IsAdmin)
 	user["id"] = fmt.Sprintf("%d", *user_model.ID)
 	user["email"] = user_model.Email
-	Sess.Start(ctx).Set("is_login", true)
-	template.AuthInfo = user
+	Sess.Start(ctx).Set("user", user)
 	resRedis := service.Redis.Set(needField.Sence, 1, 60*time.Second)
 	if resRedis.Err() != nil {
 		service.Log.Error(resRedis.Err().Error())

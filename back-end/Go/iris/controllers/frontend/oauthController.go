@@ -113,8 +113,7 @@ func OauthCallback(ctx iris.Context) {
 	user["is_admin"] = fmt.Sprintf("%d", *user_model.IsAdmin)
 	user["id"] = fmt.Sprintf("%d", *user_model.ID)
 	user["email"] = user_model.Email
-	Sess.Start(ctx).Set("is_login", true)
-	template.AuthInfo = user
+	Sess.Start(ctx).Set("user", user)
 	refer := Sess.Start(ctx).GetString("target_url")
 	if refer == "" {
 		app_url := config.GetConfig("app.url").(string)
@@ -128,7 +127,7 @@ func OauthCallback(ctx iris.Context) {
 退出登录
 */
 func Logout(ctx iris.Context) {
-	Sess.Start(ctx).Set("is_login", false)
+	Sess.Start(ctx).Delete("user")
 	template.AuthInfo = make(map[string]string)
 	Response.RenderSuccess(ctx, "退出登录成功！", nil)
 }
