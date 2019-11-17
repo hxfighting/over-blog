@@ -117,7 +117,11 @@ func (this OauthConfig) GetUserFromQQ(code string) (map[string]string, error) {
 		user["access_token"] = access_token
 		user["openid"] = openid
 		user["name"] = gjson.Get(body_str, "nickname").String()
-		user["avatar"] = strings.Replace(gjson.Get(body_str, "figureurl_qq_1").String(), "http", "https", -1)
+		avatar := gjson.Get(body_str, "figureurl_qq_1").String()
+		if strings.Index(avatar, "https") == -1 {
+			avatar = strings.Replace(avatar, "http", "https", -1)
+		}
+		user["avatar"] = avatar
 		return user, nil
 	}
 

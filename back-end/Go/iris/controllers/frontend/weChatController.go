@@ -73,8 +73,14 @@ func GetLoginResult(ctx iris.Context) {
 		}
 		res := service.Redis.Get(scene)
 		if res.Err() == nil {
-			Response.RenderSuccess(ctx, "登录成功", nil)
-			return
+			user_string := res.String()
+			user := make(map[string]string)
+			service.FastJson.Unmarshal([]byte(user_string), &user)
+			if _, ok := user["id"]; ok {
+				Sess.Start(ctx).Set("user", user)
+				Response.RenderSuccess(ctx, "登录成功", nil)
+				return
+			}
 		}
 	} else {
 		ctx.StatusCode(iris.StatusNotFound)
@@ -117,7 +123,10 @@ func WeChatLogin(ctx iris.Context) {
 	}
 	var loginTimes int64 = 1
 	var IsAdmin int8 = 0
-	avatar := strings.Replace(needField.Avatar, "http", "https", -1)
+	avatar := needField.Avatar
+	if strings.Index(avatar, "https") == -1 {
+		avatar = strings.Replace(avatar, "http", "https", -1)
+	}
 	user := make(map[string]string)
 	user["name"] = needField.Name
 	user["avatar"] = avatar
@@ -152,8 +161,8 @@ func WeChatLogin(ctx iris.Context) {
 	user["is_admin"] = fmt.Sprintf("%d", *user_model.IsAdmin)
 	user["id"] = fmt.Sprintf("%d", *user_model.ID)
 	user["email"] = user_model.Email
-	Sess.Start(ctx).Set("user", user)
-	resRedis := service.Redis.Set(needField.Sence, 1, 60*time.Second)
+	user_byte, _ := service.FastJson.Marshal(user)
+	resRedis := service.Redis.Set(needField.Sence, string(user_byte), 60*time.Second)
 	if resRedis.Err() != nil {
 		service.Log.Error(resRedis.Err().Error())
 		Response.Code = 500
