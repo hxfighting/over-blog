@@ -73,7 +73,7 @@ func GetLoginResult(ctx iris.Context) {
 		}
 		res := service.Redis.Get(scene)
 		if res.Err() == nil {
-			user_string := res.String()
+			user_string := res.Val()
 			user := make(map[string]string)
 			service.FastJson.Unmarshal([]byte(user_string), &user)
 			if _, ok := user["id"]; ok {
