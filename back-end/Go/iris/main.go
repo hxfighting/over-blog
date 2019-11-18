@@ -20,6 +20,7 @@ import (
 	"os"
 	"runtime"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -30,9 +31,8 @@ var (
 
 func init() {
 	getConfigPath()
-	file = service.NewLogFile()
-	app.Logger().SetOutput(file)
 	config.NewConfig()
+	service.NewLogger()
 	database.NewDB()
 	service.NewGeoDb()
 	service.NewRedis()
@@ -54,7 +54,6 @@ func main() {
 	app.Use(service.NewSentry(service.SentryOptions{
 		Repanic: true,
 	}))
-	service.Log = app.Logger()
 	app.Use(cors.New(cors.Options{
 		AllowedOrigins:   []string{"*"}, // allows everything, use that to change the hosts.
 		AllowCredentials: true,
@@ -125,6 +124,9 @@ func panicCapture() context.Handler {
 				logMessage += fmt.Sprintf("At Request: %s\n", getRequestLogs(ctx))
 				logMessage += fmt.Sprintf("Trace: %s\n", err)
 				logMessage += fmt.Sprintf("\n%s", stacktrace)
+				if !helper.CheckDebug() {
+					logMessage = strings.Replace(logMessage, "\n", ",", -1)
+				}
 				service.Log.Error(logMessage)
 				ctx.StatusCode(500)
 				ctx.StopExecution()
