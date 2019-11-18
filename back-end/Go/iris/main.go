@@ -17,7 +17,6 @@ import (
 	"github.com/kataras/iris/v12/context"
 	requestLogger "github.com/kataras/iris/v12/middleware/logger"
 	"log"
-	"os"
 	"runtime"
 	"strconv"
 	"strings"
@@ -25,8 +24,7 @@ import (
 )
 
 var (
-	app  = iris.New()
-	file *os.File
+	app = iris.New()
 )
 
 func init() {
@@ -80,7 +78,6 @@ func main() {
 		app.Shutdown(ctx)
 		database.Db.Close()
 		service.Redis.Close()
-		file.Close()
 	})
 	if run := app.Run(iris.Addr(":3024"), iris.WithoutInterruptHandler, iris.WithOptimizations); run != nil {
 		log.Fatalln(run.Error())
