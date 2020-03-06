@@ -5,27 +5,22 @@ import (
 	"github.com/mojocn/base64Captcha"
 )
 
+var store = base64Captcha.DefaultMemStore
+
 /**
 生成验证码
 */
 func GenerateCaptcha() (string, string) {
-	var configs = base64Captcha.ConfigCharacter{
-		Height: 60,
-		Width:  240,
-		//const CaptchaModeNumber:数字,CaptchaModeAlphabet:字母,CaptchaModeArithmetic:算术,CaptchaModeNumberAlphabet:数字字母混合.
-		Mode:               base64Captcha.CaptchaModeAlphabet,
-		ComplexOfNoiseText: base64Captcha.CaptchaComplexLower,
-		ComplexOfNoiseDot:  base64Captcha.CaptchaComplexLower,
-		IsShowHollowLine:   true,
-		IsShowNoiseDot:     true,
-		IsShowNoiseText:    true,
-		IsShowSlimeLine:    false,
-		IsShowSineLine:     false,
-		CaptchaLen:         6,
+	var digit = base64Captcha.NewDriverDigit(80,240,5,0.7,80)
+	var driver base64Captcha.Driver
+	driver = digit
+	c := base64Captcha.NewCaptcha(driver, store)
+	id, b64s, err := c.Generate()
+	if err != nil {
+		Log.Error(err.Error())
+		return "", ""
 	}
-	key, captchaInstance := base64Captcha.GenerateCaptcha("", configs)
-	base64string := base64Captcha.CaptchaWriteToBase64Encoding(captchaInstance)
-	return key, base64string
+	return id, b64s
 }
 
 /**
@@ -33,7 +28,7 @@ func GenerateCaptcha() (string, string) {
 */
 func ValidateCaptcha(key, captcha string) bool {
 	if !helper.CheckDebug() {
-		return base64Captcha.VerifyCaptcha(key, captcha)
+		return store.Verify(key, captcha, true)
 	}
 	return true
 }
