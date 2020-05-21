@@ -1,13 +1,12 @@
 package service
 
 import (
+	"context"
 	"net/http"
 	"time"
 
-	stdContext "context"
 	"github.com/getsentry/sentry-go"
 	"github.com/kataras/iris/v12"
-	"github.com/kataras/iris/v12/context"
 )
 
 const valuesKey = "sentry"
@@ -32,7 +31,7 @@ type SentryOptions struct {
 
 // New returns a function that satisfies iris.Handler interface
 // It can be used with Use() method.
-func NewSentry(options SentryOptions) context.Handler {
+func NewSentry(options SentryOptions) iris.Handler {
 	handler := handler{
 		repanic:         false,
 		timeout:         time.Second * 2,
@@ -56,7 +55,7 @@ func NewSentry(options SentryOptions) context.Handler {
 
 func (h *handler) handle(ctx iris.Context) {
 	hub := sentry.CurrentHub().Clone()
-	hub.Scope().SetRequest(sentry.Request{}.FromHTTPRequest(ctx.Request()))
+	hub.Scope().SetRequest(ctx.Request())
 	ctx.Values().Set(valuesKey, hub)
 	defer h.recoverWithSentry(hub, ctx.Request())
 	ctx.Next()
@@ -65,7 +64,7 @@ func (h *handler) handle(ctx iris.Context) {
 func (h *handler) recoverWithSentry(hub *sentry.Hub, r *http.Request) {
 	if err := recover(); err != nil {
 		eventID := hub.RecoverWithContext(
-			stdContext.WithValue(r.Context(), sentry.RequestContextKey, r),
+			context.WithValue(r.Context(), sentry.RequestContextKey, r),
 			err,
 		)
 		if eventID != nil && h.waitForDelivery {

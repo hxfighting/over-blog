@@ -49,9 +49,7 @@ func main() {
 	if helper.CheckDebug() {
 		app.Use(requestLogger.New())
 	}
-	app.Use(service.NewSentry(service.SentryOptions{
-		Repanic: true,
-	}))
+	app.Use(service.NewSentry(service.SentryOptions{}))
 	app.Use(cors.New(cors.Options{
 		AllowedOrigins:   []string{"*"}, // allows everything, use that to change the hosts.
 		AllowCredentials: true,
