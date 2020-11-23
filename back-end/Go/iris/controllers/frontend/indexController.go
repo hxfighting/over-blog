@@ -15,7 +15,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"time"
-	"unicode/utf8"
 )
 
 const BLOG_UV = "blog_uv"
@@ -50,7 +49,6 @@ func Index(ctx iris.Context) {
 获取照片
 */
 func getPhoto() []map[string]string {
-	utf8.RuneCountInString("世界")
 	s, e := service.Redis.Get(PHOTO_KEY).Result()
 	if e != nil {
 		ph := models.Photo{}

@@ -11,6 +11,7 @@ import (
 	"github.com/qiniu/api.v7/storage"
 	"io/ioutil"
 	"net/http"
+	"strings"
 )
 
 //5MB
@@ -73,5 +74,6 @@ func Upload(ctx iris.Context) {
 		response.RenderError(ctx, "上传失败："+e.Error(), nil)
 		return
 	}
-	response.RenderSuccess(ctx, "上传成功！", ret.Key)
+	img := strings.Replace(ret.Key, "http://image.ohdata.top", "https://pic.ohdata.top", -1)
+	response.RenderSuccess(ctx, "上传成功！", img)
 }

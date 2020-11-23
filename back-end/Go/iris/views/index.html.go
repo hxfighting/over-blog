@@ -305,13 +305,6 @@ func Index(AuthInfo map[string]string, articleList []models.Article, total, page
 	}
 	buffer.WriteString(`
             </div>
-            <br/>
-            <h5 title="距离毕业">
-                <div>
-                    <p class="center">距离结婚还有：</p>
-                    <span id="clock" style="font-size: 18px"></span>
-                </div>
-            </h5>
         </div>
     </div>
 </div>
