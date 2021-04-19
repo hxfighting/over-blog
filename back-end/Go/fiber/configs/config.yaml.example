@@ -1,0 +1,51 @@
+server:
+  addr: :8080
+  debug: true
+  pprofToken:
+  name: blog
+  maxbody: 31457280
+  concurrency: 262144
+  readtimeout: 10s
+  writetimeout: 10s
+  enableswagger: true
+mysql:
+  maxopenconns: 10
+  maxidleconns: 2
+  maxlifetime: 60s
+  maxidletime: 60s
+  username:
+  password:
+  host:
+  db:
+cors:
+  alloworigins: "*"
+  allowmethods: "*"
+  allowheaders: Authorization,Content-Type
+  exposeheaders: Authorization
+  allowcredentials: true
+  maxage: 12 #hour
+  enable: true
+ratelimit:
+  max: 20
+  expire: 1m
+log:
+  path: .
+  output: console
+jwt:
+  secret: dasdsa
+  expire: 1h #hour
+  maxrefresh: 90 #day
+  signingalgorithm: RS256
+httpclient:
+  requesttimeout: 30s #seconds
+  readtimeout: 0s #seconds
+  writetimeout: 0s #seconds
+  maxconnduration: 0s #seconds
+  maxconnwaittimeout: 30s #seconds
+  maxconnsperhost: 2000
+  maxidleconnduration: 3s #seconds
+  maxidemponentcallattempts: 3
+qiniu:
+  accesskey:
+  secretkey:
+  bucket:
