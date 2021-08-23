@@ -23,13 +23,14 @@ func (a Admin) TableName() string {
 
 // 获取用户信息
 func GetUserInfo(ctx *fiber.Ctx, uid int64) (admin Admin, err error) {
-	err = db(ctx.Context()).Where("id = ?", uid).First(&admin).Error
+	err = db(ctx.Context(), nil).Where("id = ?", uid).First(&admin).Error
 	return
 }
 
 // 修改个人信息
 func UpdateInfo(ctx *fiber.Ctx, uid int64, name, avatar, email, phone string) error {
-	return db(ctx.Context()).Table(Admin{}.TableName()).Where("id = ?", uid).Updates(map[string]interface{}{
+	return db(ctx.Context(), nil).Table(Admin{}.TableName()).
+		Where("id = ?", uid).Updates(map[string]interface{}{
 		"name":       name,
 		"avatar":     avatar,
 		"email":      email,
@@ -39,6 +40,11 @@ func UpdateInfo(ctx *fiber.Ctx, uid int64, name, avatar, email, phone string) er
 
 // 修改密码
 func ResetPassword(ctx *fiber.Ctx, uid int64, pass string) error {
-	return db(ctx.Context()).Table(Admin{}.TableName()).
+	return db(ctx.Context(), nil).Table(Admin{}.TableName()).
 		Where("id = ?", uid).Update("password", pass).Error
+}
+
+func GetUserByName(ctx *fiber.Ctx, name string) (admin Admin, err error) {
+	err = db(ctx.Context(), nil).Where("name = ?", name).First(&admin).Error
+	return
 }

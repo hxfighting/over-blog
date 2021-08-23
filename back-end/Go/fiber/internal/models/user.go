@@ -1,11 +1,11 @@
 package models
 
 import (
-	"blog/database"
-	"blog/helper"
-	"blog/service"
 	"net"
-	"time"
+
+	"github.com/ohdata/blog/internal/pkg/geo"
+	"github.com/ohdata/blog/tools/log"
+	"github.com/ohdata/blog/tools/util"
 )
 
 type User struct {
@@ -31,8 +31,8 @@ func (User) TableName() string {
 }
 
 func (this *User) AfterFind() {
-	this.CreatedAt = helper.GetDateTime(this.CreatedUnix, helper.YMDHIS)
-	this.UpdatedAt = helper.GetDateTime(this.UpdatedUnix, helper.YMDHIS)
+	this.CreatedAt = util.GetDateTime(this.CreatedUnix, util.YMDHIS)
+	this.UpdatedAt = util.GetDateTime(this.UpdatedUnix, util.YMDHIS)
 	this.LastLoginIp = getAddress(this.LastLoginIp)
 }
 
@@ -40,13 +40,13 @@ func (this *User) AfterFind() {
 获取IP对应的地址
 */
 func getAddress(ip string) string {
-	if service.GeoDB == nil {
+	if geo.GeoDB == nil {
 		return "未知地方"
 	}
 	right_ip := net.ParseIP(ip)
-	record, err := service.GeoDB.City(right_ip)
+	record, err := geo.GeoDB.City(right_ip)
 	if err != nil {
-		service.Log.Error(err.Error())
+		log.Log.Error().Err(err).Send()
 		return "未知地方"
 	}
 	var city, country, province string
@@ -68,49 +68,4 @@ func getAddress(ip string) string {
 		province = record.Subdivisions[0].Names["zh-CN"]
 	}
 	return country + province + city
-}
-
-/**
-获取用户列表
-*/
-func (this User) GetUserList(pageNum, pageSize int64, search string) map[string]interface{} {
-	user := []User{}
-	var db = database.Db.Table("user")
-	if search != "" {
-		db = db.Where("name like ?", "%"+search+"%").Or("email like ?", "%"+search+"%")
-	}
-	var total int64 = 0
-	db.Count(&total)
-	db.Order("created_at desc").Offset((pageNum - 1) * pageSize).Limit(pageSize).Find(&user)
-	data := make(map[string]interface{})
-	data["total"] = total
-	data["list"] = user
-	return data
-}
-
-/**
-删除用户
-*/
-func (this User) DeleteUser() bool {
-	res := database.Db.Delete(&this)
-	if res.Error != nil {
-		return false
-	}
-	return true
-}
-
-/**
-修改用户信息
-*/
-func (this User) UpdateUser() bool {
-	now := time.Now().Unix()
-	data := map[string]interface{}{
-		"is_admin":   *this.IsAdmin,
-		"updated_at": now,
-	}
-	result := database.Db.Model(&this).Updates(data)
-	if result.Error != nil {
-		return false
-	}
-	return true
 }

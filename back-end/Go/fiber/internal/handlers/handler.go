@@ -5,6 +5,8 @@ import (
 
 	"github.com/ohdata/blog/configs"
 	"github.com/ohdata/blog/internal/handlers/backend/admin"
+	"github.com/ohdata/blog/internal/handlers/backend/base"
+	"github.com/ohdata/blog/internal/handlers/backend/category"
 	"github.com/ohdata/blog/internal/middlewares/jwt"
 	"github.com/ohdata/blog/tools"
 )
@@ -28,4 +30,6 @@ func RegisterRoute(app *fiber.App) {
 	})}
 
 	admin.Route(app, handlers...)
+	base.Route(app, handlers...)
+	category.Route(app, handlers...)
 }

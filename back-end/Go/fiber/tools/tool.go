@@ -1,13 +1,13 @@
 package tools
 
 import (
-	"database/sql"
 	"errors"
 	"net/http"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/sync/singleflight"
+	"gorm.io/gorm"
 
 	"github.com/ohdata/blog/tools/log"
 )
@@ -42,7 +42,7 @@ func ValidateStruct(ctx *fiber.Ctx, data interface{}) error {
 }
 
 func SingleRecordResponse(err error, annotate string) error {
-	if err == sql.ErrNoRows {
+	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return errors.New(annotate)
 	}
 	return ErrServer

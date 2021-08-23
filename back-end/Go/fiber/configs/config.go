@@ -68,6 +68,22 @@ type GlobalConfig struct {
 		SecretKey string `json:"secretkey" yaml:"secretkey" cfg:"secretkey"`
 		Bucket    string `json:"bucket" yaml:"bucket" cfg:"bucket"`
 	} `yaml:"qiniu" json:"qiniu"`
+	Redis struct {
+		Host         string        `json:"host" yaml:"host"`
+		Password     string        `json:"password" yaml:"password"`
+		Port         string        `json:"port" yaml:"port"`
+		DB           int           `json:"db" yaml:"db"`
+		MinIdleConns int           `json:"minidleconns" yaml:"minidleconns"`
+		PoolSize     int           `json:"poolsize" yaml:"poolsize"`
+		MaxConnAge   time.Duration `json:"maxconnage" yaml:"maxconnage"`
+		ReadTimeout  time.Duration `json:"readtimeout" yaml:"readtimeout"`
+		WriteTimeout time.Duration `json:"writetimeout" yaml:"writetimeout"`
+		DialTimeout  time.Duration `json:"dialtimeout" yaml:"dialtimeout"`
+	} `yaml:"redis" json:"redis" cfg:"redis"`
+	Event struct {
+		Size       int `json:"size" yaml:"size"`
+		Concurrent int `json:"concurrent" yaml:"concurrent"`
+	} `yaml:"event" json:"event" cfg:"event"`
 }
 
 var Config *GlobalConfig

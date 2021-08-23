@@ -4,16 +4,18 @@ import (
 	"bytes"
 	"crypto/md5"
 	"encoding/hex"
+	stdJson "encoding/json"
 	"io/ioutil"
 	"net/http"
 	"strings"
 
-	"blog/database"
 	"github.com/gofiber/fiber/v2"
 	"github.com/qiniu/go-sdk/v7/auth/qbox"
 	"github.com/qiniu/go-sdk/v7/storage"
 
 	"github.com/ohdata/blog/configs"
+	"github.com/ohdata/blog/internal/middlewares/jwt"
+	"github.com/ohdata/blog/internal/pkg/database"
 	"github.com/ohdata/blog/tools"
 	"github.com/ohdata/blog/tools/captcha"
 	"github.com/ohdata/blog/tools/log"
@@ -27,6 +29,8 @@ func Route(app *fiber.App, handlers ...fiber.Handler) {
 	app.Get("/api/captcha", getCaptcha)
 	g := app.Group("/api/admin", handlers...)
 	g.Post("/upload", upload)
+	g.Get("/count", count)
+	g.Get("/token", refreshToken)
 }
 
 // 生成验证码
@@ -96,17 +100,18 @@ func upload(ctx *fiber.Ctx) error {
 	return tools.Success(ctx, "上传成功！", img)
 }
 
-func count(ctx *fiber.Ctx) error  {
+func count(ctx *fiber.Ctx) error {
 	data := make([]map[string]interface{}, 8)
-	user, link, article, comment, tag, category, contact, chat := 0, 0, 0, 0, 0, 0, 0, 0
-	database.Db.Table("user").Count(&user)
-	database.Db.Table("link").Count(&link)
-	database.Db.Table("article").Count(&article)
-	database.Db.Table("article_comment").Count(&comment)
-	database.Db.Table("tag").Count(&tag)
-	database.Db.Table("category").Count(&category)
-	database.Db.Table("contact").Count(&contact)
-	database.Db.Table("chat").Count(&chat)
+	user, link, article, comment, tag, category, contact, chat := int64(0), int64(0), int64(0),
+		int64(0), int64(0), int64(0), int64(0), int64(0)
+	database.DB.Table("user").Count(&user)
+	database.DB.Table("link").Count(&link)
+	database.DB.Table("article").Count(&article)
+	database.DB.Table("article_comment").Count(&comment)
+	database.DB.Table("tag").Count(&tag)
+	database.DB.Table("category").Count(&category)
+	database.DB.Table("contact").Count(&contact)
+	database.DB.Table("chat").Count(&chat)
 	data[0] = map[string]interface{}{
 		"title": "用户统计",
 		"icon":  "md-people",
@@ -155,5 +160,27 @@ func count(ctx *fiber.Ctx) error  {
 		"count": chat,
 		"color": "#FFFF00",
 	}
-	response.RenderSuccess(ctx, "获取统计成功", data)
+	return tools.Success(ctx, "获取统计成功", data)
+}
+
+func refreshToken(ctx *fiber.Ctx) error {
+	info, err := jwt.GetUserInfo(ctx)
+	if err != nil {
+		return err
+	}
+	uidJSON := info["subject"].(stdJson.Number)
+	uid, err := uidJSON.Int64()
+	if err != nil {
+		return tools.ErrServer
+	}
+	if err = jwt.BlockToken(ctx); err != nil {
+		return tools.ServerErrResponse(ctx, err)
+	}
+	nameJSON := info["username"].(stdJson.Number)
+	name := nameJSON.String()
+	data, err := jwt.GenerateToken(uid, name, "admin")
+	if err != nil {
+		return tools.ServerErrResponse(ctx, err)
+	}
+	return tools.Success(ctx, "token刷新成功", data)
 }

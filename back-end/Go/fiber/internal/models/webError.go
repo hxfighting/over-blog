@@ -1,9 +1,7 @@
 package models
 
 import (
-	"blog/database"
-	"blog/helper"
-	"time"
+	"github.com/ohdata/blog/tools/util"
 )
 
 type WebError struct {
@@ -24,45 +22,6 @@ func (WebError) TableName() string {
 }
 
 func (this *WebError) AfterFind() {
-	this.CreatedAt = helper.GetDateTime(this.CreatedUnix, helper.YMDHIS)
-	this.UpdatedAt = helper.GetDateTime(this.UpdatedUnix, helper.YMDHIS)
-}
-
-/**
-获取错误日志列表
-*/
-func (this WebError) GetWebErrorList(pageNum, pageSize int64) map[string]interface{} {
-	webError := []WebError{}
-	db := database.Db.Table("web_error")
-	var total int64 = 0
-	db.Count(&total)
-	db.Order("created_at desc").Offset((pageNum - 1) * pageSize).Limit(pageSize).Find(&webError)
-	data := make(map[string]interface{})
-	data["total"] = total
-	data["list"] = webError
-	return data
-}
-
-/**
-添加错误日志
-*/
-func (this WebError) AddWebError() bool {
-	this.CreatedUnix = time.Now().Unix()
-	this.UpdatedUnix = time.Now().Unix()
-	res := database.Db.Create(&this)
-	if res.Error != nil {
-		return false
-	}
-	return true
-}
-
-/**
-删除错误日志
-*/
-func (this WebError) DeleteWebError() bool {
-	res := database.Db.Where("id in (?)", this.IDs).Delete(WebError{})
-	if res.Error != nil {
-		return false
-	}
-	return true
+	this.CreatedAt = util.GetDateTime(this.CreatedUnix, util.YMDHIS)
+	this.UpdatedAt = util.GetDateTime(this.UpdatedUnix, util.YMDHIS)
 }

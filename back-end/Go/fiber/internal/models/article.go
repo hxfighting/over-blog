@@ -7,7 +7,9 @@ import (
 const ARTICLE_VIEW = "blog_article_view"
 
 type Article struct {
-	ID            *int64         `json:"id" validate:"gt=0"`
+	IsShow        *int8          `json:"is_show" validate:"oneof=0 1" mapstructure:"is_show"`
+	IsTop         *int8          `json:"is_top" validate:"oneof=0 1" mapstructure:"is_top"`
+	IsOriginal    *int8          `json:"is_original" validate:"oneof=0 1" mapstructure:"is_original"`
 	Title         string         `json:"title" validate:"gte=2,lte=100"`
 	Author        string         `json:"author" validate:"gte=2,lte=20"`
 	Keywords      string         `json:"keywords" validate:"gte=2,lte=255"`
@@ -15,18 +17,16 @@ type Article struct {
 	Thumb         string         `json:"thumb" validate:"url"`
 	ContentHtml   string         `json:"content_html" validate:"gte=2" mapstructure:"content_html"`
 	ContentMd     string         `json:"content_md" gorm:"column:content_md" validate:"gte=2" mapstructure:"content_md"`
-	IsShow        *int8          `json:"is_show" validate:"oneof=0 1" mapstructure:"is_show"`
-	IsTop         *int8          `json:"is_top" validate:"oneof=0 1" mapstructure:"is_top"`
-	IsOriginal    *int8          `json:"is_original" validate:"oneof=0 1" mapstructure:"is_original"`
+	CreatedAt     string         `json:"created_at" gorm:"-"`
+	UpdatedAt     string         `json:"updated_at" gorm:"-"`
+	ID            *int64         `json:"id" validate:"gt=0"`
 	Click         int64          `json:"click"`
 	CategoryID    *int64         `json:"category_id" validate:"gt=0,numeric" mapstructure:"category_id"`
 	CreatedUnix   int64          `json:"created_unix" gorm:"column:created_at"`
 	UpdatedUnix   int64          `json:"updated_unix" gorm:"column:updated_at"`
-	CreatedAt     string         `json:"created_at" gorm:"-"`
-	UpdatedAt     string         `json:"updated_at" gorm:"-"`
+	CommentsCount int64          `json:"comments_count" gorm:"-"`
 	Category      simpleCategory `json:"category" gorm:"-"`
 	Tags          []simpleTag    `json:"tags" gorm:"-"`
-	CommentsCount int64          `json:"comments_count" gorm:"-"`
 }
 
 type SimpleArticle struct {

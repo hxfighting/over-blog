@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"html"
 	"strings"
 
 	"github.com/gofiber/fiber/v2"
@@ -8,20 +9,25 @@ import (
 	"github.com/ohdata/blog/internal/middlewares/jwt"
 	"github.com/ohdata/blog/internal/models"
 	"github.com/ohdata/blog/tools"
+	"github.com/ohdata/blog/tools/captcha"
 	"github.com/ohdata/blog/tools/util"
 )
 
 func Route(app *fiber.App, handlers ...fiber.Handler) {
-
-	g := app.Group("/api/admin", handlers...)
+	prefix := "/api/admin"
+	auth := app.Group(prefix, handlers...)
 	// 获取个人信息
-	g.Get("", getUserInfo)
+	auth.Get("", getUserInfo)
 	// 修改个人信息
-	g.Put("", update)
+	auth.Put("", update)
 	// 退出登录
-	g.Post("/logout", logout)
+	auth.Post("/logout", logout)
 	// 修改密码
-	g.Put("/password", resetPassword)
+	auth.Put("/password", resetPassword)
+
+	noAuth := app.Group(prefix)
+	// 登录
+	noAuth.Post("/login", login)
 }
 
 func getUserInfo(ctx *fiber.Ctx) error {
@@ -99,4 +105,35 @@ func resetPassword(ctx *fiber.Ctx) error {
 		return tools.ServerErrResponse(ctx, err)
 	}
 	return tools.Success(ctx, "修改密码成功！")
+}
+
+type loginReq struct {
+	Password string `json:"password" validate:"required"`
+	Name     string `json:"name" validate:"required"`
+	Captcha  string `json:"captcha" validate:"required"`
+	Key      string `json:"key" validate:"required"`
+}
+
+func login(ctx *fiber.Ctx) error {
+	req := new(loginReq)
+	if err := tools.ValidateStruct(ctx, req); err != nil {
+		return tools.Error(ctx, "参数错误")
+	}
+	req.Password = html.EscapeString(req.Password)
+	req.Name = html.EscapeString(req.Name)
+	if captcha.ValidateCaptcha(req.Key, req.Captcha) {
+		user, err := models.GetUserByName(ctx, req.Name)
+		if err != nil {
+			return tools.SingleRecordResponse(err, "参数错误")
+		}
+		if user.ID <= 0 {
+			return tools.Error(ctx, "参数错误")
+		}
+		data, err := jwt.GenerateToken(user.ID, user.Name, "admin")
+		if err != nil {
+			return tools.ServerErrResponse(ctx, err)
+		}
+		return tools.Success(ctx, "登录成功！", data)
+	}
+	return tools.Error(ctx, "验证码错误")
 }

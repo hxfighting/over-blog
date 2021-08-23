@@ -49,3 +49,17 @@ qiniu:
   accesskey:
   secretkey:
   bucket:
+redis:
+  password:
+  db: 0
+  host: 127.0.0.1
+  port: 6379
+  diatimeout: 10s
+  readtimeout: 10s
+  writetimeout: 10s
+  poolsize: 200
+  minidleconns: 50
+  maxconnage: 10m
+event:
+  size: 100
+  concurrent: 3

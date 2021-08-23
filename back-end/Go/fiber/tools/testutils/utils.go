@@ -6,10 +6,9 @@ import (
 	"net/http"
 	"net/http/httptest"
 
-	"github.com/gofiber/fiber/v2"
 	"github.com/jmoiron/sqlx"
 
-	"github.com/ohdata/blog/internal/database"
+	database2 "github.com/ohdata/blog/internal/pkg/database"
 )
 
 var router *fiber.App
@@ -31,7 +30,7 @@ func GetRouter() *fiber.App {
 
 // SetCommonObject ...
 func SetCommonObject(db *sql.DB) {
-	database.DB = sqlx.NewDb(db, "mysql")
+	database2.DB = sqlx.NewDb(db, "mysql")
 }
 
 func MockRequest(method, target string, body io.Reader) *http.Request {
